@@ -15,6 +15,13 @@ export default new Router({
       component: () => import('@/views/orderservice/index')
     },
     {
+      path: '/orderdetail',
+      component: () => import('@/views/orderdetail/index'),
+      meta: {
+        title: '订单详情'
+      }
+    },
+    {
       path: '/ordermap',
       component: () => import('@/views/ordermap/index')
     },

@@ -22,6 +22,6 @@ html, body
     padding: 0;  
     margin: 0;  
     height: 100%;  
-    overflow:hidden;  
+    /* overflow:hidden;   */
 }  
 </style>
