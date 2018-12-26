@@ -22,8 +22,8 @@
         </van-collapse-item>
       </van-collapse>
       <div class="btn">
-        <van-button type="primary">电话联系</van-button>
-        <van-button type="warning">工单竣工</van-button>
+        <van-button type="primary" size="large">电话联系</van-button>
+        <van-button type="warning" size="large">工单竣工</van-button>
       </div>
 
   </div>
@@ -43,10 +43,15 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style lang="less" type="text/less" scoped>
+.app-container {
+  height: 100%;
+  background: #efefef;
+}
 .btn {
-  padding: 180px;
+  .van-button--large {
+     margin-top:30px;
+  }
 }
  
 </style>

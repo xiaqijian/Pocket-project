@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "less": "^3.9.0",
+    "less-loader": "^4.1.0",
     "postcss-pxtorem": "^4.0.1",
     "vant": "^1.5.0",
     "vue": "^2.5.2",
