@@ -11,6 +11,14 @@ export default new Router({
       component: () => import('@/views/index/index')
     },
     {
+      path: '/orderservice',
+      component: () => import('@/views/orderservice/index')
+    },
+    {
+      path: '/ordermap',
+      component: () => import('@/views/ordermap/index')
+    },
+    {
       path: '/404',
       component: () => import('@/views/404')
     },
