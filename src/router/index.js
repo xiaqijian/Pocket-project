@@ -26,6 +26,21 @@ export default new Router({
       component: () => import('@/views/service/viewOrder/serviceEvaluation')
     },
     {
+      path: '/serviceState',
+      name: 'serviceEvaluation',
+      component: () => import('@/views/my/serviceState')
+    },
+    {
+      path: '/contact',
+      name: 'serviceEvaluation',
+      component: () => import('@/views/my/contact')
+    },
+    {
+      path: '/informationBind',
+      name: 'serviceEvaluation',
+      component: () => import('@/views/my/informationBind')
+    },
+    {
       path: '/404',
       component: () => import('@/views/404')
     },
