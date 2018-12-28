@@ -22,6 +22,27 @@ export default new Router({
       }
     },
     {
+      path: '/addorder',
+      component: () => import('@/views/addorder/index'),
+      meta: {
+        title: '新增订单'
+      }
+    },
+    {
+      path: '/addstatus',
+      component: () => import('@/views/addstatus/index'),
+      meta: {
+        title: '新增状态'
+      }
+    },
+    {
+      path: '/adduser',
+      component: () => import('@/views/adduser/index'),
+      meta: {
+        title: '新增客户'
+      }
+    },
+    {
       path: '/ordermap',
       component: () => import('@/views/ordermap/index')
     },
