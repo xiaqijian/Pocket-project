@@ -160,6 +160,7 @@ export default {
   },
   methods:{
    call:function(){
+    
               this.$dialog.confirm({
           title: '安全呼叫',
           message: '是否呼叫10086？'

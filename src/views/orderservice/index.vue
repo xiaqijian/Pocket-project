@@ -22,7 +22,7 @@
         </van-collapse-item>
       </van-collapse>
       <div class="btn">
-        <van-button type="primary" size="large" @click="callclick">电话联系</van-button>
+        <van-button type="primary" size="large" @click.stop.prevent="callclick">电话联系</van-button>
         <van-button type="warning" size="large" @click="orderclick">工单竣工</van-button>
       </div>
 
@@ -39,7 +39,7 @@ export default {
   },
   methods: {
    callclick () {
-      this.$Dialog.confirm({
+      this.$dialog.confirm({
           title: '提示',
           message: '你即将通过电话联系客户，是否确认'
         }).then(() => {
@@ -49,7 +49,7 @@ export default {
         });
    },
     orderclick () {
-      this.$Dialog.confirm({
+      this.$dialog.confirm({
           title: '提示',
           message: '你即将完结本次工单，是否确认？'
         }).then(() => {

@@ -8,7 +8,10 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: () => import('@/views/index/index')
+      component: () => import('@/views/index/index'),
+      meta: {
+        title: '首页'
+      }
     },
     {
       path: '/orderservice',
@@ -44,65 +47,121 @@ export default new Router({
     },
     {
       path: '/ordermap',
-      component: () => import('@/views/ordermap/index')
+      component: () => import('@/views/ordermap/index'),
+      meta: {
+        title: '订单地图'
+      }
     },
-    // 
-    {//新增状态
+    {
       path: '/addState',
       name: 'addState',
-      component: () => import('@/views/yingxiao/addState')
-    },{//处理工单
+      component: () => import('@/views/yingxiao/addState'),
+      meta: {
+        title: '新增状态'
+      }
+    },
+    {
       path: '/disposeWorkorder',
       name: 'disposeWorkorder',
-      component: () => import('@/views/workorderManagement/disposeWorkorder')
-    },{//我的统计
+      component: () => import('@/views/workorderManagement/disposeWorkorder'),
+      meta: {
+        title: '处理工单'
+      }
+    },
+    {
       path: '/myStatistics',
       name: 'myStatistics',
-      component: () => import('@/views/workorderManagement/myStatistics')
-    },{//推荐最新活动
+      component: () => import('@/views/workorderManagement/myStatistics'),
+      meta: {
+        title: '我的统计'
+      }
+    },
+    {
       path: '/newActivity',
       name: 'newActivity',
-      component: () => import('@/views/recommend/newActivity')
-    },{//推荐联迪A8使用说明
+      component: () => import('@/views/recommend/newActivity'),
+      meta: {
+        title: '推荐最新活动'
+      }
+    },
+    {
       path: '/instructions',
       name: 'instructions',
-      component: () => import('@/views/recommend/instructions')
-    },{//维护首页
+      component: () => import('@/views/recommend/instructions'),
+      meta: {
+        title: '推荐联迪A8使用说明'
+      }
+    },
+    {
       path: '/serviceIndex',
       name: 'serviceIndex',
-      component: () => import('@/views/service/serviceIndex')
-    },{//新增需求
+      component: () => import('@/views/service/serviceIndex'),
+      meta: {
+        title: '维护首页'
+      }
+    },
+    {
       path: '/newDemand',
       name: 'newDemand',
-      component: () => import('@/views/service/newDemand')
-    },{//所有订单
+      component: () => import('@/views/service/newDemand'),
+      meta: {
+        title: '新增需求'
+      }
+    },
+    {//
       path: '/myOrder',
       name: 'myOrder',
-      component: () => import('@/views/service/viewOrder/myOrder')
-    },{//查看订单
+      component: () => import('@/views/service/viewOrder/myOrder'),
+      meta: {
+        title: '所有订单'
+      }
+    },
+    {
       path: '/checkOrder',
       name: 'checkOrder',
-      component: () => import('@/views/service/viewOrder/checkOrder')
-    },{//订单评价
+      component: () => import('@/views/service/viewOrder/checkOrder'),
+      meta: {
+        title: '查看订单'
+      }
+    },
+    {
       path: '/serviceEvaluation',
       name: 'serviceEvaluation',
-      component: () => import('@/views/service/viewOrder/serviceEvaluation')
-    },{
+      component: () => import('@/views/service/viewOrder/serviceEvaluation'),
+      meta: {
+        title: '订单评价'
+      }
+    },
+    {
       path: '/serviceState',
       name: 'serviceEvaluation',
-      component: () => import('@/views/my/serviceState')
-    },{//业务状态
+      component: () => import('@/views/my/serviceState'),
+      meta: {
+        title: '订单状态'
+      }
+    },
+    {
       path: '/contact',
       name: 'serviceEvaluation',
-      component: () => import('@/views/my/contact')
-    },{//联系方式
+      component: () => import('@/views/my/contact'),
+      meta: {
+        title: '业务状态'
+      }
+    },
+    {
       path: '/informationBind',
       name: 'serviceEvaluation',
-      component: () => import('@/views/my/informationBind')
+      component: () => import('@/views/my/informationBind'),
+      meta: {
+        title: '联系方式'
+      }
     },
     {
       path: '/404',
-      component: () => import('@/views/404')
+      component: () => import('@/views/404'),
+      meta: {
+        title: '404页面'
+      }
     },
     { path: '*', redirect: '/404' }
   ]
