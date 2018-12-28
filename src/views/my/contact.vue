@@ -6,12 +6,8 @@
                <span>1899008475y7</span>
            </div>
            <div class="store-info">
-                    <div class="store-name">
-                        <div>
-                            <label> <van-icon name="shop-o" />&nbsp;店铺名称：</label>
-                            <span>嘻哈哈零食店铺</span>
-                        </div>
-                        <van-button round   size="small" @click="modifyStore()">修改</van-button>
+                    <div class="store-name"> 
+                    <van-cell icon="shop-o" title="店铺名称：" is-link  value="嘻哈哈零食店铺" @click="modifyStore()"/>
                         <van-popup v-model="dialogStoreModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
                         <div class="modify">
                                 <p>
@@ -25,11 +21,7 @@
                         </van-popup>
                     </div>
                     <div class="user-name">
-                        <div>
-                            <label><van-icon name="manager-o" />&nbsp;客户名称：</label>
-                            <span>戏游人间</span>
-                        </div>
-                        <van-button round  size="small" @click="modifyName()">修改</van-button>
+                        <van-cell icon="manager-o" title="客户名称：" is-link  value="戏游人间" @click="modifyName()"/>
                         <van-popup v-model="dialogNameModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
                         <div class="modify">
                                 <p>
@@ -43,11 +35,8 @@
                         </van-popup>
                     </div>
                     <div class="contact-way">
-                            <div>
-                            <label><van-icon name="chat-o" />&nbsp;联系方式：</label>
-                            <span>12343545@145.com</span>
-                        </div>
-                        <van-button round   size="small" @click="modifyContact()">修改</van-button>
+                         <van-cell icon="chat-o" title="联系方式：" is-link  value="12343545@145.com" @click="modifyContact()"/>
+                        
                         <van-popup v-model="dialogContactModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
                         <div class="modify">
                                 <p>
