@@ -22,8 +22,8 @@
         </van-collapse-item>
       </van-collapse>
       <div class="btn">
-        <van-button type="primary" size="large">电话联系</van-button>
-        <van-button type="warning" size="large">工单竣工</van-button>
+        <van-button type="primary" size="large" @click="callclick">电话联系</van-button>
+        <van-button type="warning" size="large" @click="orderclick">工单竣工</van-button>
       </div>
 
   </div>
@@ -36,6 +36,28 @@ export default {
        index: "我是首页",
        activeNames: ['1']
     }
+  },
+  methods: {
+   callclick () {
+      this.$Dialog.confirm({
+          title: '提示',
+          message: '你即将通过电话联系客户，是否确认'
+        }).then(() => {
+          // on confirm
+        }).catch(() => {
+          // on cancel
+        });
+   },
+    orderclick () {
+      this.$Dialog.confirm({
+          title: '提示',
+          message: '你即将完结本次工单，是否确认？'
+        }).then(() => {
+          // on confirm
+        }).catch(() => {
+          // on cancel
+        });
+   }
   },
   components: {
 
