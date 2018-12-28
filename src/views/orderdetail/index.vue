@@ -22,7 +22,7 @@
         </van-collapse-item>
       </van-collapse>
       <div class="btn">
-        <van-button type="warning" size="large">抢工单</van-button>
+        <van-button type="warning" size="large" @click="orderclick">抢工单</van-button>
       </div>
 
   </div>
@@ -34,6 +34,15 @@ export default {
     return {
        index: "我是首页",
        activeNames: ['1']
+    }
+  },
+  methods: {
+    orderclick () {
+      this.$notify({
+         message: '抢工单成功',
+         duration: 1000,
+        background: '#1989fa'
+      });
     }
   },
   components: {

@@ -34,8 +34,11 @@
       </van-cell-group>
      
       <div class="btn">
-        <van-button type="primary" size="large">用户ID匹配</van-button>
-        <van-button type="warning" size="large">新建客户</van-button>
+        <van-button type="primary" size="large" @click = "findId">用户ID匹配</van-button>
+        <router-link to="/adduser">
+             <van-button type="warning" size="large">新建客户</van-button>
+        </router-link>
+       
       </div>
 
   </div>
@@ -48,6 +51,15 @@ export default {
        index: "我是首页",
        activeNames: ['1'],
        value: ''
+    }
+  },
+  methods: {
+    findId () {
+      this.$notify({
+         message: '匹配用户ID成功',
+         duration: 1000,
+        background: '#1989fa'
+      });
     }
   },
   components: {
