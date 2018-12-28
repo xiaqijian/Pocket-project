@@ -6,60 +6,60 @@
                <span>1899008475y7</span>
            </div>
            <div class="store-info">
-               <div class="store-name">
-                 <div>
-                       <label> <van-icon name="shop" />&nbsp;店铺名称：</label>
-                       <span>嘻哈哈零食店铺</span>
-                 </div>
-                <van-button round   size="small" @click="modifyStore()">修改</van-button>
-                 <van-popup v-model="dialogStoreModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
-                  <div class="modify">
-                        <p>
-                         <input type="text" placeholder="请输入淘宝名称" v-bind:style="inputStyle">
-                      
-                    </p>
-                    <p>
-                        <van-button round  size="small" @click="save">保存</van-button>
-                    </p>
-                  </div>
-                 </van-popup>
-               </div>
-               <div class="user-name">
-                <div>
-                       <label><van-icon name="manager" />&nbsp;客户名称：</label>
-                       <span>戏游人间</span>
-                 </div>
-                <van-button round  size="small" @click="modifyName()">修改</van-button>
-                 <van-popup v-model="dialogNameModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
-                  <div class="modify">
-                        <p>
-                         <input type="text" placeholder="请输入名称" v-bind:style="inputStyle">
-                      
-                    </p>
-                    <p>
-                        <van-button round  size="small" @click="save">保存</van-button>
-                    </p>
-                  </div>
-                 </van-popup>
-               </div>
-               <div class="contact-way">
-                    <div>
-                       <label><van-icon name="chat" />&nbsp;联系方式：</label>
-                       <span>12343545@145.com</span>
-                 </div>
-                <van-button round   size="small" @click="modifyContact()">修改</van-button>
-                  <van-popup v-model="dialogContactModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
-                  <div class="modify">
-                        <p>
-                         <input type="text" placeholder="请输入联系方式" v-bind:style="inputStyle">
-                      
-                    </p>
-                    <p>
-                        <van-button round  size="small" @click="save">保存</van-button>
-                    </p>
-                  </div>
-                 </van-popup>
-               </div>
+                    <div class="store-name">
+                        <div>
+                            <label> <van-icon name="shop-o" />&nbsp;店铺名称：</label>
+                            <span>嘻哈哈零食店铺</span>
+                        </div>
+                        <van-button round   size="small" @click="modifyStore()">修改</van-button>
+                        <van-popup v-model="dialogStoreModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
+                        <div class="modify">
+                                <p>
+                                <input type="text" placeholder="请输入淘宝名称" v-bind:style="inputStyle">
+                            
+                            </p>
+                            <p>
+                                <van-button round  size="small" @click="save">保存</van-button>
+                            </p>
+                        </div>
+                        </van-popup>
+                    </div>
+                    <div class="user-name">
+                        <div>
+                            <label><van-icon name="manager-o" />&nbsp;客户名称：</label>
+                            <span>戏游人间</span>
+                        </div>
+                        <van-button round  size="small" @click="modifyName()">修改</van-button>
+                        <van-popup v-model="dialogNameModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
+                        <div class="modify">
+                                <p>
+                                <input type="text" placeholder="请输入名称" v-bind:style="inputStyle">
+                            
+                            </p>
+                            <p>
+                                <van-button round  size="small" @click="save">保存</van-button>
+                            </p>
+                        </div>
+                        </van-popup>
+                    </div>
+                    <div class="contact-way">
+                            <div>
+                            <label><van-icon name="chat-o" />&nbsp;联系方式：</label>
+                            <span>12343545@145.com</span>
+                        </div>
+                        <van-button round   size="small" @click="modifyContact()">修改</van-button>
+                        <van-popup v-model="dialogContactModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
+                        <div class="modify">
+                                <p>
+                                <input type="text" placeholder="请输入联系方式" v-bind:style="inputStyle">
+                            
+                            </p>
+                            <p>
+                                <van-button round  size="small" @click="save">保存</van-button>
+                            </p>
+                        </div>
+                        </van-popup>
+                    </div>
            </div>
      </div>
   </div>
@@ -139,6 +139,9 @@ export default {
   height: 88px;
   line-height: 88px;
   border-bottom: 1px solid #e5e5e5;
+}
+.store-info{
+    margin-top: 10px;
 }
 .store-info > div {
   display: flex;
