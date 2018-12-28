@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
       <div class="weihu">
-          <p class="p" v-model="sjData">{{sjData}}</p>
+          <!-- <div class="pdiv" v-model="sjData">{{sjData}}</div> -->
       </div>
   </div>
 </template>
@@ -30,7 +30,7 @@ export default {
     margin:50px auto 30px;
     display: table;
 }
-.p{
+.pdiv{
     display:table-cell; 
     vertical-align:middle;  
     text-align: center; /*设置文本水平居中*/  

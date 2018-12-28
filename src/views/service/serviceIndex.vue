@@ -6,7 +6,7 @@
        </p>   
       </div>
       <div class="weihu">
-          <p class="p" v-model="sjData">{{sjData}}</p>
+          <!-- <p class="p" v-model="sjData">{{sjData}}</p> -->
       </div>
   </div>
 </template>
