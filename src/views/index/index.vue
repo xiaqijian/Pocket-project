@@ -33,10 +33,13 @@
          <a href="#/serviceIndex">
          <van-button size="large" type="primary">维护首页</van-button>
        </a>
+        <a href="#/newDemand">
+         <van-button size="large" type="primary">新建订单</van-button>
+       </a>
          <a href="#/myOrder">
          <van-button size="large" type="primary">所有订单</van-button>
        </a>
-         <a href="#/checkOrder">
+       <a href="#/checkOrder">
          <van-button size="large" type="primary">查看订单</van-button>
        </a>
          <a href="#/serviceEvaluation">
