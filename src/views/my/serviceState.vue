@@ -104,7 +104,7 @@ export default {
     margin: 20px;
   padding:30px;
   border-radius: 30px;
-  background: #Feee90;
+  /* background: #Feee90; */
   box-shadow: #eeeeee -2px 1px  10px 2px;
   color: #666;
 }
@@ -129,7 +129,7 @@ export default {
     border-radius: 10px;
     padding: 10px 30px;
     margin-top: 20px;
-    font-size: 16px;
+    /* font-size: 16px; */
 }
 .person-bussiness>div{
     height: 48px;

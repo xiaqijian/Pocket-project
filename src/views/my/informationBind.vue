@@ -6,7 +6,7 @@
                     <div class="business-photo">
 
                     </div>
-                    <van-uploader >
+                    <van-uploader :after-read="onRead">
                     <van-icon name="photograph" />
                     </van-uploader>
 
@@ -16,9 +16,10 @@
 
                 <van-field 
                     required
-                    clearable
                     label="手机号"
                     placeholder="请输入手机号"
+                    v-model="phone"
+                     v-on:input="activeBind()"
                 />
 
                 <van-field
@@ -26,14 +27,16 @@
                     label="验证码"
                     placeholder="请输入验证码"
                     required
+                   v-model="yzm"
+                   v-on:input="activeBind()"
                 >
-                 <van-button slot="button" size="small" class="obtain-yzm">获取验证码</van-button>
+                 <van-button slot="button" size="small" class="obtain-yzm" @click="obtainYzm">{{content}}</van-button>
                 </van-field>
                
                 </van-cell-group>
         </div>
        <div class="binding">
-           <van-button size="large" class="binding-info" round >绑定</van-button>
+           <van-button size="large" class="binding-info" :class="[canBind?'canBinding':'']" round @click="bindAccount">绑定</van-button>
         
        </div>
       </div>
@@ -44,7 +47,13 @@
 export default {
   data () {
     return {
-       index: "我的信息绑定"
+        content:'获取验证码',
+                totalTime:60,   //倒计时
+                canClick:true, //添加canClick
+                phone:'',
+                yzm:'',
+                canBind:false
+
        
     }
   },
@@ -54,6 +63,43 @@ export default {
   methods:{
       onRead(file) {
       console.log(file)
+    },
+    obtainYzm:function(){
+      if(!(/^1[34578]\d{9}$/.test(this.phone))){ 
+        this.$toast('手机号码有误，请重填');
+        return false; 
+    } 
+       if(!this.canClick){return}  //节流   
+                   this.canClick=false;
+                   this.content = this.totalTime + 's后重新发送'
+                   let clock = window.setInterval(() => {
+                   this.totalTime--;
+                  this.content = this.totalTime + 's后重新发送'
+                  if (this.totalTime < 0) {  //当倒计时小于0时清除定时器
+                       window.clearInterval(clock); //关闭
+                       this.content = '重新获取验证码'
+                       this.totalTime = 60;
+                       this.canClick = true; //这里重新开启
+                          }
+             
+        },1000)
+    },
+    // 按钮的激活状态
+    activeBind(){
+        if(this.phone&&this.yzm){
+        this.canBind=true;
+    }else{
+         this.canBind=false;
+    }
+    },
+    // 去绑定
+    bindAccount(){
+        if(!(/^1[34578]\d{9}$/.test(this.phone))){ 
+        this.$toast('手机号码有误，请重填');
+        return false; 
+    } 
+   
+         
     }
   }
 }
@@ -73,7 +119,7 @@ export default {
     border: 1px solid #e5e5e5;
 }
 .obtain-yzm{
-    background: #eeeeee;
+   background: #Feee90;
 }
 .bussiness-prove{
     margin-bottom: 40px;
@@ -84,7 +130,10 @@ export default {
 }
 .binding-info{
     width: 60%;
-    background: #eeeeee;
+   background: #eee;
+}
+.canBinding{
+     background: #Feee90;
 }
  
 </style>

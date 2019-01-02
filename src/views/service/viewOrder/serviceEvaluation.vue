@@ -4,7 +4,8 @@
       <p><van-icon name="records" size="20px"/>服务评价</p>
       <p>宝贝满足您的期待吗？</p>
       </div>
-    
+  <div class="judgeScore">
+        
     <div class="contact">
     <label>联系速度</label>
     <van-rate
@@ -37,6 +38,7 @@
   void-icon="like-o"
 />
     </div>
+  </div>
    <div class="doJudge" @click="doJudge">
       <van-button size="normal" >确认打分</van-button>
    </div>
@@ -74,7 +76,7 @@ export default {
 .service-judge{
   padding: 5px 10px;
   border-radius: 30px;
-  background: #Feee90;
+  /* background: #Feee90; */
   border: 1px solid #e5e5e5;
   margin-bottom: 30px;
   /* color: #b32b2b; */
@@ -95,6 +97,11 @@ export default {
 .van-button--normal{
   border-radius: 10px;
   background:#Feee90;
+}
+.judgeScore{
+  border: 1px solid #eeeeee;
+  padding: 20px 0 250px;
+  border-radius: 10px;
 }
  
  
