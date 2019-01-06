@@ -9,61 +9,56 @@ import navs from '@/components/nav'
 export default {
   data () {
     return {
-      //  口袋商服
+      //  口袋业务
        navs: { 'navs': [
          {
-           'name': '推荐',
+           'name': '抢工单',
            'id':1,
            'link': '',
            'navlist': [
              {
-             'name': '联迪A8使用说明',
+             'name': '工单服务',
              'id': 1,
-             'link': '/instructions'
+             'link': '/orderservice'
            },
            {
-             'name': '最新活动',
+             'name': '抢工单',
              'id': 2,
-             'link': '/newActivity'
+             'link': '/ordermap'
            }
           ]
          },
          {
-           'name': '维护',
+           'name': '营销管理',
            'id':2,
            'link': '',
            'navlist': [
              {
-             'name': '查看订单',
+             'name': '新增工单',
              'id': 1,
-             'link': '/checkOrder'
+             'link': '/addorder'
            },
            {
-             'name': '新需求',
+             'name': '新增状态',
              'id': 2,
-             'link': '/newDemand'
+             'link': '/addstatus'
            }
           ]
          },
          {
-           'name': '我的',
+           'name': '工单管理',
            'id':3,
            'link': '',
            'navlist': [
              {
-             'name': '信息绑定',
+             'name': '处理工单',
              'id': 1,
-             'link': '/informationBind'
+             'link': '/disposeWorkorder'
            },
            {
-             'name': '联系方式',
+             'name': '我的统计',
              'id': 2,
-             'link': '/informationBind'
-           },
-           {
-             'name': '业务状态',
-             'id': 3,
-             'link': '/contact'
+             'link': '/myStatistics'
            }
           ]
          }

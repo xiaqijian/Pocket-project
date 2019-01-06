@@ -43,6 +43,7 @@ export default {
 </script>
 
 <style scoped lang="less" type="text/less">
+@height: 120px;
 a {
   color: #333;
 }
@@ -60,20 +61,20 @@ a {
   .left {
     width: 60px;
     text-align: center;
-    line-height: 80px;
+    line-height: @height;
   }
   .right {
     flex: 1;
     display: flex;
     > div {
       flex: 1;
-      line-height: 80px;
+      line-height: @height;
       text-align: center;
       border-left: 1px solid #333;
       position: relative;
       .nav-list {
          position: absolute;
-         bottom: 80px;
+         bottom: @height;
          left: 0;
          width: 100%;
          border-left: 1px solid #333;

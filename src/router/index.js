@@ -18,12 +18,23 @@ export default new Router({
       name: 'nav',
       component: () => import('@/views/nav/index'),
       meta: {
-        title: '导航'
+        title: '口袋商服'
+      }
+    },
+    {
+      path: '/nav2',
+      name: 'nav2',
+      component: () => import('@/views/nav/index2'),
+      meta: {
+        title: '口袋商服业务'
       }
     },
     {
       path: '/orderservice',
-      component: () => import('@/views/orderservice/index')
+      component: () => import('@/views/orderservice/index'),
+      meta: {
+        title: '工单服务'
+      }
     },
     {
       path: '/orderdetail',
