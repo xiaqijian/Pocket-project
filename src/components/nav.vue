@@ -6,7 +6,7 @@
                 <van-icon name="comment" />
             </div>
             <div class="right">
-                <div v-for="item in navs" :key="item.id">
+                <div v-for="item in datanav.navs" :key="item.id">
                   <router-link :to="item.link"> 
                     <div @click="clicknav(item.id)">
                          {{item.name}}
@@ -25,44 +25,10 @@
 
 <script>
 export default {
+  props: ['datanav'],
   data () {
     return {
-       id: 0,
-       navs: [
-         {
-           'name': '推荐',
-           'id':1,
-           'link': '',
-           'navlist': [{
-             'name': '推荐',
-             'id': 1,
-             'link': '/'
-           }
-          ]
-         },
-         {
-           'name': '推荐',
-           'id':2,
-           'link': '',
-           'navlist': [{
-             'name': '推荐',
-             'id': 1,
-             'link': '/'
-           }
-          ]
-         },
-         {
-           'name': '推荐',
-           'id':3,
-           'link': '',
-           'navlist': [{
-             'name': '推荐',
-             'id': 1,
-             'link': '/'
-           }
-          ]
-         }
-       ]
+       id: 0
     }
   },
   components: {
