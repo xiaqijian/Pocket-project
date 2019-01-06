@@ -14,6 +14,14 @@ export default new Router({
       }
     },
     {
+      path: '/nav',
+      name: 'nav',
+      component: () => import('@/views/nav/index'),
+      meta: {
+        title: '导航'
+      }
+    },
+    {
       path: '/orderservice',
       component: () => import('@/views/orderservice/index')
     },
