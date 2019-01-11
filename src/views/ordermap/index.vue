@@ -15,7 +15,7 @@
       let self = this
       return {
        uid: 3,
-       zoom: 2,
+       zoom: 12,
        center: [120.163936,30.254841],
        resdata: [],
        markers: [],
@@ -37,6 +37,10 @@
     },
     mounted () {
        this.getdata()
+       console.log('初始化')
+    },
+    updated () {
+       console.log('初始化22222')    
     },
     components: {
  
@@ -45,7 +49,7 @@
       // 请求数据
       getdata () {
         let that = this;
-        this.$axios.get('pocket/wxchat/getWorkOrderStatus', { params: { 'uid': that.uid }})
+        this.$axios.get('pocket/wxchat/grabwol', { params: { 'uid': that.uid }})
           .then((res) => {
             console.log(res.data)
             that.getmark(res.data.data)
@@ -57,15 +61,20 @@
       // 获取地图图标数据
       getmark (data) {
          let markder = []
+         let that = this
          data.forEach(ele => {
             let id = ele.id
             markder.push({
               'id': ele.id,
               'position': [ele.longitude, ele.latitude],
               'markderclick': {
-                mousedown: (id) => {
-                     console.log(ele.id)
-                    console.log(id);
+                click: (id) => {
+                    console.log(ele.id)
+                    that.$router.push({
+                       path:'/orderdetail', 
+                       query: {
+                          id: ele.id
+                       }})
                 },
               }
             })
