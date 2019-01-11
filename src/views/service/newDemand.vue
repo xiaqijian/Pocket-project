@@ -1,8 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="aa">
-        <p class="p">新建订单</p>
-    </div>
     <div class="center">       
         <van-cell-group>
              <van-cell title="业务选择" is-link :value="val" size="large" @click="ywSelect"/>
@@ -124,13 +121,6 @@ export default {
     .app-container{
         background: #cccccc;
         height: 100%;
-    }
-    .aa{
-      /* display: table; */
-      background: white;
-      height: 40px;
-      /* width: 98%; */
-      margin: auto;
     }
     .p{
       /* padding: 0px 2px; */

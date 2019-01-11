@@ -39,7 +39,7 @@ export default {
              'link': '/addorder'
            },
            {
-             'name': '新增状态',
+             'name': '工单状态',
              'id': 2,
              'link': '/addstatus'
            }
@@ -51,7 +51,7 @@ export default {
            'link': '',
            'navlist': [
              {
-             'name': '处理工单',
+             'name': '我的工单',
              'id': 1,
              'link': '/disposeWorkorder'
            },

@@ -1,90 +1,92 @@
-
 <template>
-  <div class="app-container">
-     <div class="card">
-        <div class="carlist">
-          <div class="left">夏夏</div>
-          <div class="right red">待审核</div>
-        </div>
-        <van-cell title="营业执照名称" value="阿里巴巴集团公司" />
-        <van-cell title="创建时间" value="2018-12-12" />
-        <van-collapse v-model="activeNames">
-          <van-collapse-item title="需求业务" name="1">
-            哈哈哈哈哈哈哈
-          </van-collapse-item>
-         
-        </van-collapse>
-     </div>
-      <div class="card">
-        <div class="carlist">
-          <div class="left">夏夏</div>
-          <div class="right blue">审核通过</div>
-        </div>
-        <van-cell title="营业执照名称" value="阿里巴巴集团公司" />
-        <van-cell title="创建时间" value="2018-12-12" />
-        <van-collapse v-model="activeNames">
-          <van-collapse-item title="需求业务" name="1">
-            哈哈哈哈哈哈哈
-          </van-collapse-item>
-         
-        </van-collapse>
-     </div>
-      <div class="card">
-        <div class="carlist">
-          <div class="left">夏夏</div>
-          <div class="right red">待审核</div>
-        </div>
-        <van-cell title="营业执照名称" value="阿里巴巴集团公司" />
-        <van-cell title="创建时间" value="2018-12-12" />
-        <van-collapse v-model="activeNames">
-          <van-collapse-item title="需求业务" name="1">
-            哈哈哈哈哈哈哈
-          </van-collapse-item>
-         
-        </van-collapse>
-     </div>
+  <div class="app-container" id="sendOut">
+    <van-list
+    v-model="loading"
+    :finished="finished"
+    finished-text="没有更多了"
+    :offset="offset"
+    @load="onLoad"
+  >
+   <div v-for= "(item,index) in list" class="card">
+          <div slot="footer">
+            <van-cell title="工单编码:" :value="item.workOrderCode" size="large"/>
+            <van-cell title="客户姓名:" :value="item.customerName" size="large"/>
+            <van-cell title="联系方式:" :value="item.customerMobile" is-link @click="callphone($event,item)" size="large"/>
+            <van-cell title="开始时间:" :value="item.addTime" size="large"/>
+            <van-cell title="当前状态:" :value="item.statudDesc" size="large"/>
+            <van-cell  title="工单类型:" :value="item.status"  size="large">  
+                <div v-if="item.status ==1">
+                  <van-tag type="primary" size="large">正常</van-tag>
+                </div>
+                <div  v-if="item.status ==2">
+                  <van-tag type="danger" size="large">关闭</van-tag>
+                </div>
+            </van-cell>
+          </div>
+      </div>
+    </van-list>
   </div>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-     activeNames: ['1']
+  mounted(){
+      this.getdata(1)
+  },
+  methods:{
+      onLoad() {
+      // 异步更新数据
+      let that = this
+      setTimeout(() => {
+        that.page = that.page +1 
+        that.getdata(that.page)
+        // 加载状态结束
+        that.loading = false;
+        // 数据全部加载完成  
+        if (that.list.length >=  that.allDataYeshu) {
+          that.finished = true;
+        }
+      }, 500);
+    },
+    getdata (page, pageSize =5  ) {
+        let that = this;
+        let userID = 3;
+        that.$axios.get('pocket/wxchat/getWorkOrderStatus', 
+          { params: { 
+            'uid':userID,
+            'page': page,
+            'pageSize': pageSize
+            }
+          })
+          .then(res=>{
+             that.list = that.list.concat(res.data.data.dataResult) ;
+             that.allDataYeshu = res.data.data.totalSize;
+          })
+          .catch(err=>{
+              console.log(err)
+              this.$toast('数据获取失败');
+          })
     }
   },
-  components: {
-
-  }
+  data () {
+    return {
+      list: [],
+      loading: false,
+      finished: false,
+      offset: 10,
+      page:0 ,
+      allDataYeshu:'',//总页数
+    }
+  },
 }
 </script>
 
-<style lang="less" type="text/less" scoped>
-.app-container {
-  height: 100%;
-  background: #efefef;
+<style scoped>
+.card{
+    background: #dddddd;
+    padding: 5px;
 }
-.card {
-  background: #fff;
-  margin-bottom: 20px;
-  // padding: 20px;
-   .carlist {
-     display: flex;
-     padding: 24px;
-     border-bottom: 1px solid #efefef;
-     > div {
-       flex:1;
-     }
-     .right {
-       text-align: right;
-     }
-     .red {
-       color: #f44;
-     }
-     .blue {
-       color: blue;
-     }
-   }
+.chakan{
+    width: 100%;
 }
-
 </style>

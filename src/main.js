@@ -7,7 +7,9 @@ import axios from 'axios'
 import VueAMap from 'vue-amap'
 import Vant from 'vant'
 import 'vant/lib/index.css'
+const qs = require('qs')
 
+Vue.prototype.qs = qs;
 Vue.use(Vant)
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
