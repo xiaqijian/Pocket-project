@@ -14,13 +14,13 @@
             <van-cell title="联系方式:" :value="item.customerMobile" is-link @click="callphone($event,item)" size="large"/>
             <van-cell title="开始时间:" :value="item.addTime" size="large"/>
             <van-cell title="当前状态:" :value="item.statudDesc" size="large"/>
-            <van-cell  title="工单类型:" :value="item.status"  size="large">  
-                <div v-if="item.status ==1">
+            <van-cell  title="工单类型:" :value="item.businessName"  size="large">  
+                <!-- <div v-if="item.status ==1">
                   <van-tag type="primary" size="large">正常</van-tag>
                 </div>
                 <div  v-if="item.status ==2">
                   <van-tag type="danger" size="large">关闭</van-tag>
-                </div>
+                </div> -->
             </van-cell>
           </div>
       </div>
@@ -31,7 +31,7 @@
 <script>
 export default {
   mounted(){
-      this.getdata(1)
+      // this.getdata(1)
   },
   methods:{
       onLoad() {
@@ -59,6 +59,7 @@ export default {
             }
           })
           .then(res=>{
+            console.log(res.data)
              that.list = that.list.concat(res.data.data.dataResult) ;
              that.allDataYeshu = res.data.data.totalSize;
           })

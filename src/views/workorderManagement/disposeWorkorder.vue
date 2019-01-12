@@ -4,6 +4,7 @@
       v-model="loading"
       :finished="finished"
       finished-text="没有更多了"
+      :offset="offset"
       @load="onLoad"
     >
       <div v-for= "(item,index) in list" class="card">
@@ -13,13 +14,13 @@
           <van-cell title="联系方式:" :value="item.customerMobile" is-link @click="callphone($event,item)" size="large"/>
           <van-cell title="开始时间:" :value="item.addTime" size="large"/>
           <van-cell title="当前状态:" :value="item.statudDesc" size="large"/>
-          <van-cell  title="工单类型:" :value="item.status"  size="large">  
-              <div v-if="item.status ==1">
+          <van-cell  title="工单类型:" :value="item.businessName"  size="large">  
+              <!-- <div v-if="item.status ==1">
                 <van-tag type="primary" size="large">正常</van-tag>
               </div>
               <div  v-if="item.status ==2">
                 <van-tag type="danger" size="large">关闭</van-tag>
-              </div>
+              </div> -->
           </van-cell>
           <van-button class="chakan" size="large" @click="workDetail($event,item)">工单详情</van-button>
         </div>
@@ -41,16 +42,15 @@
                 <van-cell title="工单类型:" :value="gdstate" size="large" />
                 <van-cell title="创建时间:" :value="stratTime" size="large" />
                 <van-cell title="服务时间:" :value="fuwuTime" size="large" />
-                <van-cell title="当前状态" :value="nowState" size="large"/>
-                <van-collapse v-model="activeNames">
-                <van-collapse-item title="佣金说明" name="1">
-                  
-                  服务分0-20    佣金0<br>
-                  服务分21-30  佣金20<br>
-                  服务分31-40  佣金40<br>
-                  服务分41-50  佣金50<br>
-                </van-collapse-item>
-              </van-collapse>
+                <van-cell title="当前状态"  :value="nowState" size="large"/>
+                <van-cell value="" >
+                  <template slot="title">
+                    <span class="custom-text">服务质量</span>
+                     <van-rate v-model="value" />
+                  </template>
+                </van-cell>
+               
+              
              </div>
         </van-dialog>
     </div>
@@ -61,7 +61,7 @@
 export default {
   mounted(){
         //请求所有数据  封装成一个函数
-        this.getallData(1);
+        // this.getallData(1);
   },
   methods:{
       //事件操作
@@ -76,6 +76,7 @@ export default {
             }
           })
           .then(res=>{
+            console.log(res.data);
              that.list = that.list.concat(res.data.data.dataResult) ;
              that.allDataYeshu = res.data.data.totalSize;
           })
@@ -97,29 +98,46 @@ export default {
     workDetail:function($event,item){
         let that = this;
         that.listData = item;
-        that.gdID = item.workOrderCode;
-        that.khname = item.customerName;
-        that.khaddr = item.customerName;//客户地址需要修改
-        that.gdstate = item.statudDesc;
-        that.stratTime = item.addTime;
-        that.fuwuTime = item.addTime;//服务时间需要修改
+        let workID = item.id;
+        console.log(workID);
+        that.$axios.get('pocket/wxchat/workOrderDetail', 
+          { params: { 
+            'workOrderId':workID
+            }
+          })
+          .then(res=>{
+             console.log(res.data)
+             that.gdID = res.data.data.workOrderCode;//工单编码
+             that.khname = res.data.data.customerName;//客户姓名
+             that.khaddr = res.data.data.address;//客户地址
+             that.gdstate = res.data.data.busDesc;//工单类型
+             that.stratTime = res.data.data.addTime;//创建时间
+             that.fuwuTime = res.data.data.completionTime;//竣工时间就是服务时间
+             that.nowState = res.data.data.statudDesc;//当前状态
+          })
+          .catch(err=>{
+              console.log(err)
+              this.$toast('数据详情失败');
+          })
 
-        let aaa = item.status;
+
+        // let aaa = item.status;
+        // console.log(aaa);
         that.show = true;//打开弹窗
         that.showbtn = true;//确认按钮默认一直展示
         that.canbtn = true;        
-        console.log(item);
-        //根据返回的内容进行显示 再看是否进行判断
-        if(aaa === 1){
-            console.log('异常')
-            that.cuidan = '催单'
-            that.cantext = '取消'
-            that.nowState = '异常'
-        }else{
-            that.showbtn = false
-            that.cantext = '确认'
-            that.nowState = '处理中'
-        }
+        // console.log(item);
+        // //根据返回的内容进行显示 再看是否进行判断
+        // if(aaa === 1){
+        //     console.log('异常')
+        //     that.cuidan = '催单'
+        //     that.cantext = '取消'
+        //     that.nowState = '异常'
+        // }else{
+        //     that.showbtn = false
+        //     that.cantext = '确认'
+        //     that.nowState = '处理中'
+        // }
     },
     beforeClose(action, done) {
       if (action === 'confirm') {
@@ -162,12 +180,12 @@ export default {
        stratTime:'', //创建时间
        fuwuTime:'',  //服务时间
        nowState:'', //当前状态
-       activeNames:[1],
        list:[],
        listData:{},//存放点击对应的数据
        offset: 10,
        page:0 ,
        allDataYeshu:'',//总页数
+       value: 3
     }
   },
 }
