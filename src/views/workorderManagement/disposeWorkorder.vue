@@ -29,7 +29,6 @@
     <div>
         <van-dialog 
              v-model="show"
-             :show-cancel-button='canbtn'
              :show-confirm-button='showbtn'
              :confirm-button-text='cuidan'
              :cancel-button-text='cantext'
@@ -43,14 +42,11 @@
                 <van-cell title="创建时间:" :value="stratTime" size="large" />
                 <van-cell title="服务时间:" :value="fuwuTime" size="large" />
                 <van-cell title="当前状态"  :value="nowState" size="large"/>
-                <van-cell value="" >
-                  <template slot="title">
-                    <span class="custom-text">服务质量</span>
-                     <van-rate v-model="value" />
-                  </template>
-                </van-cell>
-               
-              
+                <van-collapse v-model="activeNames">
+                  <van-collapse-item title="佣金说明" name="1">
+                    <span v-for="item in datadetail.commissions" :key="item.id"> {{item.commissionName}} 一共{{item.score}}分 --- 每分 {{item.money}}元<br></span>
+                  </van-collapse-item>
+               </van-collapse>
              </div>
         </van-dialog>
     </div>
@@ -107,6 +103,7 @@ export default {
           })
           .then(res=>{
              console.log(res.data)
+             that.datadetail = res.data.data
              that.gdID = res.data.data.workOrderCode;//工单编码
              that.khname = res.data.data.customerName;//客户姓名
              that.khaddr = res.data.data.address;//客户地址
@@ -114,6 +111,7 @@ export default {
              that.stratTime = res.data.data.addTime;//创建时间
              that.fuwuTime = res.data.data.completionTime;//竣工时间就是服务时间
              that.nowState = res.data.data.statudDesc;//当前状态
+
           })
           .catch(err=>{
               console.log(err)
@@ -142,8 +140,6 @@ export default {
     beforeClose(action, done) {
       if (action === 'confirm') {
         done();//确认为催单事件
-        console.log(111)
-        this.$toast('催单成功');
       } else {
         done();
       }
@@ -180,12 +176,13 @@ export default {
        stratTime:'', //创建时间
        fuwuTime:'',  //服务时间
        nowState:'', //当前状态
+       activeNames:[1],
        list:[],
        listData:{},//存放点击对应的数据
        offset: 10,
        page:0 ,
        allDataYeshu:'',//总页数
-       value: 3
+       datadetail:'',
     }
   },
 }

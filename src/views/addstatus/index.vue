@@ -48,6 +48,14 @@ export default {
         }
       }, 500);
     },
+    callphone:function($event,item){
+      let that = this;
+      let phone = item.userMobile;
+      let str1 =" tel://";
+      let str2 = phone.toString()
+      console.log(phone);
+      window.location.href = str1.concat(str2);
+    },
     getdata (page, pageSize =5  ) {
         let that = this;
         let userID = 3;
