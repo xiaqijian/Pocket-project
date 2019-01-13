@@ -68,7 +68,8 @@ export default new Router({
       path: '/ordermap',
       component: () => import('@/views/ordermap/index'),
       meta: {
-        title: '订单地图'
+        title: '订单地图',
+        keepAlive: true
       }
     },
     {
