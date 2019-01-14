@@ -60,7 +60,21 @@ export default {
   components: {
 
   },
+  mounted(){
+this.getuserInfo();
+  },
   methods:{
+      getuserInfo(){
+     let that = this;
+      that.$axios.get('pocket/wxchat/getUserInfo', { params: {'uid': 3}})
+      .then(res=>{
+          console.log(res.data)
+      })
+      .catch(err=>{
+          console.log(err)
+      })
+
+      },
       onRead(file) {
       console.log(file)
     },
