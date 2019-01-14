@@ -102,6 +102,7 @@ export default {
                 duration: 1000,
                 background: '#1989fa'
               });
+              // that.$router.go(0)
           })
           .catch((err) => {
             console.log(err)
@@ -161,10 +162,19 @@ export default {
       let that = this;
         this.$axios.get('pocket/wxchat/getCustomerInfo', { params: { 'uid': that.uid , 'mobile': mobile }})
           .then((res) => {
+            if (res.data.data == 101) {
+              that.$toast.fail(res.data.msg);
+              return false
+            }
             console.log(res.data)
             that.address =  res.data.data.address
             that.userdata = res.data.data
             that.addWorkOrderfrom.cId = res.data.data.id
+            that.$notify({
+              message: '匹配用户ID成功',
+              duration: 1000,
+              background: '#1989fa'
+            });
           })
           .catch((err) => {
             console.log(err)
@@ -173,11 +183,7 @@ export default {
     findId () {
       this.getCustomerInfo(this.phone)
 
-      this.$notify({
-         message: '匹配用户ID成功',
-         duration: 1000,
-         background: '#1989fa'
-      });
+      
     }
   },
   components: {

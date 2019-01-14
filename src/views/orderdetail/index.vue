@@ -29,7 +29,7 @@
       </div>
       <div class="btn">
         <van-button type="primary" size="large" @click.stop.prevent="callclick">电话联系</van-button>
-        <van-button type="warning" size="large" @click="orderclick">抢工单</van-button>
+        <van-button type="warning" size="large" @click="orderclick" v-show="1 == datadetail.status">抢工单</van-button>
       </div>
 
   </div>
@@ -65,11 +65,12 @@ export default {
       })
    },
    callclick () {
+     let that = this
       this.$dialog.confirm({
           title: '提示',
           message: '你即将通过电话联系客户，是否确认'
         }).then(() => {
-          window.location.href = "tel:10086";
+          window.location.href = "tel:" + that.datadetail.userMobile;;
           // on confirm
         }).catch(() => {
           // on cancel
@@ -81,6 +82,7 @@ export default {
     this.$axios.get('pocket/wxchat/updateWorkOrder', { params: { 'workOrderId': that.workOrderId, 'uid': that.uid }})
       .then((res) => {
         console.log(res.data.data)
+        that.$toast.success(res.data.data);
         that.getdata(that.workOrderId)
       })
       .catch((err) => {

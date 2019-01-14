@@ -27,7 +27,10 @@
       </van-collapse>
       <div class="btn">
         <van-button type="primary" size="large" @click.stop.prevent="callclick">电话联系</van-button>
-        <van-button type="warning" size="large" @click="orderclick">工单竣工</van-button>
+        <span>
+           <van-button type="warning" :disabled="!status" size="large" @click="orderclick">{{datadetail.statudDesc}}</van-button>
+        </span>
+       
       </div>
 
   </div>
@@ -42,10 +45,12 @@ export default {
        activeNames1: ['1'],
        workOrderId: 36,
        datadetail: {},
-       message: ''
+       message: '',
+       status: false
     }
   },
   mounted() {
+    this.workOrderId = this.$route.query.id
     this.getdata(this.workOrderId)
   },
   methods: {
@@ -55,17 +60,28 @@ export default {
       .then((res) => {
         console.log(res.data.data)
         that.datadetail = res.data.data
+         
+         if( that.datadetail.status == 1 ) {
+               that.status = true
+         } else if (that.datadetail.status == 2) {
+           that.status = true
+         } else {
+           that.status = false
+         }
+         console.log(that.status)
       })
       .catch((err) => {
         console.log(err)
       })
    },
    callclick () {
+     let that = this
       this.$dialog.confirm({
           title: '提示',
           message: '你即将通过电话联系客户，是否确认'
         }).then(() => {
           // on confirm
+           window.location.href = "tel:" + that.datadetail.userMobile;
         }).catch(() => {
           // on cancel
         });

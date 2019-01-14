@@ -31,7 +31,6 @@
           <img :src="imgsrc" alt="">
         </div>
       </van-cell-group>
-      <van-button type="primary" size="large" @click.stop.prevent="callclick">电话联系</van-button>
       <div class="btn">
         <van-button type="warning" size="large" @click="adduser">新建客户</van-button>
       </div>
@@ -87,10 +86,12 @@ export default {
             data:formdata,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
          }).then((res) => {
-           console.log(res)
+          //  console.log(res)
+           resolve(res.data.data)
          })
          .catch((err) => {
            console.log(err)
+           reject(err)
          })
       })
     },
@@ -100,17 +101,21 @@ export default {
         that.$axios({
            url:'pocket/wxchat/addNewCustomer/'+ that.uid,
             method:'post',
-            data: that.qs.stringify(postdata)
+            data: postdata
          }).then((res) => {
+           that.$toast.success(res.data.data);
+           this.$router.push({ path: 'addorder'})
            console.log(res)
          })
          .catch((err) => {
            console.log(err)
          })
     },
-    adduser () {
+    async adduser () {
       console.log(this.userdata)
-      this.uploadLicense(this.userdata.mobile, this.file)
+      let data = await this.uploadLicense(this.userdata.mobile, this.file)
+      this.userdata.licenseUrl = data.path
+      this.addNewCustomer(this.userdata)
     }
   },
 }
