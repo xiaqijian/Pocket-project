@@ -2,21 +2,18 @@
 <template>
   <div class="app-container">
       <van-cell-group>
-        <van-cell title="工单业务" is-link value="平安银行" />
-        <van-field v-model="value" label="店铺名称" placeholder="请输入用户名" />
-        <van-field v-model="value" label="联系人" placeholder="请输入用户名" />
+        <van-field v-model="userdata.shopName" label="店铺名称" placeholder="请输入用户名" />
+        <van-field v-model="userdata.name" label="联系人" placeholder="请输入用户名" />
         <van-field
-          v-model="phone"
+          v-model="userdata.mobile"
           label="手机号"
           placeholder="请输入手机号"
-          error-message="手机号格式错误"
         />
          <van-field
-          v-model="value"
-          label="客户定位"
+          v-model="userdata.address"
+          label="客户地址"
           placeholder="请输入地址信息"
         >
-          <van-button slot="button" size="small" type="primary">定位</van-button>
         </van-field>
         <div class="uploadimg">
             <h5>营业执照</h5>
@@ -24,12 +21,12 @@
           <van-icon name="photograph" />
         </van-uploader>
         </div>
-         <div class="uploadimg">
+         <!-- <div class="uploadimg">
             <h5>资料上传</h5>
         <van-uploader  accept="image/gif, image/jpeg" multiple>
           <van-icon name="photograph" />
         </van-uploader>
-        </div>
+        </div> -->
         
       </van-cell-group>
       
@@ -46,7 +43,16 @@ export default {
     return {
        index: "我是首页",
        activeNames: ['1'],
-       value: ''
+       value: '',
+       userdata: {
+         'uid': '',
+         'name': '',
+         'shopName': '',
+         'mobile': '',
+         'address': '',
+         'businessLicense': '',
+         'licenseUrl': ''
+       }
     }
   },
   components: {

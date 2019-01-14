@@ -39,7 +39,7 @@ export default {
              'link': '/addorder'
            },
            {
-             'name': '新增状态',
+             'name': '工单状态',
              'id': 2,
              'link': '/addstatus'
            }
