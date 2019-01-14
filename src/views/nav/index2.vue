@@ -16,11 +16,11 @@ export default {
            'id':1,
            'link': '',
            'navlist': [
-             {
-             'name': '工单服务',
-             'id': 1,
-             'link': '/orderservice'
-           },
+          //    {
+          //    'name': '工单服务',
+          //    'id': 1,
+          //    'link': '/orderservice'
+          //  },
            {
              'name': '抢工单',
              'id': 2,

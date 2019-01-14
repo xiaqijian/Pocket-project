@@ -8,6 +8,8 @@ import VueAMap from 'vue-amap'
 import Vant from 'vant'
 import 'vant/lib/index.css'
 
+var qs = require('qs')
+
 Vue.use(Vant)
 Vue.use(VueAMap);
 VueAMap.initAMapApiLoader({
@@ -19,6 +21,7 @@ VueAMap.initAMapApiLoader({
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
+Vue.prototype.qs = qs
 
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */

@@ -1,24 +1,28 @@
 <template>
   <div class="app-container">
       <van-cell-group>
-        <van-cell title="工单编号" value="23784783748" />
-        <van-cell title="客户姓名" value="张四" />
-        <van-cell title="客户地址" value="杭州东站东关村121212号  ">
-           <van-icon slot="right-icon" name="location" class="custom-icon" />
+        <van-cell title="工单编号" :value="datadetail.workOrderCode" />
+        <van-cell title="客户姓名" :value="datadetail.customerName" />
+        <van-cell title="客户电话" :value="datadetail.customerMobile" />
+        <van-cell title="客户地址" :value="datadetail.province + datadetail.area + datadetail.address">
+           <!-- <van-icon slot="right-icon" name="location" class="custom-icon" /> -->
         </van-cell>
-        <van-cell title="工单业务" value="信用卡办卡" />
-        <van-cell title="工单类型" is-link value="信用卡" />
-        <van-cell title="创建时间" value="2018-12-12" />
-        <van-cell title="服务时间" value="2019-12-12" />
+        <van-cell title="工单业务" :value="datadetail.businessName" />
+        <van-cell title="工单类型" is-link :value="datadetail.busDesc" />
+        <van-cell title="服务状态" :value="datadetail.statudDesc" />
+        <van-cell title="创建时间" :value="datadetail.addTime" />
+        <van-cell title="服务时间" :value="datadetail.modifierTime" />
         
       </van-cell-group>
+    <van-collapse v-model="activeNames1">
+      <van-collapse-item title="备注" name="1">
+         {{datadetail.remark}}
+      </van-collapse-item>
+    </van-collapse>
+
       <van-collapse v-model="activeNames">
         <van-collapse-item title="佣金说明" name="1">
-          
-          服务分0-20    佣金0<br>
-          服务分21-30  佣金20<br>
-          服务分31-40  佣金40<br>
-          服务分41-50  佣金50<br>
+          <span v-for="item in datadetail.commissions" :key="item.id"> {{item.commissionName}} 一共{{item.score}}分 --- 每分 {{item.money}}元<br></span>
         </van-collapse-item>
       </van-collapse>
       <div class="btn">
@@ -34,10 +38,28 @@ export default {
   data () {
     return {
        index: "我是首页",
-       activeNames: ['1']
+       activeNames: ['1'],
+       activeNames1: ['1'],
+       workOrderId: 36,
+       datadetail: {},
+       message: ''
     }
   },
+  mounted() {
+    this.getdata(this.workOrderId)
+  },
   methods: {
+   getdata (id) {
+     let that = this;
+    this.$axios.get('pocket/wxchat/workOrderDetail', { params: { 'workOrderId': id }})
+      .then((res) => {
+        console.log(res.data.data)
+        that.datadetail = res.data.data
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+   },
    callclick () {
       this.$dialog.confirm({
           title: '提示',
@@ -67,7 +89,7 @@ export default {
 
 <style lang="less" type="text/less" scoped>
 .app-container {
-  height: 100%;
+  // height: 100%;
   background: #efefef;
 }
 .btn {

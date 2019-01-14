@@ -15,23 +15,25 @@
           placeholder="请输入地址信息"
         >
         </van-field>
+        <van-field
+          v-model="userdata.businessLicense"
+          label="公司机构代码"
+          placeholder="公司组织机构代码"
+        >
+        </van-field>
         <div class="uploadimg">
             <h5>营业执照</h5>
-        <van-uploader  accept="image/gif, image/jpeg" multiple>
-          <van-icon name="photograph" />
-        </van-uploader>
+            <van-uploader  :after-read="onRead" accept="image/gif, image/jpeg" multiple>
+              <van-icon name="photograph" />
+            </van-uploader>
         </div>
-         <!-- <div class="uploadimg">
-            <h5>资料上传</h5>
-        <van-uploader  accept="image/gif, image/jpeg" multiple>
-          <van-icon name="photograph" />
-        </van-uploader>
-        </div> -->
-        
+        <div class="imgsrc">
+          <img :src="imgsrc" alt="">
+        </div>
       </van-cell-group>
-      
+      <van-button type="primary" size="large" @click.stop.prevent="callclick">电话联系</van-button>
       <div class="btn">
-        <van-button type="warning" size="large">新建客户</van-button>
+        <van-button type="warning" size="large" @click="adduser">新建客户</van-button>
       </div>
 
   </div>
@@ -44,20 +46,73 @@ export default {
        index: "我是首页",
        activeNames: ['1'],
        value: '',
+       uid: 3,
+       imgsrc: '',
        userdata: {
          'uid': '',
          'name': '',
          'shopName': '',
-         'mobile': '',
+         'mobile': '18812345688',
          'address': '',
          'businessLicense': '',
          'licenseUrl': ''
-       }
+       },
+       file: ''
     }
+  },
+  mounted() {
+    this.userdata.uid = this.uid
   },
   components: {
 
-  }
+  },
+  methods: {
+    onRead(file) {
+      console.log(file)
+      console.log(file.file)
+      this.imgsrc = file.content
+      this.file = file.file
+    },
+    // 上传营业执照
+    uploadLicense (phone, file) {
+      let that = this
+      let formdata = new FormData();
+      formdata.append('phone', phone);
+      formdata.append('file', file);
+
+      return new Promise ((resolve, reject) => {
+         that.$axios({
+           url:'pocket/wxchat/uploadLicense/'+ phone,
+            method:'post',
+            data:formdata,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+         }).then((res) => {
+           console.log(res)
+         })
+         .catch((err) => {
+           console.log(err)
+         })
+      })
+    },
+    // 新增客户
+    addNewCustomer (postdata) {
+        let that = this
+        that.$axios({
+           url:'pocket/wxchat/addNewCustomer/'+ that.uid,
+            method:'post',
+            data: that.qs.stringify(postdata)
+         }).then((res) => {
+           console.log(res)
+         })
+         .catch((err) => {
+           console.log(err)
+         })
+    },
+    adduser () {
+      console.log(this.userdata)
+      this.uploadLicense(this.userdata.mobile, this.file)
+    }
+  },
 }
 </script>
 
@@ -77,5 +132,11 @@ export default {
   padding: 20px;
   border-bottom: 1px solid #efefef;
 }
- 
+.imgsrc {
+  width: 100px;
+  padding: 10px 40px;
+  img {
+    width: 100%;
+  }
+}
 </style>
