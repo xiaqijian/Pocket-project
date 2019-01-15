@@ -66,11 +66,12 @@ export default {
    },
    callclick () {
      let that = this
+     console.log(that.datadetail.customerMobile)
       this.$dialog.confirm({
           title: '提示',
           message: '你即将通过电话联系客户，是否确认'
         }).then(() => {
-          window.location.href = "tel:" + that.datadetail.userMobile;;
+          window.location.href = "tel:" + that.datadetail.customerMobile;;
           // on confirm
         }).catch(() => {
           // on cancel

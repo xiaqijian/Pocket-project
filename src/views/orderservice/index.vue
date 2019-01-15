@@ -81,7 +81,7 @@ export default {
           message: '你即将通过电话联系客户，是否确认'
         }).then(() => {
           // on confirm
-           window.location.href = "tel:" + that.datadetail.userMobile;
+           window.location.href = "tel:" + that.datadetail.customerMobile;
         }).catch(() => {
           // on cancel
         });
