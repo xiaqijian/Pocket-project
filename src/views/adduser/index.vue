@@ -104,7 +104,7 @@ export default {
             data: postdata
          }).then((res) => {
            that.$toast.success(res.data.data);
-           this.$router.push({ path: 'addorder'})
+           this.$router.go(-1)
            console.log(res)
          })
          .catch((err) => {
