@@ -68,10 +68,15 @@ this.getuserInfo();
      let that = this;
       that.$axios.get('pocket/wxchat/getUserInfo', { params: {'uid': 3}})
       .then(res=>{
+          if(res.data.code==0){
+          this.$toast('验证码已发送');
+          }else{
+            this.$toast(res.data.msg);
+          }
           console.log(res.data)
       })
       .catch(err=>{
-          console.log(err)
+          this.$toast(err);
       })
 
       },
@@ -97,6 +102,15 @@ this.getuserInfo();
                           }
              
         },1000)
+        //发送验证码
+         this.$axios.get('pocket/wxchat/sms/', { params: {'phone': this.phone}})
+      .then(res=>{
+          console.log(res.data)
+      })
+      .catch(err=>{
+          console.log(err)
+      })
+
     },
     // 按钮的激活状态
     activeBind(){
@@ -112,6 +126,13 @@ this.getuserInfo();
         this.$toast('手机号码有误，请重填');
         return false; 
     } 
+     this.$axios.get('pocket/wxchat/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':3}})
+      .then(res=>{
+          console.log(res.data)
+      })
+      .catch(err=>{
+          this.$toast(err);
+      })
    
          
     }
