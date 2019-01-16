@@ -1,16 +1,6 @@
 <template>
   <div class="app-container">
       <div class="bindingInfo">
-        <div class="bussiness-prove">
-                    <label>营业执照</label>
-                    <div class="business-photo">
-
-                    </div>
-                    <van-uploader :after-read="onRead">
-                    <van-icon name="photograph" />
-                    </van-uploader>
-
-        </div>
         <div class="phone">
                 <van-cell-group >
 
@@ -78,11 +68,7 @@ this.getuserInfo();
       .catch(err=>{
           this.$toast(err);
       })
-
       },
-      onRead(file) {
-      console.log(file)
-    },
     obtainYzm:function(){
       if(!(/^1[34578]\d{9}$/.test(this.phone))){ 
         this.$toast('手机号码有误，请重填');
@@ -141,6 +127,9 @@ this.getuserInfo();
 </script>
 
 <style scoped>
+.bindingInfo{
+    padding-top: 140px;
+}
 .bussiness-prove{
     background: #fafafa;
     padding: 40px 60px;
