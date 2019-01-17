@@ -3,91 +3,75 @@
  <van-tabs>
   <van-tab title="全部">
      <div class="myOrder" v-for="item in data" :key="item.id" @click="checkDetail">
-                  <van-card 
-                    :num=item.num
-                    :tag=item.tag
-                    :price=item.price
-                    :desc=item.desc  
-                    :title=item.title
-                    :origin-price=item.originPrice
-                    :thumb="item.thumb"
-                 >
-                <div slot="footer" v-if="item.type==2">
-                <van-button size="mini" @click.stop.prevent="call">安全拨叫</van-button>
-                <van-button size="mini" @click.stop.prevent="urgency">催单</van-button>
-                 <van-button size="mini" @click.stop.prevent="finish">确认完成</van-button>
-                  </div>
+              <van-panel   icon="orders-o"  title=业务状态 :status=item.tag>
+                <van-cell title="工单编码" value="0000" />
+                <van-cell title="客户姓名" value="0000" />
+                <van-cell title="联系方式" value="0000" />
+                <van-cell title="开始时间" value="0000" />
+                <van-cell title="当前状态" value="0000" />
+                <van-cell title="工单类型" value="0000" />
+          <div slot="footer" v-if="item.type==2" class="footer" >
+                <van-button size="small" @click.stop.prevent="call" type="primary">安全拨叫</van-button>
+                <van-button size="small" @click.stop.prevent="urgency" type="warning">催单</van-button>
+                 <van-button size="small" @click.stop.prevent="finish"  type="danger">确认完成</van-button>
+           </div>
 
-                   <div slot="footer" v-if="item.type==3">
-                <van-button size="mini"  @click.stop.prevent="call">安全拨叫</van-button>
-                  <van-button size="mini" @click.stop.prevent="complain">申诉</van-button>
-                   <van-button size="mini" @click.stop.prevent="judge">评价</van-button>
-                 
-                  
-                  </div>
-
-                   <div slot="footer" v-if="item.type==4">
-                  <van-button size="mini" @click.stop.prevent="complain">申诉</van-button>
-                  </div>
-          </van-card>
-          
+           <div slot="footer" v-if="item.type==3" class="footer" >
+                <van-button size="small"  @click.stop.prevent="call" type="primary">安全拨叫</van-button>
+                  <van-button size="small" @click.stop.prevent="complain" type="warning">申诉</van-button>
+                   <van-button size="small" @click.stop.prevent="judge" type="danger">评价</van-button> 
+           </div>
+           <div slot="footer" v-if="item.type==4" class="footer" >
+                  <van-button size="small" @click.stop.prevent="complain" type="warning">申诉</van-button>
+           </div>
+              </van-panel>
     </div>
   </van-tab>
 
   <van-tab title="已下单">
           <div class="myOrder" v-for="item in data" :key="item.id" v-if="item.type==1"  @click="checkDetail">
-                  <van-card 
-                    :num=item.num
-                    :tag=item.tag
-                    :price=item.price
-                    :desc=item.desc  
-                    :title=item.title
-                    :origin-price=item.originPrice
-                    :thumb="item.thumb"
-                 >
-                <div slot="footer">
-                <van-button size="mini"  @click.stop.prevent="call">安全拨叫</van-button>
-                <van-button size="mini"  @click.stop.prevent="urgency">催单</van-button>
-                 <van-button size="mini"  @click.stop.prevent="finish">确认完成</van-button>
-                  </div>
-          </van-card>
+                 <van-panel  icon="orders-o" title=业务状态 :status=item.tag>
+                <van-cell title="工单编码" value="0000" />
+                <van-cell title="客户姓名" value="0000" />
+                <van-cell title="联系方式" value="0000" />
+                <van-cell title="开始时间" value="0000" />
+                <van-cell title="当前状态" value="0000" />
+                <van-cell title="工单类型" value="0000" />
+              </van-panel>
     </div>
   </van-tab>
   <van-tab title="处理中">
             <div class="myOrder" v-for="item in data" :key="item.id" v-if="item.type==2"  @click="checkDetail">
-                  <van-card 
-                    :num=item.num
-                    :tag=item.tag
-                    :price=item.price
-                    :desc=item.desc  
-                    :title=item.title
-                    :origin-price=item.originPrice
-                    :thumb="item.thumb"
-                 >
-                  <div slot="footer">
-                <van-button size="mini"  @click.stop.prevent="call">安全拨叫</van-button>
-                  <van-button size="mini" @click.stop.prevent="complain">申诉</van-button>
-                      <van-button size="mini" @click.stop.prevent="judge">评价</van-button>
-                  </div>
-          </van-card>
+                <van-panel  icon="orders-o" title=业务状态 :status=item.tag>
+                <van-cell title="工单编码" value="0000" />
+                <van-cell title="客户姓名" value="0000" />
+                <van-cell title="联系方式" value="0000" />
+                <van-cell title="开始时间" value="0000" />
+                <van-cell title="当前状态" value="0000" />
+                <van-cell title="工单类型" value="0000" />
+          <div slot="footer" class="footer" >
+                <van-button size="small" @click.stop.prevent="call">安全拨叫</van-button>
+                <van-button size="small" @click.stop.prevent="urgency">催单</van-button>
+                 <van-button size="small" @click.stop.prevent="finish">确认完成</van-button>
+           </div>
+              </van-panel>
     </div>
 
   </van-tab>
   <van-tab title="待评价">
         <div class="myOrder" v-for="item in data" :key="item.id" v-if="item.type==3"  @click="checkDetail">
-                  <van-card 
-                    :num=item.num
-                    :tag=item.tag
-                    :price=item.price
-                    :desc=item.desc  
-                    :title=item.title
-                    :origin-price=item.originPrice
-                    :thumb="item.thumb"
-                 >
-                    <div slot="footer">
-                  <van-button size="mini" @click.stop.prevent="complain">申诉</van-button>
-                  </div>
-          </van-card>
+                <van-panel  icon="orders-o" title=业务状态 :status=item.tag>
+                <van-cell title="工单编码" value="0000" />
+                <van-cell title="客户姓名" value="0000" />
+                <van-cell title="联系方式" value="0000" />
+                <van-cell title="开始时间" value="0000" />
+                <van-cell title="当前状态" value="0000" />
+           <div slot="footer" class="footer" >
+                <van-button size="small"  @click.stop.prevent="call" type="primary">安全拨叫</van-button>
+                  <van-button size="small" @click.stop.prevent="complain" type="warning">申诉</van-button>
+                   <van-button size="small" @click.stop.prevent="judge" type="warning">评价</van-button> 
+           </div>
+              </van-panel>
     </div>
   </van-tab>
 </van-tabs>
@@ -108,7 +92,7 @@ export default {
           title:"商品标题",
           originPrice:"10.00",
           thumb:"http://yanxuan.nosdn.127.net/42b4ab968ae5b0f38e608131fb68a095.png",
-          buttonType:1,
+          buttonType:1, 
           id:1,
           type:1
 
@@ -207,11 +191,17 @@ export default {
 </script>
 
 <style scoped>
+.footer{
+  text-align: end;
+}
 .myOrder{
  
   width: 90%;
   margin: auto;
    margin-top: 20px; 
+   border: 2px solid #eeeeee;
+   border-radius: 6px;
+   box-shadow:#e5e5e5 1px 3px 6px 3px;
 }
 .van-card{
    background: #Feee90;
