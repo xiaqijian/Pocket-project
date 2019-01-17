@@ -58,12 +58,12 @@ export default {
            {
              'name': '联系方式',
              'id': 2,
-             'link': '/serviceState'
+             'link': '/contact'
            },
            {
              'name': '业务状态',
              'id': 3,
-             'link': '/contact'
+             'link': '/serviceState'
            }
           ]
          }
