@@ -36,7 +36,7 @@ export default {
              {
              'name': '查看订单',
              'id': 1,
-             'link': '/checkOrder'
+             'link': '/myOrder'
            },
            {
              'name': '新需求',
@@ -58,7 +58,7 @@ export default {
            {
              'name': '联系方式',
              'id': 2,
-             'link': '/informationBind'
+             'link': '/serviceState'
            },
            {
              'name': '业务状态',

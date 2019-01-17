@@ -1,8 +1,5 @@
 <template>
   <div class="app-container">
-    <div class="aa">
-        <p class="p">新建订单</p>
-    </div>
     <div class="center">       
         <van-cell-group>
              <van-cell title="业务选择" is-link :value="val" size="large" @click="ywSelect"/>
