@@ -175,6 +175,13 @@ export default new Router({
       meta: {
         title: '联系方式'
       }
+    }, {
+      path: '/addPeople',
+      name: 'addPeople',
+      component: () => import('@/views/kehuUser/addPeople'),
+      meta: {
+        title: '新增客户'
+      }
     },
     {
       path: '/404',

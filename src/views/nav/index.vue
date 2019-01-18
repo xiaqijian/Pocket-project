@@ -42,6 +42,11 @@ export default {
              'name': '新需求',
              'id': 2,
              'link': '/newDemand'
+           },
+            {
+             'name': '新增客户',
+             'id': 3,
+             'link': '/addPeople'
            }
           ]
          },
