@@ -25,9 +25,10 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  // var ss = 'http://cyp.startupbelts.com/dist/index.html?data=0&isCreated=y&isBind=n';
+  var ss = 'http://cyp.startupbelts.com/dist/index.html?data=0&isCreated=y&isBind=n';
      var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-     var r =  window.location.search.substr(1).match(reg);
+    //  var r =  window.location.search.substr(1).match(reg);
+     var r =  ss.substr(1).match(reg);
      if(r!=null)return  unescape(r[2]); return null;
 }
   // isCreated 用户是否存在，y存在，n不存在
@@ -53,7 +54,7 @@ router.beforeEach((to, from, next) => {
         }else{
           // 用户不存在，跳转到添加页面
           next({
-            path: '/addorder',
+            path: '/addPeople',
         })
         }
   }
