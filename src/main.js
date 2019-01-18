@@ -23,12 +23,44 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.qs = qs
 
+function GetQueryString(name)
+{
+  // var ss = 'http://cyp.startupbelts.com/dist/index.html?data=0&isCreated=y&isBind=n';
+     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+     var r =  window.location.search.substr(1).match(reg);
+     if(r!=null)return  unescape(r[2]); return null;
+}
+  // isCreated 用户是否存在，y存在，n不存在
+var isCreated = GetQueryString('isCreated');
+// isBind: y 已经绑定 n 未绑定
+var isBind =  GetQueryString('isBind');
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */
   if (to.meta.title) {
     document.title = to.meta.title
   }
-  next()
+  if (to.meta.requireAuth) { 
+   if (isCreated=='y') {  // 用户存在
+            
+            // 判断是否绑定
+            if(isBind=='y'){ //用户绑定
+              next({
+                path: '/myOrder',
+               })
+            }else{
+              next(); //未绑定
+            }
+        }else{
+          // 用户不存在，跳转到添加页面
+          next({
+            path: '/addorder',
+        })
+        }
+  }
+  else {
+      next();
+  }
+  
 })
 
 /* eslint-disable no-new */
