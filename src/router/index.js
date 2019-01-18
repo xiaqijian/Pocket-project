@@ -22,6 +22,14 @@ export default new Router({
       }
     },
     {
+      path: '/orderlist',
+      name: 'orderlist',
+      component: () => import('@/views/orderlist/index'),
+      meta: {
+        title: '工单列表'
+      }
+    },
+    {
       path: '/nav2',
       name: 'nav2',
       component: () => import('@/views/nav/index2'),

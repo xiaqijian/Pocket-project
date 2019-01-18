@@ -3,7 +3,9 @@
     <div class="amap-wrapper">
       <el-amap class="amap-box" :plugin="plugin" vid="amap-vue" :zoom="zoom" :center="center">
           <el-amap-marker v-for="marker in markers" :key="
-          marker.id"  :position="marker.position" :events="marker.markderclick"></el-amap-marker>
+          marker.id" :text="text" :position="marker.position" :icon="marker.icon" :events="marker.markderclick"></el-amap-marker>
+          <el-amap-text :text="text" v-for="marker in markers" :key="
+          marker.id + '-label'" :offset="offset" :position="marker.position"></el-amap-text>
       </el-amap>
     </div>
   </div>
@@ -16,6 +18,8 @@
       return {
        uid: 3,
        zoom: 12,
+       text: '维修',
+       offset: [10, -50],
        center: [120.163936,30.254841],
        resdata: [],
        markers: [],
@@ -67,6 +71,7 @@
             markder.push({
               'id': ele.id,
               'position': [ele.longitude, ele.latitude],
+              'icon': require('@/assets/option.png'),
               'markderclick': {
                 click: (id) => {
                     console.log(ele.id)
@@ -85,7 +90,7 @@
   }
 </script>
 
-<style scoped>
+<style>
 .page {
   height: 100%;
   width: 100%;
@@ -93,5 +98,9 @@
 .amap-wrapper {
   width: 100%;
   height: 100%;
+}
+.amap-overlay-text-container {
+  color: red!important;
+  border: none!important;
 }
 </style>

@@ -16,7 +16,12 @@ export default {
            'id':1,
            'link': '',
            'navlist': [
-          //    {
+             {
+             'name': '工单列表',
+             'id': 1,
+             'link': '/orderlist'
+           },
+          //   {
           //    'name': '工单服务',
           //    'id': 1,
           //    'link': '/orderservice'
