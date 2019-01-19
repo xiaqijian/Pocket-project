@@ -150,9 +150,7 @@ export default {
         text-align: center;
        margin-left: 20%;
     }
-</style>
-<style>
-.van-button--default{
+    .van-button--default{
   background:#68B6F7;
   color:#fff;
 
