@@ -1,14 +1,20 @@
 <template>
   <div class="app-container">
     <div class="person">
-         <div class="person-info">
-         <label><van-icon name="user-o" />&nbsp;客户名称：</label> <span>西门吹雪</span>
-         </div>
+       <div>
+            <van-icon name="user-o" size="50px"/>
+            <div>西雪</div>
+       </div>
+        <div class="personInfo">
+             <!-- <div class="person-info">
+         <label>客户名称：</label> 
+         </div> -->
         <div class="person-id">
-            <label><van-icon name="idcard" />&nbsp;客户ID：</label> <span>18336391418</span>
+            <label>客户ID：</label> <span>18336391418</span>
         </div>
         <div class="person-address">
-            <label><van-icon name="location-o" />&nbsp;联系地址：</label> <span>荆门路1990号</span>
+            <label>联系地址：</label> <span>荆门路1990号XXXXXXXX</span>
+        </div>
         </div>
     </div>
     <div class="seviceStatus"><van-icon name="description"/>&nbsp;我的业务状态</div>
@@ -99,17 +105,24 @@ export default {
     background: #fafafa;
     padding-top: 10px;
 }
+.personInfo{
+  margin-left: 70px;
+  flex: 3;
+}
 .person{
-    border: 1px solid #e5e5e5;
-    margin: 20px;
-  padding:30px;
-  border-radius: 30px;
-  background: #Feee90;
+  padding:50px;
+  background: #68B6F7;
   box-shadow: #eeeeee -2px 1px  10px 2px;
-  color: #666;
+  color: #ffffff;
+  display: flex;
+  height: 120px;
+
+}
+.person>div:first-child{
+      text-align: center;
 }
 .colorRed{
-    color: red;
+    color: #68B6F7;
 }
 .seviceStatus{
     padding-left: 30px;

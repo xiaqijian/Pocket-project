@@ -1,17 +1,24 @@
 <template>
   <div class="app-container">
-     <div class="user-info">
-           <div class="user-id">
+      <div class="detail-top">
+         <img src="../../assets/tx.png" alt="" class="header-img"> 
+          <div class="user-id">
                <label>客户ID：</label>
                <span>1899008475y7</span>
            </div>
+        
+    </div>
+     <div class="user-info">
+          
            <div class="store-info">
                     <div class="store-name">
+                        
+                       <van-cell is-link @click="modifyStore()">
                         <div>
                             <label> <van-icon name="shop-o" />&nbsp;店铺名称：</label>
                             <span>嘻哈哈零食店铺</span>
                         </div>
-                        <van-button round   size="small" @click="modifyStore()">修改</van-button>
+                     </van-cell>
                         <van-popup v-model="dialogStoreModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
                         <div class="modify">
                                 <p>
@@ -25,11 +32,12 @@
                         </van-popup>
                     </div>
                     <div class="user-name">
+                        <van-cell is-link @click="modifyName()">
                         <div>
-                            <label><van-icon name="manager-o" />&nbsp;客户名称：</label>
+                            <label> <van-icon name="manager-o" />&nbsp;客户名称：</label>
                             <span>戏游人间</span>
                         </div>
-                        <van-button round  size="small" @click="modifyName()">修改</van-button>
+                     </van-cell>
                         <van-popup v-model="dialogNameModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
                         <div class="modify">
                                 <p>
@@ -43,11 +51,12 @@
                         </van-popup>
                     </div>
                     <div class="contact-way">
-                            <div>
-                            <label><van-icon name="chat-o" />&nbsp;联系方式：</label>
-                            <span>12343545@145.com</span>
+                         <van-cell is-link @click="modifyContact()">
+                        <div>
+                            <label> <van-icon name="chat-o" />&nbsp;联系方式：</label>
+                            <span>2343545@145.com</span>
                         </div>
-                        <van-button round   size="small" @click="modifyContact()">修改</van-button>
+                     </van-cell>
                         <van-popup v-model="dialogContactModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
                         <div class="modify">
                                 <p>
@@ -115,8 +124,20 @@ export default {
 </script>
 
 <style scoped>
-.user-info {
-  padding: 40px;
+.detail-top{
+  height: 200px;
+  background: #68B6F7;
+  display: flex;
+  align-items:center;
+  color: #fff;
+}
+.app-container{
+  height: 100%;
+  background: #fafafa;
+}
+.header-img{
+  width: 120px;
+  margin: 0 20px;
 }
 .modify{
     padding: 30px;
@@ -128,6 +149,7 @@ export default {
     background: transparent;
     padding-left: 20px;
     padding-bottom: 10px;
+    border-bottom: 1px solid #68B6F7;
 }
 .van-popup--right{
     top: 10%;
@@ -148,5 +170,9 @@ export default {
   justify-content: space-between;
   align-items: center;
   height: 88px;
+}
+.van-button--default{
+    background:#68B6F7;
+    color: #fff;
 }
 </style>

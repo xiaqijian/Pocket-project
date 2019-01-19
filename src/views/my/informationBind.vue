@@ -125,6 +125,8 @@ export default {
                that.$router.replace('/myOrder')
            },1000)
          
+          }else{
+              this.$toast(res.data.msg);
           }
       
           
@@ -146,7 +148,7 @@ export default {
     text-align: center;
     height: 208px;
     line-height: 78px;
-    color:coral;
+    color:#68B6F7;
 }
 .bindingInfo{
     padding-top: 140px;
@@ -164,7 +166,7 @@ export default {
     border: 1px solid #e5e5e5;
 }
 .obtain-yzm{
-   background: coral;
+   background: #68B6F7;
    color: #ffffff;
 }
 .bussiness-prove{
@@ -181,7 +183,7 @@ export default {
      color: #999;
 }
 .canBinding{
-     background: coral;
+     background: #68B6F7;
      color: #ffffff;
 }
  

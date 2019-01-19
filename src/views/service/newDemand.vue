@@ -27,7 +27,7 @@
                 placeholder="请输入联系方式"
              />            
         </van-cell-group>
-        <van-button size="large" type="primary" class="butstyle" @click="pushContent">提交</van-button>
+        <van-button size="normal" round class="butstyle submit-btn" @click="pushContent">提交</van-button>
         <van-popup v-model="show"  position="bottom">
             <van-picker
             show-toolbar
@@ -119,7 +119,7 @@ export default {
 
 <style scoped>
     .app-container{
-        background: #cccccc;
+        background: #eee;
         height: 100%;
     }
     .aa{
@@ -145,7 +145,17 @@ export default {
         font-size: 36px
     }
     .butstyle{
-        margin-top: 10px;
-        /* padding: 0 10PX; */
+        margin: 150px auto;
+        width: 60%;
+        text-align: center;
+       margin-left: 20%;
     }
 </style>
+<style>
+.van-button--default{
+  background:#68B6F7;
+  color:#fff;
+
+}
+</style>
+

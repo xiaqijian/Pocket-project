@@ -52,7 +52,7 @@
         </div>
       </van-cell-group>
       <div class="btn">
-        <van-button type="warning" size="large" @click="adduser">新建客户</van-button>
+        <van-button round size="large" @click="adduser" >新建客户</van-button>
       </div>
 
   </div>
@@ -254,17 +254,23 @@ export default {
   height: 100%;
   background: #efefef;
 }
+
 .btn {
   padding: 20px;
   padding-bottom: 100px;
   .van-button--large {
      margin-top:30px;
+     background: #68B6F7;
+     color: #fff;
+     width: 60%;
+     margin-left: 20%;
   }
 }
 .uploadimg {
   padding: 20px;
   border-bottom: 1px solid #efefef;
 }
+
 .imgsrc {
   width: 100px;
   padding: 10px 40px;
@@ -273,3 +279,9 @@ export default {
   }
 }
 </style>
+<style>
+.van-field .van-cell__title{
+  max-width: 120px;
+}
+</style>
+
