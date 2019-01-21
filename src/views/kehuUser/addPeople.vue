@@ -183,8 +183,11 @@ export default {
       let formdata = new FormData();
       formdata.append('phone', phone);
       formdata.append('file', file);
-
-      return new Promise ((resolve, reject) => {
+      if(!(/^1[34578]\d{9}$/.test(that.userdata.mobile))){ 
+        this.$toast('手机号码有误，请重填');
+        return false; 
+      }else{
+        return new Promise ((resolve, reject) => {
          that.$axios({
            url:'pocket/wxchat/uploadLicense/'+ phone,
             method:'post',
@@ -200,6 +203,8 @@ export default {
            reject(err)
          })
       })
+      }
+      
     },
     // 新增客户
     async adduser(){
@@ -214,10 +219,13 @@ export default {
        let shengfen = that.provval;
        let chengshi = that.cityval;
        let csID = that.cityidid;
-       if(phofuwuadd !='' && khname !='' && khaddr !='' && khphone !='' && khnameaddr !='' && gszzcode !='' && shengfen !='' && chengshi !=''){
+      if(!(/^1[34578]\d{9}$/.test(that.userdata.mobile))){ 
+        this.$toast('手机号码有误，请重填');
+        return false; 
+      }else if(phofuwuadd !='' && khname !='' && khaddr !='' && khphone !='' && khnameaddr !='' && gszzcode !='' && shengfen !='' && chengshi !=''){
           console.log(11);
-          that.$axios.get('pocket/wxchat/customerAdd', 
-          { params: { 
+          that.$axios.post('pocket/wxchat/customerAdd', 
+           { 
             'name': khname,//客户名称
             'shopName': khaddr,//	客户店铺地址
             'mobile': khphone,//客户手机号码
@@ -227,7 +235,7 @@ export default {
             'area':chengshi,//城市名称
             'areaCode':csID,//城市id
             'licenseUrl': phofuwuadd//上传的营业执照服务端地址
-            }
+            
           })
           .then(res=>{
             console.log(res.data);
