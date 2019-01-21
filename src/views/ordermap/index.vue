@@ -4,8 +4,8 @@
       <el-amap class="amap-box" :plugin="plugin" vid="amap-vue" :zoom="zoom" :center="center">
           <el-amap-marker v-for="marker in markers" :key="
           marker.id" :text="text" :position="marker.position" :icon="marker.icon" :events="marker.markderclick"></el-amap-marker>
-          <el-amap-text :text="text" v-for="marker in markers" :key="
-          marker.id + '-label'" :offset="offset" :position="marker.position"></el-amap-text>
+          <el-amap-text :text="marker.businessName" v-for="marker in markers" :key="
+          marker.id + '-label'" :offset="offset" :position="marker.position" data-id="id"></el-amap-text>
       </el-amap>
     </div>
   </div>
@@ -68,10 +68,17 @@
          let that = this
          data.forEach(ele => {
             let id = ele.id
+            let busid = ele.businessTypeId
+            let icon = 'option.png'
+            console.log(busid)
+            if(busid == 4 || busid == 34) {
+               icon = 'option1.png'
+            }
             markder.push({
               'id': ele.id,
+              'businessName': ele.businessName,
               'position': [ele.longitude, ele.latitude],
-              'icon': require('@/assets/option.png'),
+              'icon': require('@/assets/'+ icon +''),
               'markderclick': {
                 click: (id) => {
                     console.log(ele.id)
