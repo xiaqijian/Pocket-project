@@ -147,8 +147,13 @@ export default {
   position: relative;
 }
 .card{
-    background: #dddddd;
-    padding: 5px;
+   background: #dddddd;
+   width: 90%; 
+   margin: auto;
+   margin-top: 20px; 
+   border: 2px solid #eeeeee;
+   border-radius: 6px;
+   box-shadow:#e5e5e5 1px 3px 6px 3px;
 }
 .chakan{
     width: 100%;

@@ -9,12 +9,12 @@
     >
       <div v-for= "(item,index) in list" class="card" :key="index">
         <div slot="footer">
-          <van-cell title="工单编码:" :value="item.workOrderCode" size="large"/>
-          <van-cell title="客户姓名:" :value="item.customerName" size="large"/>
-          <van-cell title="联系方式:" :value="item.customerMobile" is-link @click="callphone($event,item)" size="large"/>
-          <van-cell title="开始时间:" :value="item.addTime" size="large"/>
-          <van-cell title="当前状态:" :value="item.statudDesc" size="large"/>
-          <van-cell  title="工单类型:" :value="item.businessName"  size="large">  
+          <van-cell class="haha" icon="card" title="工单编码:" :value="item.workOrderCode" size="large"/>
+          <van-cell  class="haha" icon="friends"  title="客户姓名:" :value="item.customerName" size="large"/>
+          <van-cell class="haha" icon="phone"  title="联系方式:" :value="item.customerMobile" is-link @click="callphone($event,item)" size="large"/>
+          <van-cell  class="haha" icon="printer" title="开始时间:" :value="item.addTime" size="large"/>
+          <van-cell class="haha" icon="info" title="当前状态:" :value="item.statudDesc" size="large"/>
+          <van-cell class="haha" icon="award" title="工单类型:" :value="item.businessName"  size="large">  
               <!-- <div v-if="item.status ==1">
                 <van-tag type="primary" size="large">正常</van-tag>
               </div>
@@ -193,9 +193,17 @@ export default {
 <style scoped>
 .card{
     background: #dddddd;
-    padding: 5px;
+   width: 90%; 
+   margin: auto;
+   margin-top: 20px; 
+   border: 2px solid #eeeeee;
+   border-radius: 6px;
+   box-shadow:#e5e5e5 1px 3px 6px 3px;
 }
 .chakan{
     width: 100%;
+}
+.haha{
+  color: #2983fb
 }
 </style>
