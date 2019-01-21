@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import axios from 'axios'
+import axios from '@/utils/request'
 import VueAMap from 'vue-amap'
 import Vant from 'vant'
 import 'vant/lib/index.css'

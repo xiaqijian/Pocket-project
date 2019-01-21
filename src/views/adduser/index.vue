@@ -76,6 +76,7 @@ export default {
     uploadLicense (phone, file) {
       let that = this
       let formdata = new FormData();
+      
       formdata.append('phone', phone);
       formdata.append('file', file);
 
@@ -104,7 +105,7 @@ export default {
             data: postdata
          }).then((res) => {
            that.$toast.success(res.data.data);
-           this.$router.go(-1)
+          //  this.$router.go(-1)
            console.log(res)
          })
          .catch((err) => {
@@ -113,6 +114,16 @@ export default {
     },
     async adduser () {
       console.log(this.userdata)
+      let that = this
+      if(this.userdata.mobile == '' ) {
+        this.$toast('请添加手机号码')
+        return false
+      }
+      if(this.file == '' ) {
+        this.$toast('请上传营业执照')
+        return false
+      }
+      
       let data = await this.uploadLicense(this.userdata.mobile, this.file)
       this.userdata.licenseUrl = data.path
       this.addNewCustomer(this.userdata)
