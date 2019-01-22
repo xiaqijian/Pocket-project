@@ -2,7 +2,15 @@
   <div class="app-container">
  <van-tabs swipeable color ="#68B6F7">
   <van-tab title="全部">
-     <div class="myOrder" v-for="item in data" :key="item.id" @click="checkDetail">
+    
+       <van-list
+  v-model="loading"
+  :finished="finished"
+  finished-text="没有更多了"
+  @load="onLoad"
+>               
+          <div class="myOrder" v-for="item in data" :key="item.id" @click="checkDetail">
+
               <van-panel  title=当前状态 :status=item.tag v-bind:class="[item.type==2?'blue':'','font-weight']">
                  <van-cell title="工单类型" value="英航订单" class="order-type"/>
                 <van-cell title="工单编码" value="0000" />
@@ -26,7 +34,10 @@
                   <van-button size="small" @click.stop.prevent="complain" >申诉</van-button>
            </div>
               </van-panel>
+            
+        
     </div>
+     </van-list>
   </van-tab>
 
   <van-tab title="已下单">
@@ -88,6 +99,16 @@
 export default {
   data () {
     return {
+      loading: false,
+      finished: false,
+      // 客户ID
+      id:42,
+      // 查询状态 0：查询全部；2：进行中；5：已完成； -1： 查询异常
+     status:0,
+     //  查询页数
+     pageSize:10,
+     page:1,
+
       // type：1：已下单，2，已处理，3，待评价 4，已评价
       data:[
         {
@@ -148,7 +169,38 @@ export default {
   components: {
 
   },
+  mounted(){
+this.getCheckOrder();
+  },
   methods:{
+    onLoad() {
+      // 异步更新数据
+      setTimeout(() => {
+        for (let i = 0; i < 10; i++) {
+          this.page++;
+        }
+        // 加载状态结束
+        this.loading = false;
+
+        // // 数据全部加载完成
+        // if (this.list.length >= 40) {
+        //   this.finished = true;
+        // }
+      }, 500);
+    },
+    getCheckOrder(){
+          this.$axios.get('pocket/wxchat/queryCustomerOwList', 
+          { params: {'customerId': this.id,'status':this.status,'pageSize':this.pageSize,'page':this.page}})
+      .then(res=>{ 
+          console.log(res.data)
+          if(res.data.data.length<=0){
+             this.finished = true;
+          }
+      })
+      .catch(err=>{
+          this.$toast(err);
+      })
+    },
    call:function(){
     
               this.$dialog.confirm({
