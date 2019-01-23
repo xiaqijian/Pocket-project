@@ -1,9 +1,10 @@
 <template>
   <div class="app-container">
-    <div class="service-judge">
+    <!-- <div class="service-judge">
       <h3><van-icon name="records" size="40px"/>服务评价</h3>
       <p>&nbsp;&nbsp;请您对本次服务做出评价</p>
-    </div>
+    </div> -->
+    <div class="service-judge">请您对本次服务做出评价</div>
     
       <div class="judge-score">
           <div class="contact">
@@ -36,7 +37,7 @@
             </div>
       </div>
    <div class="doJudge" @click="doJudge">
-      <van-button size="large" round>确认打分</van-button>
+      <van-button size="large" >确认打分</van-button>
    </div>
   </div>
 </template>
@@ -78,6 +79,8 @@ h3{
    background: #68B6F7;
   color: #ffffff;
   box-shadow: #eee -2px 1px  10px 2px;
+  padding-top: 60px;
+  padding-left: 40px;
 }
 .contact {
     margin-bottom: 30px;
@@ -94,7 +97,7 @@ h3{
     }
 .doJudge{
   text-align: center;
-  width: 60%;
+  width: 70%;
   margin:70px auto 0; 
  
 }
