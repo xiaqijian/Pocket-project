@@ -271,7 +271,7 @@ export default {
      background: #68B6F7;
      color: #fff;
      width: 60%;
-     margin-left: 21%;
+     margin-left: 20%;
   }
 }
 .uploadimg {
