@@ -3,7 +3,7 @@
     <div class="center">       
         <van-cell-group>
              <van-cell title="业务选择" is-link :value="val" size="large" @click="ywSelect"/>
-             <van-cell title="工单业务" is-link :value="gdval" size="large" @click="gdSelect"/>
+             <!-- <van-cell title="工单业务" is-link :value="gdval" size="large" @click="gdSelect"/> -->
              <van-field
                 v-model="message"
                 type="textarea"
@@ -11,7 +11,7 @@
                 rows="1"
                 autosize
              />
-              <van-field
+              <!-- <van-field
                 v-model="contactName"
                 label="联系人:"
                 placeholder="请输入联系人"
@@ -25,7 +25,7 @@
                 v-model="contactPhone"
                 label="联系方式:"
                 placeholder="请输入联系方式"
-             />            
+             />             -->
         </van-cell-group>
         <van-button size="normal" round class="butstyle submit-btn" @click="pushContent">提交</van-button>
         <van-popup v-model="show"  position="bottom">
