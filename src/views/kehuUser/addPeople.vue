@@ -2,8 +2,8 @@
 <template>
   <div class="app-container">
       <van-cell-group>
-        <van-field v-model="userdata.shopName" label="客户名称" placeholder="请输入名字" />
-        <van-field v-model="userdata.name" label="客户店铺地址" placeholder="请输入店铺地址" />
+        <van-field v-model="userdata.shopName" label="名称" placeholder="请输入名字" />
+        <van-field v-model="userdata.name" label="店铺名称" placeholder="请输入店铺地址" />
         <van-field
           v-model="userdata.mobile"
           label="手机号"
@@ -11,7 +11,7 @@
         />
          <van-field
           v-model="userdata.address"
-          label="客户地址"
+          label="地址"
           placeholder="请输入地址信息"
         >
         </van-field>
