@@ -3,7 +3,7 @@
       <div class="detail-top">
          <img src="../../assets/tx.png" alt="" class="header-img"> 
           <div class="user-id">
-               <label>客户ID：</label>
+               <label>ID：</label>
                <span>1899008475y7</span>
            </div>
         
@@ -22,7 +22,7 @@
                         <van-popup v-model="dialogStoreModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
                         <div class="modify">
                                 <p>
-                                <input type="text" placeholder="请输入淘宝名称" v-bind:style="inputStyle">
+                                <input type="text" placeholder="请输入淘宝名称" v-bind:style="inputStyle" v-model='storeName'>
                             
                             </p>
                             <p>
@@ -34,14 +34,14 @@
                     <div class="user-name">
                         <van-cell is-link @click="modifyName()">
                         <div>
-                            <label> <van-icon name="manager-o" />&nbsp;客户名称：</label>
+                            <label> <van-icon name="manager-o" />&nbsp;名称：</label>
                             <span>戏游人间</span>
                         </div>
                      </van-cell>
                         <van-popup v-model="dialogNameModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
                         <div class="modify">
                                 <p>
-                                <input type="text" placeholder="请输入名称" v-bind:style="inputStyle">
+                                <input type="text" placeholder="请输入名称" v-bind:style="inputStyle" v-model="customerName">
                             
                             </p>
                             <p>
@@ -60,7 +60,7 @@
                         <van-popup v-model="dialogContactModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
                         <div class="modify">
                                 <p>
-                                <input type="text" placeholder="请输入联系方式" v-bind:style="inputStyle">
+                                <input type="text" placeholder="请输入联系方式" v-bind:style="inputStyle" v-model="contact">
                             
                             </p>
                             <p>
@@ -78,6 +78,16 @@
 export default {
   data() {
     return {
+        //店铺名称
+        storeName:'',
+        //客户名称
+        customerName:'',
+        //联系方式
+        contact:'',
+        //uid
+        uid:'',
+        //mobelie:
+        mobile:'',
         popupNameStyle:{
             background:'#fafafa',
             top:'0',
@@ -98,7 +108,26 @@ export default {
     };
   },
   components: {},
+  mounted(){
+      this.uid = localStorage.getItem('uid');
+      this.mobile = localStorage.getItem('mobile');
+      this.getUserInfo();
+  },
   methods: {
+      getUserInfo(){
+          let that = this;
+        that.$axios.get('pocket/wxchat/getCustomerInfo', 
+           { 'uid':this.uid,
+            'mobile':this.mobile
+            
+          })
+      .then(res=>{    
+          console.log(res.data)
+      })
+      .catch(err=>{
+          this.$toast(err);
+      })
+      },
     //   保存店铺名
     modifyStore: function() {
       this.dialogStoreModify=true;
@@ -116,7 +145,24 @@ export default {
       this.dialogStoreModify=false;
      this.dialogNameModify=false;
      this.dialogContactModify = false;
+     this.modifyInfo();
       
+      
+  },
+  modifyInfo(){
+        let that = this;
+        that.$axios.post('pocket/wxchat/customerInfoUpdate', 
+           { 
+            'mobile':this.storeName,
+            'name':this.customerName,
+            'shopName':this.contact
+          })
+      .then(res=>{    
+          console.log(res.data)
+      })
+      .catch(err=>{
+          this.$toast(err);
+      })
       
   }
   }

@@ -3,13 +3,14 @@
     <div class="express-info" >
       <div class="detail-top">
          <img src="../../../assets/tx.png" alt="" class="header-img"> 
-         <span>小明</span>
+         <span>订单详情</span>
       </div>
-       <div class="order-detail">订单详情</div>
+       <!-- <div class="order-detail">订单详情</div> -->
        <van-steps direction="vertical" :active="0" active-color="#68B6F7">
           <van-step  v-for="item in data" :key="item.id">
-            <h3>{{item.city}}</h3>
-            <p>{{item.time}}</p>
+            <h3>{{item.statusDesc}}</h3>
+            <p> 操作员：{{item.userName}}</p>
+            <p>{{item.addTime}}</p>
           </van-step>
         </van-steps>
     </div>
@@ -20,28 +21,29 @@
 export default {
   data () {
     return {
-      data:[
-      {
-         city:"订单提交",
-        time:'2012-12-23'
-      },
-      {
-         city:"接单 业务员：西松 电3话：1243245",
-        time:'2012-12-23'
-      },
-      {
-         city:"已完成",
-        time:'2012-12-22'
-      },
-       {
-         city:"已确认",
-        time:'2012-12-22'
-      },
-      {
-         city:"已评价",
-        time:'2012-12-20'
-      }
-      ]
+      //查询id
+      id:'',
+      data:''
+    }
+  },
+  mounted(){
+  this.id = this.$route.params.id
+  //获取订单跟踪数据
+  this.getOrderTrack();
+  },
+  methods:{
+    getOrderTrack(){
+      this.$axios.get('pocket/wxchat/workOrderTrack',
+      {params:{
+        workOrderId:this.id
+      }}).
+      then(res=>{
+    console.log(res)
+    this.data = res.data.data;
+      }).
+      catch(err=>{
+    this.$toast(err);
+      })
     }
   },
   components: {

@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
- <van-tabs swipeable color ="#68B6F7">
-  <van-tab title="全部">
+ <van-tabs swipeable color ="#68B6F7" @click="onClick">
+  <van-tab title="全部" >
     
        <van-list
   v-model="loading"
@@ -9,31 +9,32 @@
   finished-text="没有更多了"
   @load="onLoad"
 >               
-          <div class="myOrder" v-for="item in data" :key="item.id" @click="checkDetail">
+          <div class="myOrder" v-for="item in data" :key="item.id" @click="checkDetail(item.id)">
 
-              <van-panel  title=当前状态 :status=item.tag v-bind:class="[item.type==2?'blue':'','font-weight']">
-                 <van-cell title="工单类型" value="英航订单" class="order-type"/>
-                <van-cell title="工单编码" value="0000" />
-                <van-cell title="客户姓名" value="电饭锅" />
-                <van-cell title="联系方式" value="1342352345" />
-                <van-cell title="开始时间" value="2804-3-330" />
-                <van-cell title="当前状态" value="正常" />
+               <van-panel  title=当前状态 :status='item.statudDesc'  v-bind:class="[item.status==2?'blue':'','font-weight']">
                
-          <div slot="footer" v-if="item.type==2" class="footer" >
-                <van-button size="small" @click.stop.prevent="call" >安全拨叫</van-button>
+                 <van-cell title="工单类型" :value="item.businessName" class="order-type" @click="checkDetail(item.id)"/>
+                <van-cell title="工单编码" :value="item.workOrderCode" />
+                <van-cell title="姓名" :value="item.customerName"/>
+                <van-cell title="联系方式" :value="item.customerMobile" />
+                <van-cell title="开始时间" :value="item.addTime" />
+                <van-cell title="竣工时间" :value="item.modifierTime" />
+               
+          <div slot="footer" v-if="item.status==2" class="footer" >
+                <van-button size="small" @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
                 <van-button size="small" @click.stop.prevent="urgency">催单</van-button>
-                 <van-button size="small" @click.stop.prevent="finish" class="primary-but">确认完成</van-button>
+                 <van-button size="small" @click.stop.prevent="finish(item.id)" class="primary-but">确认完成</van-button>
            </div>
 
-           <div slot="footer" v-if="item.type==3" class="footer" >
-                <van-button size="small"  @click.stop.prevent="call" >安全拨叫</van-button>
-                  <van-button size="small" @click.stop.prevent="complain" >申诉</van-button>
-                   <van-button size="small" @click.stop.prevent="judge" class="primary-but">评价</van-button> 
+           <div slot="footer" v-if="item.status==5" class="footer" >
+                <van-button size="small"  @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
+                  <!-- <van-button size="small" @click.stop.prevent="complain" >申诉</van-button> -->
+                   <van-button size="small" @click.stop.prevent="judge(item.id)" class="primary-but">评价</van-button> 
            </div>
-           <div slot="footer" v-if="item.type==4" class="footer" >
-                  <van-button size="small" @click.stop.prevent="complain" >申诉</van-button>
+           <div slot="footer" v-if="item.status==3" class="footer" >
+                  <van-button size="small" @click.stop.prevent="complain(item.id)" >申诉</van-button>
            </div>
-              </van-panel>
+              </van-panel> 
             
         
     </div>
@@ -41,55 +42,78 @@
   </van-tab>
 
   <van-tab title="已下单">
-          <div class="myOrder" v-for="item in data" :key="item.id" v-if="item.type==1"  @click="checkDetail">
-            
-                 <van-panel title=当前状态 :status=item.tag>
-                     <van-cell title="工单类型" value="0000" class="order-type"/>
-                <van-cell title="工单编码" value="0000" />
-                <van-cell title="客户姓名" value="0000" />
-                <van-cell title="联系方式" value="0000" />
-                <van-cell title="开始时间" value="0000" />
-                <van-cell title="当前状态" value="0000" />
+           <van-list
+  v-model="loading"
+  :finished="finished"
+  finished-text="没有更多了"
+  @load="onLoad"
+>  
+          <div class="myOrder" v-for="item in data" :key="item.id"   @click="checkDetail(item.id)">
+                   <van-panel title=当前状态 :status='item.statudDesc' class="font-weight">
+                     <van-cell title="工单类型" :value="item.businessName" class="order-type" @click="checkDetail(item.id)"/>
+                <van-cell title="工单编码" :value="item.workOrderCode" />
+                <van-cell title="姓名" :value="item.customerName"  />
+                <van-cell title="联系方式" :value="item.customerMobile"  />
+                <van-cell title="开始时间" :value="item.addTime" />
+              <van-cell title="竣工时间" :value="item.modifierTime" />
               
               </van-panel>
+                
     </div>
+     </van-list>
   </van-tab>
   <van-tab title="处理中">
-            <div class="myOrder" v-for="item in data" :key="item.id" v-if="item.type==2"  @click="checkDetail">
-                <van-panel  title=当前状态 :status=item.tag>
-              <van-cell title="工单类型" value="0000" class="order-type"/>
+               <van-list
+  v-model="loading"
+  :finished="finished"
+  finished-text="没有更多了"
+  @load="onLoad"
+>  
+            <div class="myOrder" v-for="item in data" :key="item.id"   @click="checkDetail(item.id)">
+                  <van-panel  title=当前状态 :status='item.statudDesc' class="font-weight">
+              <van-cell title="工单类型" :value="item.businessName" class="order-type" @click="checkDetail(item.id)"/>
               
-                <van-cell title="工单编码" value="0000" />
-                <van-cell title="客户姓名" value="0000" />
-                <van-cell title="联系方式" value="0000" />
-                <van-cell title="开始时间" value="0000" />
-                <van-cell title="当前状态" value="0000" />
+                <van-cell title="工单编码" :value="item.workOrderCode" />
+                <van-cell title="姓名" :value="item.customerName" />
+                <van-cell title="联系方式" :value="item.customerMobile"  />
+                <van-cell title="开始时间" :value="item.addTime" />
+                <van-cell title="竣工时间" :value="item.modifierTime" />
                 
           <div slot="footer" class="footer" >
-                <van-button size="small" @click.stop.prevent="call">安全拨叫</van-button>
-                <van-button size="small" @click.stop.prevent="urgency">催单</van-button>
+                <van-button size="small" @click.stop.prevent="call(item.userMobile)">安全拨叫</van-button>
+                <!-- <van-button size="small" @click.stop.prevent="urgency">催单</van-button> -->
                  <van-button size="small" @click.stop.prevent="finish" class="primary-but">确认完成</van-button>
            </div>
               </van-panel>
+              
     </div>
-
+ </van-list>
   </van-tab>
   <van-tab title="待评价">
-        <div class="myOrder" v-for="item in data" :key="item.id" v-if="item.type==3"  @click="checkDetail">
-                <van-panel  title=当前状态 :status=item.tag class="font-weight">
-                  <van-cell title="工单类型" value="0000" class="order-type"/>
-                <van-cell title="工单编码" value="0000" />
-                <van-cell title="客户姓名" value="0000" />
-                <van-cell title="联系方式" value="0000" />
-                <van-cell title="开始时间" value="0000" />
-                <van-cell title="当前状态" value="0000" />
+       <van-list
+  v-model="loading"
+  :finished="finished"
+  finished-text="没有更多了"
+  @load="onLoad"
+>  
+        <div class="myOrder" v-for="item in data" :key="item.id"   @click="checkDetail(item.id)">
+                 <van-panel  title=当前状态 :status='item.statudDesc' class="font-weight">
+              <van-cell title="工单类型" :value="item.businessName" class="order-type" @click="checkDetail(item.id)"/>
+              
+                <van-cell title="工单编码" :value="item.workOrderCode" />
+                <van-cell title="姓名" :value="item.customerName" />
+                <van-cell title="联系方式" :value="item.customerMobile"  />
+                <van-cell title="开始时间" :value="item.addTime" />
+                <van-cell title="竣工时间" :value="item.modifierTime" />
            <div slot="footer" class="footer" >
-                <van-button size="small"  @click.stop.prevent="call" >安全拨叫</van-button>
-                  <van-button size="small" @click.stop.prevent="complain" >申诉</van-button>
+                <van-button size="small"  @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
+                  <!-- <van-button size="small" @click.stop.prevent="complain" >申诉</van-button> -->
                    <van-button size="small" @click.stop.prevent="judge" class="primary-but">评价</van-button> 
            </div>
               </van-panel>
+               
     </div>
+     </van-list>
   </van-tab>
 </van-tabs>
   </div>
@@ -102,77 +126,41 @@ export default {
       loading: false,
       finished: false,
       // 客户ID
-      id:42,
+      customerId:'',
+      // 详情id
+      id:'',
       // 查询状态 0：查询全部；2：进行中；5：已完成； -1： 查询异常
      status:0,
      //  查询页数
-     pageSize:10,
+     pageSize:4,
      page:1,
 
       // type：1：已下单，2，已处理，3，待评价 4，已评价
-      data:[
-        {
-          num:"2",
-          tag:"已下单",
-          price:"2.00",
-          desc:"描述信息"  ,
-          title:"商品标题",
-          originPrice:"10.00",
-          thumb:"http://yanxuan.nosdn.127.net/42b4ab968ae5b0f38e608131fb68a095.png",
-          buttonType:1, 
-          id:1,
-          type:1
-
-      },
-       {
-          num:"2",
-          tag:"处理中",
-          price:"2.00",
-          desc:"描述信息"  ,
-          title:"商品标题",
-          originPrice:"10.00",
-          thumb:"http://yanxuan.nosdn.127.net/42b4ab968ae5b0f38e608131fb68a095.png",
-          buttonType:1,
-           id:2,
-            type:2
-
-      },
-       {
-          num:"2",
-          tag:"待评价",
-          price:"2.00",
-          desc:"描述信息"  ,
-          title:"商品标题",
-          originPrice:"10.00",
-          thumb:"http://yanxuan.nosdn.127.net/42b4ab968ae5b0f38e608131fb68a095.png",
-          buttonType:1,
-           id:3,
-            type:3
-
-      },
-       {
-          num:"2",
-          tag:"已评价",
-          price:"2.00",
-          desc:"描述信息"  ,
-          title:"商品标题",
-          originPrice:"10.00",
-          thumb:"http://yanxuan.nosdn.127.net/42b4ab968ae5b0f38e608131fb68a095.png",
-          buttonType:1,
-           id:4,
-            type:4
-
-      }
-      ]
+      data:''
+   
     }
   },
   components: {
 
   },
   mounted(){
+    this.customerId = localStorage.getItem('customerId');
 this.getCheckOrder();
   },
   methods:{
+    //tab切换请求数据
+    onClick(index, title) {
+      if(index==0){//全部
+    this.status=0
+      } else if(index==1){//进行中
+      this.status=2
+      }else if(index==2){ //已完成
+         this.status=5
+      }else if(index==7){//已评价
+        this.status=7
+      }
+      this.getCheckOrder();
+    },
     onLoad() {
       // 异步更新数据
       setTimeout(() => {
@@ -190,10 +178,16 @@ this.getCheckOrder();
     },
     getCheckOrder(){
           this.$axios.get('pocket/wxchat/queryCustomerOwList', 
-          { params: {'customerId': this.id,'status':this.status,'pageSize':this.pageSize,'page':this.page}})
+          { params: {
+            'customerId': this.customerId,
+            'status':this.status,
+            'pageSize':this.pageSize,
+            'page':this.page
+            }})
       .then(res=>{ 
           console.log(res.data)
-          if(res.data.data.length<=0){
+          this.data = res.data.data;
+          if(res.data.data.length<=4){
              this.finished = true;
           }
       })
@@ -201,13 +195,34 @@ this.getCheckOrder();
           this.$toast(err);
       })
     },
-   call:function(){
+    //修改工单状态接口
+    changeOrderStatus(id){
+      this.$axios.get('pocket/wxchat/customerWoUpdate', 
+          { params: {
+            'customerId':id,
+            'status':this.status,
+            'star':'',
+            }})
+      .then(res=>{ 
+          console.log(res.data)
+          if(res.data.code==200){
+            
+          }else{
+             this.$toast(res.data.msg);
+          }
+      })
+      .catch(err=>{
+          this.$toast(err);
+      })
+    },
+   call:function(phone){
     
               this.$dialog.confirm({
           title: '安全呼叫',
-          message: '是否呼叫10086？'
+          message: '是否呼叫'+phone+'?'
         }).then(() => {
           // on confirm
+          window.location.href = "tel:" + phone;;
         }).catch(() => {
           // on cancel
         });
@@ -217,31 +232,34 @@ this.getCheckOrder();
       message: '请耐心等待，已为您催单！'
     });
    },
-   finish:function(){
+   finish:function(id){
         this.$dialog.confirm({
           title: '确认完成',
           message: '是否确认完成订单？'
         }).then(() => {
           // on confirm
+           this.changeOrderStatus(id)
         }).catch(() => {
           // on cancel
         });
    },
-   complain:function(){
+   complain:function(id){
        this.$dialog.confirm({
           title: '申诉',
           message: '是否申诉？'
         }).then(() => {
           // on confirm
+           this.changeOrderStatus(id)
         }).catch(() => {
           // on cancel
+          
         });
    },
-   checkDetail:function(){
-     this.$router.push('/checkOrder')
+   checkDetail:function(id){
+     this.$router.push({name:'checkOrder',params:{id:id}})
     
    },
-   judge:function(){
+   judge:function(id){
      this.$router.push('/serviceEvaluation')
    }
   }

@@ -2,7 +2,8 @@
   <div class="app-container">
     <div class="person">
        <div>
-            <van-icon name="user-o" size="50px"/>
+            <img src="../../assets/tx.png" alt="" class="header-img"> 
+            <!-- <van-icon name="user-o" size="50px"/> -->
             <div>西雪</div>
        </div>
         <div class="personInfo">
@@ -10,7 +11,7 @@
          <label>客户名称：</label> 
          </div> -->
         <div class="person-id">
-            <label>客户ID：</label> <span>18336391418</span>
+            <label>ID：</label> <span>18336391418</span>
         </div>
         <div class="person-address">
             <label>联系地址：</label> <span>荆门路1990号XXXXXXXX</span>
@@ -62,33 +63,33 @@ export default {
         // 1：异常 2正常
       data:[
           {
-          name:'银行收单',
+          name:'POS业务',
           status:'1',
           time:'20小时',
           last:'15小时之前',
           printNumber:'4次',
           surplusNumber:'4次',
-          machineStatus:'通信异常' ,
+          machineStatus:'正常' ,
           id:1      
       },
        {
-          name:'花费查询',
+          name:'开卡',
           status:'2',
           time:'40小时',
           last:'5小时之前',
           printNumber:'4次',
           surplusNumber:'无限次',
-          machineStatus:'通信正常',
+          machineStatus:'正常',
           id:2    
       },
        {
-          name:'银行收单',
-          status:'1',
+          name:'售后',
+          status:'2',
           time:'20小时',
           last:'15小时之前',
           printNumber:'4次',
           surplusNumber:'4次',
-          machineStatus:'通信异常' ,
+          machineStatus:'正常' ,
           id:13    
       }
       ]
@@ -100,7 +101,12 @@ export default {
   mounted(){},
   methods:{
       getCreateBusiness(){
-             this.$axios.get('pocket/wxchat/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':3}})
+             this.$axios.get('pocket/wxchat/getCustomerInfo', 
+             { params: {
+                 'mobile': this.phone,
+                 'code':this.yzm,
+                 'openId':3
+                 }})
       .then(res=>{
               let that = this
           if(res.data.code===0){
@@ -129,6 +135,10 @@ export default {
     background: #fafafa;
     padding-top: 10px;
 }
+.header-img{
+    width: 120px;
+
+}
 .personInfo{
   margin-left: 70px;
   flex: 3;
@@ -139,7 +149,7 @@ export default {
   box-shadow: #eeeeee -2px 1px  10px 2px;
   color: #ffffff;
   display: flex;
-  height: 120px;
+  height: 140px;
 
 }
 .person>div:first-child{
