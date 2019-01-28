@@ -16,7 +16,8 @@
                        <van-cell is-link @click="modifyStore()">
                         <div>
                             <label> <van-icon name="shop-o" />&nbsp;店铺名称：</label>
-                            <span>嘻哈哈零食店铺</span>
+                            <span>{{storeName}}</span>
+                        
                         </div>
                      </van-cell>
                         <van-popup v-model="dialogStoreModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
@@ -35,7 +36,7 @@
                         <van-cell is-link @click="modifyName()">
                         <div>
                             <label> <van-icon name="manager-o" />&nbsp;名称：</label>
-                            <span>戏游人间</span>
+                            <span>{{customerName}}</span>
                         </div>
                      </van-cell>
                         <van-popup v-model="dialogNameModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
@@ -54,7 +55,7 @@
                          <van-cell is-link @click="modifyContact()">
                         <div>
                             <label> <van-icon name="chat-o" />&nbsp;联系方式：</label>
-                            <span>2343545@145.com</span>
+                            <span>{{contact}}</span>
                         </div>
                      </van-cell>
                         <van-popup v-model="dialogContactModify" position="right" :overlay="true" :overlay-style="popupNameStyle">
@@ -109,20 +110,22 @@ export default {
   },
   components: {},
   mounted(){
-      this.uid = localStorage.getItem('uid');
-      this.mobile = localStorage.getItem('mobile');
+      this.uid = localStorage.getItem('customerId');
       this.getUserInfo();
   },
   methods: {
       getUserInfo(){
           let that = this;
-        that.$axios.get('pocket/wxchat/getCustomerInfo', 
-           { 'uid':this.uid,
-            'mobile':this.mobile
+        that.$axios.get('pocket/wxchat/customerInfo', 
+        {params:{  
+            'customerId':this.uid
             
-          })
+          }})
       .then(res=>{    
           console.log(res.data)
+          that.storeName = res.data.data.shopName;
+          that.customerName = res.data.data.name;
+          that.contact = res.data.data.mobile;
       })
       .catch(err=>{
           this.$toast(err);

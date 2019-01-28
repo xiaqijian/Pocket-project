@@ -145,6 +145,14 @@ export default new Router({
       }
     },
     {
+      path: '/bussinessDetail',
+      name: 'bussinessDetail',
+      component: () => import('@/views/service/viewOrder/bussinessDetail'),
+      meta: {
+        title: '订单详情'
+      }
+    },
+    {
       path: '/serviceEvaluation',
       name: 'serviceEvaluation',
       component: () => import('@/views/service/viewOrder/serviceEvaluation'),

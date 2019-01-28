@@ -49,18 +49,56 @@ export default {
       contactV: 0,
       arriveV:0,
       qualityV:0,
-      attitudeV:0
+      attitudeV:0,
+      //工单id
+      workId:'',
+      //评分
+      eval:{},
+      customerId:''
+      
+
 
     }
   },
   components: {
 
   },
+  mounted(){
+this.workId = this.$route.params.id;
+this.customerId = localStorage.getItem('customerId');
+console.log(this.workId)
+  },
   methods:{
     doJudge:function(){
-      this.$dialog.alert({
+     this.eval = {
+        1:this.contactV,
+        2:this.arriveV,
+        3:this.qualityV,
+        4:this.attitudeV
+      }
+  this.$axios.get('pocket/wxchat/customerWoUpdate',
+      {params:{
+        workOrderId:this.workId,
+        status:3,
+        customerId:this.customerId,
+        evaluation:this.eval
+      }}).
+      then(res=>{
+    console.log(res)
+    if(res.data.code==200){
+    this.$dialog.alert({
       message: '您的评价已提交！'
     });
+    }else{
+this.$toast(res.data.msg);
+    }
+      }).
+      catch(err=>{
+    this.$toast(err);
+      })
+
+
+     
     }
   }
 }
