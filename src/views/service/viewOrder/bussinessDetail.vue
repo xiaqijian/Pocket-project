@@ -26,7 +26,7 @@
         </van-collapse-item>
       </van-collapse>
       <div class="btn">
-        <van-button type="primary" size="large" @click.stop.prevent="callclick">电话联系</van-button>    
+        <van-button round size="large" @click.stop.prevent="callclick">电话联系</van-button>    
       </div>
 
   </div>
@@ -89,16 +89,26 @@ export default {
 </script>
 
 <style lang="less" type="text/less" scoped>
+
 .app-container {
-  // height: 100%;
+  height: 100%;
   background: #efefef;
 }
+// van-collapse{
+  
+// }
 .btn {
   padding: 20px;
   padding-bottom: 100px;
   .van-button--large {
-     margin-top:30px;
+     margin-top:30px; 
+     background: #68B6F7;
+     color: #fff;
+     width: 60%;
+     margin-left: 20%;
   }
 }
- 
+
 </style>
+
+

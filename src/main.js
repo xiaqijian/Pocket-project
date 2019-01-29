@@ -25,10 +25,10 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  var ss = 'http://cyp.startupbelts.com/dist/index.html?data=0&isCreated=y&isBind=n&uid=10647&customerId=10647&mobile="18812340000"';
+  // var ss = 'http://cyp.startupbelts.com/dist/index.html?data=0&isCreated=n&isBind=n&uid=10647&customerId=10647&mobile="18812340000"';
      var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-    //  var r =  window.location.search.substr(1).match(reg);
-     var r =  ss.substr(1).match(reg);
+     var r =  window.location.search.substr(1).match(reg);
+    //  var r =  ss.substr(1).match(reg);
      if(r!=null)return  unescape(r[2]); return null;
 }
   // isCreated 用户是否存在，y存在，n不存在

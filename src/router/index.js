@@ -125,7 +125,8 @@ export default new Router({
       name: 'newDemand',
       component: () => import('@/views/service/newDemand'),
       meta: {
-        title: '新增需求'
+        title: '新增需求',
+        requireAuth: true
       }
     },
     {//
@@ -133,7 +134,8 @@ export default new Router({
       name: 'myOrder',
       component: () => import('@/views/service/viewOrder/myOrder'),
       meta: {
-        title: '所有订单'
+        title: '所有订单',
+        requireAuth: true
       }
     },
     {
@@ -165,23 +167,25 @@ export default new Router({
       name: 'serviceEvaluation',
       component: () => import('@/views/my/serviceState'),
       meta: {
-        title: '订单状态'
+        title: '业务状态',
+        requireAuth: true
       }
     },
     {
       path: '/contact',
-      name: 'serviceEvaluation',
+      name: 'contact',
       component: () => import('@/views/my/contact'),
       meta: {
-        title: '业务状态'
+        title: '联系方式',
+        requireAuth: true
       }
     },
     {
       path: '/informationBind',
-      name: 'serviceEvaluation',
+      name: 'informationBind',
       component: () => import('@/views/my/informationBind'),
       meta: {
-        title: '联系方式',
+        title: '信息绑定',
         requireAuth: true
 
       }

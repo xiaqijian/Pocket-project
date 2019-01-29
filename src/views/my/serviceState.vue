@@ -4,17 +4,17 @@
        <div>
             <img src="../../assets/tx.png" alt="" class="header-img"> 
             <!-- <van-icon name="user-o" size="50px"/> -->
-            <div>西雪</div>
+            <div>{{customerName}}</div>
        </div>
         <div class="personInfo">
              <!-- <div class="person-info">
          <label>客户名称：</label> 
          </div> -->
         <div class="person-id">
-            <label>ID：</label> <span>18336391418</span>
+            <label>联系方式：</label> <span>{{mobile}}</span>
         </div>
         <div class="person-address">
-            <label>联系地址：</label> <span>荆门路1990号XXXXXXXX</span>
+            <label>联系地址：</label> <span>{{address}}</span>
         </div>
         </div>
     </div>
@@ -60,6 +60,14 @@
 export default {
   data () {
     return {
+         //地址
+        address:'',
+        //客户名称
+        customerName:'',
+        //联系方式
+        mobile:'',
+        //uid
+        uid:'',
         // 1：异常 2正常
       data:[
           {
@@ -98,29 +106,23 @@ export default {
   components: {
 
   },
-  mounted(){},
+  mounted(){
+    this.uid = localStorage.getItem('customerId');
+      this.getUserInfo();
+  },
   methods:{
-      getCreateBusiness(){
-             this.$axios.get('pocket/wxchat/getCustomerInfo', 
-             { params: {
-                 'mobile': this.phone,
-                 'code':this.yzm,
-                 'openId':3
-                 }})
-      .then(res=>{
-              let that = this
-          if(res.data.code===0){
-           this.$toast('绑定成功！');
-             setTimeout(function(){
-               that.$router.replace('/myOrder')
-           },1000)
-         
-          }else{
-              this.$toast(res.data.msg);
-          }
-      
-          
+     getUserInfo(){
+          let that = this;
+        that.$axios.get('pocket/wxchat/customerInfo', 
+        {params:{  
+            'customerId':this.uid
+            
+          }})
+      .then(res=>{    
           console.log(res.data)
+          that.address = res.data.data.province+res.data.data.provinceArea+res.data.data.address;
+          that.customerName = res.data.data.name;
+          that.mobile = res.data.data.mobile;
       })
       .catch(err=>{
           this.$toast(err);
