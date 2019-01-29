@@ -11,24 +11,22 @@
 >               
           <div class="myOrder" v-for="item in data" :key="item.id" @click="checkDetail(item.id)">
 
-               <van-panel  title=当前状态 :status='item.statudDesc'  v-bind:class="[item.status==2?'blue':'','font-weight']">
-               
-                 <van-cell title="工单类型" :value="item.businessName" class="order-type" v-on:click.stop.prevent="checkProgress(item.id)"/>
-                <van-cell title="工单编码" :value="item.workOrderCode" />
-                <van-cell title="姓名" :value="item.customerName"/>
-                <van-cell title="联系方式" :value="item.customerMobile" />
-                <van-cell title="开始时间" :value="item.addTime" />
-                <van-cell title="竣工时间" :value="item.modifierTime" />
+            <van-panel  title=当前状态 :status='item.statudDesc'  v-bind:class="[item.status==2?'blue':'','font-weight']">    
+            <div @click.stop="checkProgress(item.id)">
+                  <van-cell title="工单类型" :value="item.businessName" class="order-type" />
+            </div>
+            <van-cell title="工单编码" :value="item.workOrderCode" />
+            <van-cell title="姓名" :value="item.customerName"/>
+            <van-cell title="联系方式" :value="item.customerMobile" />
+            <van-cell title="开始时间" :value="item.addTime" />
+            <van-cell title="竣工时间" :value="item.modifierTime" />
                
           <div slot="footer" v-if="item.status==2" class="footer" >
                 <van-button size="small" @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
-                <!-- <van-button size="small" @click.stop.prevent="urgency">催单</van-button> -->
-                 <!-- <van-button size="small" @click.stop.prevent="finish(item.id,item.status)" class="primary-but">确认完成</van-button> -->
-           </div>
+          </div>
 
            <div slot="footer" v-if="item.status==5" class="footer" >
                 <van-button size="small"  @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
-                  <!-- <van-button size="small" @click.stop.prevent="complain" >申诉</van-button> -->
                   
            </div>
            <div slot="footer" v-if="item.status==3" class="footer" >
@@ -45,14 +43,19 @@
 
   <van-tab title="已下单">
            <van-list
-  v-model="loading"
-  :finished="finished"
-  finished-text="没有更多了"
-  @load="onLoad"
->  
+        v-model="loading"
+        :finished="finished"
+        finished-text="没有更多了"
+        @load="onLoad"
+      >  
           <div class="myOrder" v-for="item in data" :key="item.id"   @click="checkDetail(item.id)">
                    <van-panel title=当前状态 :status='item.statudDesc' class="font-weight">
-                     <van-cell title="工单类型" :value="item.businessName" class="order-type" @click="checkProgress(item.id)"/>
+                
+                <div @click.stop="checkProgress(item.id)">
+                  <van-cell title="工单类型" :value="item.businessName" class="order-type" />
+                </div>
+
+                      
                 <van-cell title="工单编码" :value="item.workOrderCode" />
                 <van-cell title="姓名" :value="item.customerName"  />
                 <van-cell title="联系方式" :value="item.customerMobile"  />
@@ -73,7 +76,9 @@
 >  
             <div class="myOrder" v-for="item in data" :key="item.id"   @click="checkDetail(item.id)">
                   <van-panel  title=当前状态 :status='item.statudDesc' class="font-weight">
-              <van-cell title="工单类型" :value="item.businessName" class="order-type" @click="checkProgress(item.id)"/>
+              <div @click.stop="checkProgress(item.id)">
+                  <van-cell title="工单类型" :value="item.businessName" class="order-type" />
+            </div>
               
                 <van-cell title="工单编码" :value="item.workOrderCode" />
                 <van-cell title="姓名" :value="item.customerName" />
@@ -100,7 +105,9 @@
 >  
         <div class="myOrder" v-for="item in data" :key="item.id"   @click="checkDetail(item.id)">
                  <van-panel  title=当前状态 :status='item.statudDesc' class="font-weight">
-              <van-cell title="工单类型" :value="item.businessName" class="order-type" @click="checkProgress(item.id)"/>
+          <div @click.stop="checkProgress(item.id)">
+                  <van-cell title="工单类型" :value="item.businessName" class="order-type" />
+            </div>
               
                 <van-cell title="工单编码" :value="item.workOrderCode" />
                 <van-cell title="姓名" :value="item.customerName" />
@@ -282,13 +289,14 @@ this.$axios.get('pocket/wxchat/customerWoError',
    checkDetail(id){
  this.$router.push({name:'bussinessDetail',params:{id:id}})
    },
-   checkProgress:function(id){
+   checkProgress:function( id){
+    
      this.$router.push({name:'checkOrder',params:{id:id}})
     
    },
    judge:function(id){
      this.$router.push({name:'serviceEvaluation',params:{id:id}})
-    
+      
    }
   }
 }

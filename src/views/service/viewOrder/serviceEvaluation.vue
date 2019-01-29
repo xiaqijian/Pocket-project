@@ -7,34 +7,14 @@
     <div class="service-judge">请您对本次服务做出评价</div>
     
       <div class="judge-score">
-          <div class="contact">
-                      <label>联系速度</label>
+          <div class="contact" v-for="(item,index) in arrList" :key="index">
+                      <label>{{item.value}}</label>
                       <van-rate
-                    v-model="contactV"
-                    icon="like"
-                    void-icon="like-o"/>
-              </div>
-              <div class="contact">
-                  <label>上门速度</label>
-                  <van-rate
-                v-model="arriveV"
-                icon="like"
-                void-icon="like-o"/>
-              </div>
-              <div class="contact">
-              <label>服务质量</label>
-              <van-rate
-                v-model="qualityV"
-                icon="like"
-                void-icon="like-o" />
-             </div>
-            <div class="contact">
-            <label>服务态度</label>
-            <van-rate
-              v-model="attitudeV"
-              icon="like"
-              void-icon="like-o"/>
+                      v-model="contactV[index]"
+                      icon="like"
+                      void-icon="like-o" />
             </div>
+          
       </div>
    <div class="doJudge" @click="doJudge">
       <van-button size="large" >确认打分</van-button>
@@ -46,42 +26,68 @@
 export default {
   data () {
     return {
-      contactV: 0,
-      arriveV:0,
-      qualityV:0,
-      attitudeV:0,
+      index:'0',
+      contactV: [5,5,5],//默认五星好评
       //工单id
       workId:'',
       //评分
       eval:{},
-      customerId:''
-      
-
-
+      customerId:'',
+      descripe:'',
+      arrList:[],
+      arrid:[],
     }
   },
-  components: {
-
-  },
   mounted(){
-this.workId = this.$route.params.id;
-this.customerId = localStorage.getItem('customerId');
-console.log(this.workId)
+    this.workId = this.$route.params.id;
+    this.customerId = localStorage.getItem('customerId');
+    console.log(this.workId)
+    this.getDtailData();
   },
   methods:{
-    doJudge:function(){
-     this.eval = {
-        1:this.contactV,
-        2:this.arriveV,
-        3:this.qualityV,
-        4:this.attitudeV
-      }
-  this.$axios.get('pocket/wxchat/customerWoUpdate',
+  getDtailData(){
+    let that = this;
+    that.workId = this.$route.params.id;
+    let gdID = that.workId;
+    console.log(gdID)
+    that.$axios.get('pocket/wxchat/workOrderDetail', 
+        { params: { 
+          'workOrderId':gdID,
+          }
+        })
+        .then(res=>{
+          console.log(res.data.data.commissionNameList);  
+          that.arrList = res.data.data.commissionNameList;
+          let arr = [];
+          for(let i=0;i<res.data.data.commissionNameList.length;i++){
+            arr.push(res.data.data.commissionNameList[i].sysId)
+          }
+          that.arrid = arr;
+          console.log(that.arrid);
+        })
+        .catch(err=>{
+            console.log(err)
+            this.$toast('数据获取失败');
+        })
+  },
+  doJudge:function(){
+     let that = this;
+     console.log(this.contactV)
+     let evaluation = {}
+     this.contactV.forEach((ele, index) => {
+        console.log(ele)
+        // console.log(index)
+        let id = that.arrList[index].sysId
+        evaluation[id] = ele
+
+     });
+     console.log(evaluation)
+  this.$axios.get('pocket/wxchat/customerWoUpdate',//
       {params:{
         workOrderId:this.workId,
         status:3,
         customerId:this.customerId,
-        evaluation:this.eval
+        evaluation:evaluation
       }}).
       then(res=>{
     console.log(res)
@@ -90,15 +96,12 @@ console.log(this.workId)
       message: '您的评价已提交！'
     });
     }else{
-this.$toast(res.data.msg);
-    }
-      }).
-      catch(err=>{
-    this.$toast(err);
-      })
-
-
-     
+      this.$toast(res.data.msg);
+          }
+            }).
+            catch(err=>{
+          this.$toast(err);
+        })
     }
   }
 }
