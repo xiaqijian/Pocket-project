@@ -158,8 +158,8 @@ this.getCheckOrder();
       this.status=2
       }else if(index==2){ //已完成
          this.status=5
-      }else if(index==7){//已评价
-        this.status=7
+      }else if(index==3){//待评价
+        this.status=3
       }
       this.getCheckOrder();
     },
