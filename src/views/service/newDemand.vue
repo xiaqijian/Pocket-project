@@ -55,7 +55,7 @@ show: false,
     aa(){
          let that = this
          let userID = localStorage.getItem('customerId')
-         that.$axios.get('pocket/wxchat/customerCreateBusiness', { params: { 
+         that.$axios.get('pocket/wxchatc/customerCreateBusiness', { params: { 
             'customerId':userID,
             }
           })

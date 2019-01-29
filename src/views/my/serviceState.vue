@@ -113,7 +113,7 @@ export default {
   methods:{
      getUserInfo(){
           let that = this;
-        that.$axios.get('pocket/wxchat/customerInfo', 
+        that.$axios.get('pocket/wxchatc/customerInfo', 
         {params:{  
             'customerId':this.uid
             

@@ -33,7 +33,7 @@ export default {
   },
   methods:{
     getOrderTrack(){
-      this.$axios.get('pocket/wxchat/workOrderTrack',
+      this.$axios.get('pocket/wxchatc/workOrderTrack',
       {params:{
         workOrderId:this.id
       }}).

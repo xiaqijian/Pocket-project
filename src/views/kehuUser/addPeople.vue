@@ -115,7 +115,7 @@ export default {
       let provid = that.provdata[index].id;
       //选择省份时发送接口
       let citarr = [];
-      that.$axios.get('pocket/wxchat/getCity', 
+      that.$axios.get('pocket/wxchatc/getCity', 
           { params: { 
             'id':provid,
             }
@@ -158,7 +158,7 @@ export default {
         let that = this;
         let arr = [];
         let idarr = [];
-        that.$axios.get('pocket/wxchat/getProvince', 
+        that.$axios.get('pocket/wxchatc/getProvince', 
           )
           .then(res=>{
             that.provdata =res.data.data;
@@ -189,7 +189,7 @@ export default {
       }else{
         return new Promise ((resolve, reject) => {
          that.$axios({
-           url:'pocket/wxchat/uploadLicense/'+ phone,
+           url:'pocket/wxchatc/uploadLicense/'+ phone,
             method:'post',
             data:formdata,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
@@ -224,7 +224,7 @@ export default {
         return false; 
       }else if(phofuwuadd !='' && khname !='' && khaddr !='' && khphone !='' && khnameaddr !='' && gszzcode !='' && shengfen !='' && chengshi !=''){
           console.log(11);
-          that.$axios.post('pocket/wxchat/customerAdd', 
+          that.$axios.post('pocket/wxchatc/customerAdd', 
            { 
             'name': khname,//客户名称
             'shopName': khaddr,//	客户店铺地址
@@ -238,6 +238,12 @@ export default {
             
           })
           .then(res=>{
+            if(res.data.code===0){
+           this.$toast('创建成功！');
+         
+          }else{
+              this.$toast(res.data.msg);
+          }
             console.log(res.data);
           })
           .catch(err=>{

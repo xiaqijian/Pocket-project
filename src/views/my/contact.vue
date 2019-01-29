@@ -116,7 +116,7 @@ export default {
   methods: {
       getUserInfo(){
           let that = this;
-        that.$axios.get('pocket/wxchat/customerInfo', 
+        that.$axios.get('pocket/wxchatc/customerInfo', 
         {params:{  
             'customerId':this.uid
             
@@ -154,7 +154,7 @@ export default {
   },
   modifyInfo(){
         let that = this;
-        that.$axios.post('pocket/wxchat/customerInfoUpdate', 
+        that.$axios.post('pocket/wxchatc/customerInfoUpdate', 
            { 
             'mobile':this.storeName,
             'name':this.customerName,

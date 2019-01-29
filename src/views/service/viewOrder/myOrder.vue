@@ -186,7 +186,7 @@ this.getCheckOrder();
       }, 500);
     },
     getCheckOrder(){
-          this.$axios.get('pocket/wxchat/queryCustomerOwList', 
+          this.$axios.get('pocket/wxchatc/queryCustomerOwList', 
           { params: {
             'customerId': this.customerId,
             'status':this.status,

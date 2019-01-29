@@ -50,7 +50,7 @@ export default {
     that.workId = this.$route.params.id;
     let gdID = that.workId;
     console.log(gdID)
-    that.$axios.get('pocket/wxchat/workOrderDetail', 
+    that.$axios.get('pocket/wxchatc/workOrderDetail', 
         { params: { 
           'workOrderId':gdID,
           }
@@ -82,7 +82,7 @@ export default {
 
      });
      console.log(evaluation)
-  this.$axios.get('pocket/wxchat/customerWoUpdate',//
+  this.$axios.get('pocket/wxchatc/customerWoUpdate',//
       {params:{
         workOrderId:this.workId,
         status:3,

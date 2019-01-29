@@ -38,7 +38,7 @@ export default {
     return {
        activeNames: ['1'],
        activeNames1: ['1'],
-       workOrderId: 36,
+       workOrderId:'',
        datadetail: {},
        message: '',
        status: false
@@ -51,7 +51,7 @@ export default {
   methods: {
    getdata (id) {
      let that = this;
-    this.$axios.get('pocket/wxchat/workOrderDetail', { params: { 'workOrderId': id }})
+    this.$axios.get('pocket/wxchatc/workOrderDetail', { params: { 'workOrderId': id }})
       .then((res) => {
         console.log(res.data.data)
         that.datadetail = res.data.data
