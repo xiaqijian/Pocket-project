@@ -181,7 +181,7 @@ export default new Router({
       name: 'serviceEvaluation',
       component: () => import('@/views/my/informationBind'),
       meta: {
-        title: '联系方式'
+        title: '绑定信息'
       }
     },
     {

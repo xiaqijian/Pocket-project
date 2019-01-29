@@ -23,12 +23,25 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.qs = qs
 
+let url = 'http://www.insoup.cn/pocket/wxchat?isBind=y&&user=4&&isCreated=n'
+
+let isBind = parseQueryString(url).isBind
+
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */
+  let token = isBind == 'y' ? true: false;
   if (to.meta.title) {
     document.title = to.meta.title
   }
-  next()
+  if (token) {
+     next()
+  } else {
+    if (to.path === '/informationBind') {
+      next()
+    } else {
+      next('/informationBind')
+    }
+  }
 })
 
 /* eslint-disable no-new */
@@ -38,3 +51,20 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+
+
+
+function parseQueryString(url) {
+  var obj = {};
+  var keyvalue = [];
+  var key = "",
+    value = "";
+  var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&&");
+  for (var i in paraString) {
+    keyvalue = paraString[i].split("=");
+    key = keyvalue[0];
+    value = keyvalue[1];
+    obj[key] = value;
+  }
+  return obj;
+}

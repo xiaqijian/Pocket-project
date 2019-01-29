@@ -1,45 +1,35 @@
 <template>
   <div class="app-container">
       <div class="bindingInfo">
-        <div class="bussiness-prove">
-                    <label>营业执照</label>
-                    <div class="business-photo">
-
-                    </div>
-                    <van-uploader >
-                    <van-icon name="photograph" />
-                    </van-uploader>
-
-        </div>
+          <div class="pocket">
+              口袋业务
+          </div>
         <div class="phone">
                 <van-cell-group >
+
                 <van-field 
                     required
-                    clearable
-                    v-model="phone"
                     label="手机号"
                     placeholder="请输入手机号"
-                    :error-message="errmessage"
+                    v-model="phone"
+                     v-on:input="activeBind()"
                 />
+
                 <van-field
                     type="password"
                     label="验证码"
-                    v-model="yanzhengma"
                     placeholder="请输入验证码"
                     required
+                   v-model="yzm"
+                   v-on:input="activeBind()"
                 >
-                 <van-button  slot="button"   type="default" size="small" class="obtain-yzm" v-if="sending" :disabled="disabled"  @click="huoqu">获取验证码
-                     
-                 </van-button>
-                <van-button  slot="button"  type="default" size="small"  v-if="!sending" :disabled="disabled"  >{{second}}秒后重新获取
-                     
-                 </van-button>
+                 <van-button slot="button" size="small" class="obtain-yzm" @click="obtainYzm">{{content}}</van-button>
                 </van-field>
                
                 </van-cell-group>
         </div>
        <div class="binding">
-           <van-button size="large" class="binding-info" round @click="bangding">绑定</van-button>
+           <van-button size="large" class="binding-info" :class="[canBind?'canBinding':'']" round @click="bindAccount">绑定</van-button>
         
        </div>
       </div>
@@ -50,99 +40,119 @@
 export default {
   data () {
     return {
-       index: "我的信息绑定",
-       sending:true,//判断是否显示倒计时
-       disabled:false,//是否禁用点击
-       phone:'',//手机号
-       yanzhengma:'', //验证码 
-       second:60,//倒计时
-       errmessage:'',//手机号错误信息
-       openID:123456,
+        content:'获取验证码',
+                totalTime:60,   //倒计时
+                canClick:true, //添加canClick
+                phone:'',
+                yzm:'',
+                canBind:false
+
+       
     }
   },
+  components: {
+
+  },
   mounted(){
-    this.aa();
+     this.getuserInfo();
   },
   methods:{
-      onRead(file) {
-      console.log(file)
-    },
-    aa(){//获取用户信息
+      getuserInfo(){
      let that = this;
-      that.$axios.get('pocket/wxchat/getUserInfo', { params: {'uid': 3}})
+      that.$axios.get('pocket/wxchatc/getUserInfo', { params: {'uid': 3}})
       .then(res=>{
+          console.log(res.data)
+      })
+      .catch(err=>{
+          this.$toast(err);
+      })
+      },
+    obtainYzm:function(){
+      if(!(/^1[34578]\d{9}$/.test(this.phone))){ 
+        this.$toast('手机号码有误，请重填');
+        return false; 
+    } 
+       if(!this.canClick){return}  //节流   
+                   this.canClick=false;
+                   this.content = this.totalTime + 's后重新发送'
+                   let clock = window.setInterval(() => {
+                   this.totalTime--;
+                  this.content = this.totalTime + 's后重新发送'
+                  if (this.totalTime < 0) {  //当倒计时小于0时清除定时器
+                       window.clearInterval(clock); //关闭
+                       this.content = '重新获取验证码'
+                       this.totalTime = 60;
+                       this.canClick = true; //这里重新开启
+                          }
+             
+        },1000)
+        //发送验证码
+         this.$axios.get('pocket/wxchatc/sms/', { params: {'phone': this.phone}})
+      .then(res=>{
+            if(res.data.code==0){
+          this.$toast('验证码已发送');
+          }else{
+            this.$toast(res.data.msg);
+          }
           console.log(res.data)
       })
       .catch(err=>{
           console.log(err)
       })
+
     },
-    //点击获取验证码 并判断手机号格式
-    huoqu:function(){
-        let that = this;
-        let phoneNum = that.phone;
-        let reg=11 && /^((13|14|15|17|18)[0-9]{1}\d{8})$/;
-        that.errmessage  = '';
-        that.sending = false;
-        console.log(phoneNum)
-         if(phoneNum ==''){
-                console.log(111)
-                that.errmessage = "请输入手机号码";
-                 that.sending  = true;
-            }else if(!reg.test(that.phone)){
-                console.log(222);
-                that.errmessage = "手机格式不正确";
-                 that.sending  = true;
-            }else{
-                  let result = setInterval( ()=>{
-               --that.second;
-               if(that.second < 0)
-                 {
-                  clearInterval(result);
-                  that.sending  = true;
-                  that.disabled = false;
-                  that.second = 60;
-                  }                   
-                 }, 1000);
-             that.errmessage  = '';
-            }   
-        that.$axios.get('pocket/wxchat/sms/', { params: { 'phone':phoneNum}})
-            .then(res=>{
-                console.log(res.data)
-            })
-            .catch(err=>{
-                console.log(err)
-            })
-        // that.$axios({
-        //     methods:'post',
-        //     url:'pocket/wxchat/sms/',
-        //     data:that.qs.stringify(phonedata) 
-        // })
-        // .then(res=>{
-        //     console.log(res.data)
-        // })
-        // .catch(err=>{
-        //     console.log(err)
-        // })
+    // 按钮的激活状态
+    activeBind(){
+        if(this.phone&&this.yzm){
+        this.canBind=true;
+    }else{
+         this.canBind=false;
+    }
     },
-    bangding:function(){
-        let that = this;
-        let bdPhone = that.phone;  //绑定手机号
-        let bdyzm = that.yanzhengma; //绑定验证码
-        let bdopenid = that.openID;//微信openid
-        that.$axios.get('pocket/wxchat/bingd', { params: { 'phone':bdPhone,"openId":bdopenid,"code":bdyzm}})
-        .then(res=>{
-            console.log(res.data)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
+    // 去绑定
+    bindAccount(){
+    if(!this.canBind){ 
+        this.$toast('请填写完整');
+        return false; 
+    } 
+
+     this.$axios.get('pocket/wxchatc/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':3}})
+      .then(res=>{
+              let that = this
+          if(res.data.code===0){
+           this.$toast('绑定成功！');
+             setTimeout(function(){
+               that.$router.replace('/myOrder')
+           },1000)
+         
+          }else{
+              this.$toast(res.data.msg);
+          }
+      
+          
+          console.log(res.data)
+      })
+      .catch(err=>{
+          this.$toast(err);
+      })
+   
+         
     }
   }
 }
 </script>
 
 <style scoped>
+.pocket{
+    font-size: 48px;
+    text-align: center;
+    height: 208px;
+    line-height: 78px;
+    color:#68B6F7;
+}
+.bindingInfo{
+    padding-top: 140px;
+}
 .bussiness-prove{
     background: #fafafa;
     padding: 40px 60px;
@@ -156,7 +166,8 @@ export default {
     border: 1px solid #e5e5e5;
 }
 .obtain-yzm{
-    background: #eeeeee;
+   background: #68B6F7;
+   color: #ffffff;
 }
 .bussiness-prove{
     margin-bottom: 40px;
@@ -164,10 +175,16 @@ export default {
  .binding{
     text-align: center;
     margin-top: 90px;
+  
 }
 .binding-info{
     width: 60%;
-    background: #eeeeee;
+   background: #eee;
+     color: #999;
+}
+.canBinding{
+     background: #68B6F7;
+     color: #ffffff;
 }
  
 </style>
