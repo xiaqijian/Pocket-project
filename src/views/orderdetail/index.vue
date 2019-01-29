@@ -82,8 +82,8 @@ export default {
       let that = this;
     this.$axios.get('pocket/wxchat/updateWorkOrder', { params: { 'workOrderId': that.workOrderId, 'uid': that.uid }})
       .then((res) => {
-        console.log(res.data.data)
-        that.$toast.success(res.data.data);
+        // console.log(res)
+        that.$toast.success(res.data.msg);
         that.getdata(that.workOrderId)
       })
       .catch((err) => {
