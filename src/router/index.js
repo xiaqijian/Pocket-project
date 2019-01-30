@@ -164,7 +164,7 @@ export default new Router({
     },
     {
       path: '/serviceState',
-      name: 'serviceEvaluation',
+      name: 'serviceState',
       component: () => import('@/views/my/serviceState'),
       meta: {
         title: '业务状态',
