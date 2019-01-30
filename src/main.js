@@ -23,7 +23,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.qs = qs
 
-// let url = 'http://www.insoup.cn/pocket/wxchat?isBind=y&&user=4&&isCreated=n'
+// let url = 'http://www.insoup.cn/pocket/wxchat?isBind=y&user=6&isCreated=n'
 
 
 
@@ -32,21 +32,21 @@ router.beforeEach((to, from, next) => {
   let url = window.location.href
   let oldepath = to.path
   console.log(parseQueryString(url))
-  localStorage.setItem('user', JSON.stringify(parseQueryString(url)) )
-  
+  localStorage.setItem('user', JSON.stringify(parseQueryString(url)))
+
   if (to.path === '/informationBind') {
-    
+
   } else {
-    localStorage.setItem('oldepath', oldepath )
+    localStorage.setItem('oldepath', oldepath)
   }
   let isBind = parseQueryString(url).isBind
   /* 路由发生变化修改页面title */
-  let token = isBind == 'y' ? true: false;
+  let token = isBind == 'y' ? true : false;
   if (to.meta.title) {
     document.title = to.meta.title
   }
   if (token) {
-     next()
+    next()
   } else {
     if (to.path === '/informationBind') {
       next()

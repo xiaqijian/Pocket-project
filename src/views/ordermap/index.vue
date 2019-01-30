@@ -44,10 +44,7 @@
        this.getdata()
        console.log('初始化')
     },
-    getuid () {
-      let uid = JSON.parse(localStorage.getItem('user'))
-      this.uid = uid.user
-    },
+    
     updated () {
        console.log('初始化22222')    
     },
@@ -55,6 +52,10 @@
  
     },
     methods: {
+      getuid () {
+        let uid = JSON.parse(localStorage.getItem('user'))
+        this.uid = uid.user
+      },
       // 请求数据
       getdata () {
         let that = this;

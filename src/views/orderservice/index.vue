@@ -7,7 +7,7 @@
         <van-cell title="客户地址" :value="datadetail.province + datadetail.area + datadetail.address">
            <!-- <van-icon slot="right-icon" name="location" class="custom-icon" /> -->
         </van-cell>
-        <van-cell title="工单业务" :value="datadetail.businessName" />
+        <!-- <van-cell title="工单业务" :value="datadetail.businessName" /> -->
         <van-cell title="工单类型" is-link :value="datadetail.busDesc" />
         <van-cell title="服务状态" :value="datadetail.statudDesc" />
         <van-cell title="创建时间" :value="datadetail.addTime" />
@@ -22,7 +22,20 @@
 
       <van-collapse v-model="activeNames">
         <van-collapse-item title="佣金说明" name="1">
-          <span v-for="item in datadetail.commissions" :key="item.id"> {{item.commissionName}} 一共{{item.score}}分 --- 每分 {{item.money}}元<br></span>
+           <span style="font-size:16px; color: red;">总分：20分</span>
+           <van-row>
+            <!-- <van-col span="6">类别</van-col> -->
+            <van-col span="8">起始分数</van-col>
+            <van-col span="8">结束分数</van-col>
+            <van-col span="8">佣金</van-col>
+          </van-row>
+          <van-row v-for="item in datadetail.commissions" :key="item.id">
+            <!-- <van-col span="6">{{item.commissionName}}</van-col> -->
+            <van-col span="8">{{item.startScore}}</van-col>
+            <van-col span="8">{{item.endScore}}</van-col>
+            <van-col span="8">{{item.money}}</van-col>
+          </van-row>
+          <!-- <span > {{item.commissionName}} 一共{{item.score}}分 --- 每分 {{item.money}}元<br></span> -->
         </van-collapse-item>
       </van-collapse>
       <div class="btn">
