@@ -7,16 +7,16 @@
           label="手机号"
           placeholder="请输入手机号"
         >
-         <van-button slot="button" size="small" type="primary" @click = "findId">匹配客户</van-button>
+         <!-- <van-button slot="button" size="small" type="primary" @click = "findId">匹配客户</van-button> -->
         </van-field>
-        <van-cell-group>
+        <van-cell-group  v-show="showbtn">
           <van-cell title="店铺名称" :value="userdata.shopName" />
           <van-cell title="联系人" :value="userdata.name" />
           <van-cell title="地区" :value="area" />
           <van-cell title="详细地址" :value="userdata.address" />
            <van-cell title="业务类型" is-link :value="typedata" @click="seletype" />
         </van-cell-group>
-        <van-cell-group>
+        <van-cell-group  v-show="showbtn">
         <van-field
           v-model="addWorkOrderfrom.remark"
           label="备注"
@@ -27,8 +27,14 @@
         />
       </van-cell-group>
       </van-cell-group>
-      <div class="btn">
+      <div class="btn" v-show="showuser">
+         <van-button type="primary" size="large" @click="findId">匹配客户</van-button>
+      </div>
+      <div class="btn" v-show="showwork">
          <van-button type="primary" size="large" @click="addwork">新增工单</van-button>
+      </div>
+      <div class="btn" v-show="showadd">
+         <!-- <van-button type="primary" size="large" @click="addwork">新增工单</van-button> -->
          <router-link to="/adduser">
              <van-button type="warning" size="large">新建客户</van-button>
         </router-link>
@@ -61,6 +67,10 @@ export default {
     return {
        index: "我是首页",
        show: false,
+       showbtn: false,
+       showwork: false,
+       showadd: false,
+       showuser: true,
        activeNames: ['1'],
        value: '',
        phone: '18812345688',
@@ -83,16 +93,31 @@ export default {
     }
   },
   mounted () {
+    this.getuid()
     this.getUserInfo()
     this.checkBusDate ()
     this.addWorkOrderfrom.uid = this.uid
   },
   methods: {
+    checkPhone(phone){ 
+        if(!(/^1(3|4|5|7|8)\d{9}$/.test(phone))){ 
+            return true; 
+        } 
+      },
+     getuid () {
+      let uid = JSON.parse(localStorage.getItem('user'))
+      this.uid = uid.user
+    },
     seletype () {
        this.show = true
     },
     addwork () {
       console.log(this.addWorkOrderfrom)
+      // bId
+      if(this.addWorkOrderfrom.bId == "") {
+        this.$toast('请选择业务类型')
+        return false
+      }
       let that = this;
         this.$axios.get('pocket/wxchat/addWorkOrder', { params: that.addWorkOrderfrom })
           .then((res) => {
@@ -102,9 +127,10 @@ export default {
                 duration: 1000,
                 background: '#1989fa'
               });
-              // that.$router.go(0)
+              that.$router.replace('/orderlist')
           })
           .catch((err) => {
+             this.$toast(err);
             console.log(err)
           })
     },
@@ -141,12 +167,12 @@ export default {
             that.setcolumns(that.typecolumns)
           })
           .catch((err) => {
+             this.$toast(err);
             console.log(err)
           })
     },
     // 获取业务员信息
     getUserInfo () {
-       
        let that = this;
         this.$axios.get('pocket/wxchat/getUserInfo', { params: { 'uid': that.uid  }})
           .then((res) => {
@@ -154,6 +180,7 @@ export default {
             that.area = res.data.data.province + res.data.data.area
           })
           .catch((err) => {
+             this.$toast(err);
             console.log(err)
           })
     },
@@ -164,6 +191,8 @@ export default {
           .then((res) => {
             if (res.data.data == 101) {
               that.$toast.fail(res.data.msg);
+              that.showadd = true
+
               return false
             }
             console.log(res.data)
@@ -175,15 +204,26 @@ export default {
               duration: 1000,
               background: '#1989fa'
             });
+            that.showbtn = true
+            that.showwork = true
+            that.showadd = false
+            that.showuser = false
           })
           .catch((err) => {
+             this.$toast(err);
             console.log(err)
           })
     },
     findId () {
+      if(this.phone == "") {
+        this.$toast('手机号码不能为空');
+        return false
+      }
+      if(this.checkPhone(this.phone)) {
+         this.$toast('手机号码不正确');
+        return false
+      }
       this.getCustomerInfo(this.phone)
-
-      
     }
   },
   components: {
@@ -199,7 +239,7 @@ export default {
 }
 .btn {
   padding: 20px;
-  padding-bottom: 100px;
+  // padding-bottom: 100px;
   
   .van-button--large {
      margin-top:30px;

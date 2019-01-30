@@ -109,6 +109,7 @@ export default {
            console.log(res)
          })
          .catch((err) => {
+            this.$toast(err);
            console.log(err)
          })
     },

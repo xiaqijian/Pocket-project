@@ -17,7 +17,7 @@ service.interceptors.response.use(
       console.log(response)
     if(response.data.code == -200) {
       Toast(response.data.msg);
-      return Promise.reject('error')
+      return Promise.reject(response.data.msg)
     }
     if(response.code == 0) {
         return response

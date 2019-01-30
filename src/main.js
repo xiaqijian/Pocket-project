@@ -28,7 +28,17 @@ Vue.prototype.qs = qs
 
 
 router.beforeEach((to, from, next) => {
+  console.log(to)
   let url = window.location.href
+  let oldepath = to.path
+  console.log(parseQueryString(url))
+  localStorage.setItem('user', JSON.stringify(parseQueryString(url)) )
+  
+  if (to.path === '/informationBind') {
+    
+  } else {
+    localStorage.setItem('oldepath', oldepath )
+  }
   let isBind = parseQueryString(url).isBind
   /* 路由发生变化修改页面title */
   let token = isBind == 'y' ? true: false;
@@ -61,7 +71,7 @@ function parseQueryString(url) {
   var keyvalue = [];
   var key = "",
     value = "";
-  var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&&");
+  var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
   for (var i in paraString) {
     keyvalue = paraString[i].split("=");
     key = keyvalue[0];

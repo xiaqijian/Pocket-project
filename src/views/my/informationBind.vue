@@ -16,7 +16,7 @@
                 />
 
                 <van-field
-                    type="password"
+                    type="text"
                     label="验证码"
                     placeholder="请输入验证码"
                     required
@@ -45,6 +45,8 @@ export default {
                 canClick:true, //添加canClick
                 phone:'',
                 yzm:'',
+                uid: 3,
+                openId: 1,
                 canBind:false
 
        
@@ -54,18 +56,24 @@ export default {
 
   },
   mounted(){
+      this.getuid()
      this.getuserInfo();
   },
   methods:{
-      getuserInfo(){
+       getuid () {
+      let uid = JSON.parse(localStorage.getItem('user'))
+      this.uid = uid.user
+      this.openId = uid.openId
+    },
+    getuserInfo(){
      let that = this;
-      that.$axios.get('pocket/wxchat/getUserInfo', { params: {'uid': 3}})
-      .then(res=>{
-          console.log(res.data)
-      })
-      .catch(err=>{
-          this.$toast(err);
-      })
+    //   that.$axios.get('pocket/wxchat/getUserInfo', { params: {'uid': that.uid}})
+    //   .then(res=>{
+    //       console.log(res.data)
+    //   })
+    //   .catch(err=>{
+    //     //   this.$toast(err);
+    //   })
       },
     obtainYzm:function(){
       if(!(/^1[34578]\d{9}$/.test(this.phone))){ 
@@ -115,14 +123,15 @@ export default {
         this.$toast('请填写完整');
         return false; 
     } 
-
-     this.$axios.get('pocket/wxchat/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':3}})
+     let that = this
+     this.$axios.get('pocket/wxchat/bingd', { params: {'mobile': this.phone,'code':this.yzm,'openId': that.openId}})
       .then(res=>{
               let that = this
           if(res.data.code===0){
            this.$toast('绑定成功！');
              setTimeout(function(){
-               that.$router.replace('/myOrder')
+              let  oldepath = localStorage.getItem('oldepath')
+               that.$router.replace(oldepath)
            },1000)
          
           }else{
@@ -179,7 +188,7 @@ export default {
 }
 .binding-info{
     width: 60%;
-   background: #eee;
+   background: #c8c9cc;
      color: #999;
 }
 .canBinding{

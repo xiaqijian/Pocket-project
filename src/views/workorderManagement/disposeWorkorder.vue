@@ -58,12 +58,17 @@ export default {
   mounted(){
         //请求所有数据  封装成一个函数
         // this.getallData(1);
+        this.getuid()
   },
   methods:{
+    getuid () {
+      let uid = JSON.parse(localStorage.getItem('user'))
+      this.uid = uid.user
+    },
       //事件操作
     getallData(page, pageSize =5){
         let that = this;
-        let userID = 3;
+        let userID = this.uid;
         that.$axios.get('pocket/wxchat/getWorkOrderStatus', 
           { params: { 
             'uid':userID,
@@ -166,6 +171,7 @@ export default {
        isLoading: false, //下拉刷新
        loading: false,
        finished: false,
+       uid: 3,
        cantext:'取消',
        cuidan:'确认',
        canbtn:true,

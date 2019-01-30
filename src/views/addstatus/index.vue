@@ -31,9 +31,14 @@
 <script>
 export default {
   mounted(){
+    this.getuid()
       // this.getdata(1)
   },
   methods:{
+     getuid () {
+      let uid = JSON.parse(localStorage.getItem('user'))
+      this.uid = uid.user
+    },
       clickserver (id) {
           this.$router.push({ path: 'orderservice', query: { id: id }})
       },
@@ -61,7 +66,7 @@ export default {
     },
     getdata (page, pageSize =5  ) {
         let that = this;
-        let userID = 3;
+        let userID = this.uid;
         that.$axios.get('pocket/wxchat/getWorkOrderStatus', 
           { params: { 
             'uid':userID,
@@ -77,12 +82,14 @@ export default {
           .catch(err=>{
               console.log(err)
               this.$toast('数据获取失败');
+               this.$toast(err);
           })
     }
   },
   data () {
     return {
       list: [],
+      uid: 3,
       loading: false,
       finished: false,
       offset: 10,

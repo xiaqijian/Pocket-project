@@ -61,10 +61,13 @@ export default {
     }
   },
   mounted () {
-    
+    this.getuid()
   },
   methods: {
-   
+    getuid () {
+      let uid = JSON.parse(localStorage.getItem('user'))
+      this.uid = uid.user
+    },
   },
   components: {
 

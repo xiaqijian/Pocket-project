@@ -71,6 +71,7 @@ export default {
          console.log(that.status)
       })
       .catch((err) => {
+         this.$toast(err);
         console.log(err)
       })
    },

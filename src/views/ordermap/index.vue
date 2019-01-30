@@ -40,8 +40,13 @@
       } 
     },
     mounted () {
+       this.getuid()
        this.getdata()
        console.log('初始化')
+    },
+    getuid () {
+      let uid = JSON.parse(localStorage.getItem('user'))
+      this.uid = uid.user
     },
     updated () {
        console.log('初始化22222')    
@@ -59,6 +64,7 @@
             that.getmark(res.data.data)
           })
           .catch((err) => {
+             this.$toast(err);
             console.log(err)
           })
       },

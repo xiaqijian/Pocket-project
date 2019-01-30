@@ -30,13 +30,18 @@ export default {
   mounted(){
         //请求所有数据  封装成一个函数
         // this.getweekData(1);
+        this.getuid()
   },
   methods:{
+     getuid () {
+      let uid = JSON.parse(localStorage.getItem('user'))
+      this.uid = uid.user
+    },
       //事件操作
       //按月查看数据
       getmouthData(page, pageSize =5){
         let that = this;
-        let userID = 3;
+        let userID = this.uid;
         that.$axios.get('pocket/wxchat/statisticsMonth', 
           { params: { 
             'uid':userID,
@@ -57,7 +62,7 @@ export default {
      //按周查看数据
       getweekData(page1, pageSize =5){
           let that = this;
-          let userID = 3;
+          let userID = this.uid;
           that.$axios.get('pocket/wxchat/statisticsWeek', 
             { params: { 
               'uid':userID,
@@ -131,6 +136,7 @@ export default {
        page:0,
        page1:0,
        active:0,
+       uid: 3,
        isLoading: false,
        loading: false,
        finished: false,

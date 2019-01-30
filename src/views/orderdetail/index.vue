@@ -61,6 +61,7 @@ export default {
         that.datadetail = res.data.data
       })
       .catch((err) => {
+         this.$toast(err);
         console.log(err)
       })
    },
@@ -87,6 +88,7 @@ export default {
         that.getdata(that.workOrderId)
       })
       .catch((err) => {
+         this.$toast(err);
         console.log(err)
       })
    }
