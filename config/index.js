@@ -12,7 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/pocket': {
-        target: 'http://www.mypocketms.com/',  
+        target: 'http://www.insoup.cn/wx/',  
+        // target: 'http://www.insoup.cn/',  
         changeOrigin: true,
         pathRewrite: {                //需要rewrite重写的, 如果在服务器端做了处理则可以不要这段
           '^/pocket': ''

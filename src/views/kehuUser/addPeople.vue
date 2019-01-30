@@ -39,25 +39,34 @@ import { ifError } from 'assert';
         >
         </van-field>
         <div class="uploadimg">
-            <h5>营业执照</h5>
-            <van-uploader  :after-read="onRead" :disabled='updisabled' accept="image/gif, image/jpeg" multiple>
+            <div>营业执照</div>
+            <!-- <van-uploader  :after-read="onRead" :disabled='updisabled' accept="image/gif, image/jpeg" multiple>
               <van-icon name="photograph" size="30px"/>
-            </van-uploader>
+            </van-uploader> -->
+             <uploader
+    :files=[]
+    :limit =1
+    :capture = true
+    :url="imgUrl"
+    @onChange	='onChange'
+    @onSuccess="onSuccess"
+  >
+  </uploader>
             <div class="cover" v-if='cover' @click="onCover()"></div>
         </div>
         <div class="imgsrc">
           <img :src="imgsrc" alt="">
         </div>
-        
-      </van-cell-group>
-       <van-field
+         <van-field
           v-model="userdata.businessLicense"
           label="组织机构代码"
           placeholder="请输入组织机构代码"
         >
         </van-field>
+      </van-cell-group>
+      
       <div class="btn">
-         <van-button round size="large" @click="adduser" :disabled='submitDisabled'>新建客户</van-button>
+         <van-button round size="large" @click="adduser" :disabled='submitDisabled'>注册</van-button>
         
       </div>
 <div class="loading" v-if='onUping'>
@@ -67,6 +76,7 @@ import { ifError } from 'assert';
 </template>
 
 <script>
+ import Uploader from 'vux-uploader-component'
 export default {
   data () {
     return {
@@ -101,9 +111,13 @@ export default {
          'licenseUrl': '',
          'path':''
        },
-       file: ''
+       file: '',
+       imgUrl:''
     }
   },
+  components: {
+      Uploader,
+    },
   mounted() {
     this.getproData();
   },
@@ -135,6 +149,14 @@ export default {
         let that = this;
         that.cityshow = true;
     },
+    //照片调用
+    onSuccess(result){
+      console.log(result)
+    },
+    // onChange(fileList){
+    //   console.log(fileList);
+      
+    // },
     //省份选择确认 需要发送当前选择的省份的id 以获取省份下面的城市
     onConfirm(value, index) {
       console.log(`当前值：${value}, 当前索引：${index}`);
@@ -207,13 +229,15 @@ export default {
               console.log(err)
           })
     },
-   async onRead(file) {
-      // console.log(file)
+   async onChange(fileList) {
+      console.log(fileList)
+      var file = fileList[0];
       this.onUping=true;
-      console.log(file.file)
-      this.imgsrc = file.content
-      this.file = file.file
+      // console.log(file.file)
+      // this.imgsrc = file.content
+      this.file = file
       let res = await this.uploadLicense(this.userdata.mobile, this.file)
+      console.log(res)
        if(res.data.code=='0'){//说明上传成功
               if(res.data.data.code!='无'){//图片解析成功，把机构代码填入
                   this.userdata.businessLicense = res.data.data.code;
@@ -231,6 +255,7 @@ export default {
     },
     // 上传营业执照
     uploadLicense (phone, file) {
+      console.log(file,22)
       let that = this
       let formdata = new FormData();
       formdata.append('phone', phone);
@@ -320,7 +345,7 @@ export default {
 
 <style lang="less" type="text/less" scoped>
 .app-container {
-  height: 100%;
+  // height: 100%;
   background: #efefef;
   position: relative;
   width: 100%;
@@ -340,7 +365,7 @@ export default {
   padding: 20px;
   padding-bottom: 100px;
   .van-button--large {
-     margin-top:30px;
+     margin-top:10px;
      background: #68B6F7;
      color: #fff;
      width: 60%;
@@ -355,9 +380,11 @@ export default {
     position: absolute;
     left: 0;
     bottom: 0;
-    width: 13%;
-    height: 60%;
+    width: 30%;
+    height: 50%;
     background: rgba(0,0,0,0);
+    z-index: 1000;
+    
   }
 }
 
@@ -372,6 +399,9 @@ export default {
 <style>
 .van-field .van-cell__title{
   max-width: 120px;
+}
+.vux-uploader .vux-uploader_hd .vux-uploader_info{
+  color:#fff !important;
 }
 </style>
 

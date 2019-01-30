@@ -2766,6 +2766,11 @@ execa@^0.7.0:
     signal-exit "^3.0.0"
     strip-eof "^1.0.0"
 
+exif-js@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/exif-js/-/exif-js-2.3.0.tgz#9d10819bf571f873813e7640241255ab9ce1a814"
+  integrity sha1-nRCBm/Vx+HOBPnZAJBJVq5zhqBQ=
+
 exit@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/exit/-/exit-0.1.2.tgz#0632638f8d877cc82107d30a0fff1a17cba1cd0c"
@@ -7622,6 +7627,13 @@ vue-template-es2015-compiler@^1.5.3, vue-template-es2015-compiler@^1.6.0:
 vue@^2.5.2:
   version "2.5.21"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.21.tgz#3d33dcd03bb813912ce894a8303ab553699c4a85"
+
+vux-uploader-component@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vux-uploader-component/-/vux-uploader-component-1.0.2.tgz#d9aba86b94b1b2738550e0000dab29c21a6a8c91"
+  integrity sha512-rD9kqAlgvrjt3VSicijWOKV/Hn1woyaekEqs8L7XTLhVODN3hhg8X6MsKHC6qkGKoYamxb2BDxH9SvssosAoHg==
+  dependencies:
+    exif-js "^2.3.0"
 
 w3c-hr-time@^1.0.1:
   version "1.0.1"
