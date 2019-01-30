@@ -11,12 +11,7 @@ import { ifError } from 'assert';
           placeholder="请输入手机号"
         />
         
-        <van-field
-          v-model="userdata.businessLicense"
-          label="组织机构代码"
-          placeholder="组织机构代码"
-        >
-        </van-field>
+       
         <van-cell title="省份" is-link :value="provval" size="large" @click="sfSelect"/>
         <van-cell title="城市" is-link :value="cityval" size="large" @click="csSelect"/>
         <van-popup v-model="show"  position="bottom">
@@ -48,11 +43,19 @@ import { ifError } from 'assert';
             <van-uploader  :after-read="onRead" :disabled='updisabled' accept="image/gif, image/jpeg" multiple>
               <van-icon name="photograph" size="30px"/>
             </van-uploader>
+            <div class="cover" v-if='cover' @click="onCover()"></div>
         </div>
         <div class="imgsrc">
           <img :src="imgsrc" alt="">
         </div>
+        
       </van-cell-group>
+       <van-field
+          v-model="userdata.businessLicense"
+          label="组织机构代码"
+          placeholder="请输入组织机构代码"
+        >
+        </van-field>
       <div class="btn">
          <van-button round size="large" @click="adduser" :disabled='submitDisabled'>新建客户</van-button>
         
@@ -85,6 +88,7 @@ export default {
        submitDisabled:true,
        updisabled:true,
        onUping:false,
+       cover:true,
        userdata: {
          'name': '',///客户店铺地址
          'shopName': '',//客户名称
@@ -109,6 +113,10 @@ export default {
         if((/^1[34578]\d{9}$/.test(this.userdata.mobile))){ 
        
         this.updisabled=false;
+        this.cover = false;
+      }else{
+        this.updisabled=true;
+        this.cover = true;
       }
       },
       deep: true,
@@ -160,6 +168,12 @@ export default {
     onCancel() {
       this.show = false;
     //   this.Toast('取消');
+    },
+    onCover(){
+         if(!(/^1[34578]\d{9}$/.test(this.userdata.mobile))){ 
+       
+       this.$toast('请先填写手机号');
+      }
     },
     //城市选择确认
     onConfirm1(value, index) {
@@ -336,6 +350,15 @@ export default {
 .uploadimg {
   padding: 20px;
   border-bottom: 1px solid #efefef;
+  position:relative;
+  .cover{
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 13%;
+    height: 60%;
+    background: rgba(0,0,0,0);
+  }
 }
 
 .imgsrc {

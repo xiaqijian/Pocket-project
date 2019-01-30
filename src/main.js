@@ -25,7 +25,7 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  var ss = 'http://cyp.startupbelts.com/dist/index.html?data=0&isCreated=y&isBind=n&user=10647&customerId=10647&mobile="18812340000"';
+  var ss = 'http://cyp.startupbelts.com/dist/ind/ex.html?data=0&isCreated=y&isBind=n&user=10647&customerId=10647&mobile="18812340000"';
      var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
     //  var r =  window.location.search.substr(1).match(reg);
      var r =  ss.substr(1).match(reg);
