@@ -39,7 +39,7 @@ var isBind =  GetQueryString('isBind');
 var mobile = GetQueryString('mobile');
 localStorage.setItem('mobile', mobile);
 //customerId
-var customerId = GetQueryString('customerId');
+var customerId = GetQueryString('user');
 localStorage.setItem('customerId', customerId);
 //uid
 var uid = GetQueryString('user');
