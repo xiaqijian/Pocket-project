@@ -1,25 +1,25 @@
 
-import { ifError } from 'assert';
 <template>
   <div class="app-container">
       <van-cell-group>
-        <van-field v-model="userdata.shopName" label="名称" placeholder="请输入名字" />
-        <van-field v-model="userdata.name" label="店铺名称" placeholder="请输入店铺名称" />
+
+        <van-field v-show="showbtn" v-model="userdata.shopName" label="名称" placeholder="请输入名字" />
+        <van-field v-show="showbtn" v-model="userdata.name" label="店铺名称" placeholder="请输入店铺名称" />
         <van-field
           v-model="userdata.mobile"
           label="手机号"
           placeholder="请输入手机号"
         />
         
-        <van-field
+        <van-field v-show="showbtn"
           v-model="userdata.businessLicense"
           label="组织机构代码"
           placeholder="组织机构代码"
         >
         </van-field>
-        <van-cell title="省份" is-link :value="provval" size="large" @click="sfSelect"/>
-        <van-cell title="城市" is-link :value="cityval" size="large" @click="csSelect"/>
-        <van-popup v-model="show"  position="bottom">
+        <van-cell v-show="showbtn" title="省份" is-link :value="provval" size="large" @click="sfSelect"/>
+        <van-cell v-show="showbtn" title="城市" is-link :value="cityval" size="large" @click="csSelect"/>
+        <van-popup v-model="show" v-show="showbtn"  position="bottom">
             <van-picker
             show-toolbar
             title="省份选择"
@@ -28,7 +28,7 @@ import { ifError } from 'assert';
             @confirm="onConfirm"
             />      
         </van-popup>
-        <van-popup v-model="cityshow"  position="bottom">
+        <van-popup v-model="cityshow" v-show="showbtn"  position="bottom">
             <van-picker
             show-toolbar
             title="城市选择"
@@ -38,23 +38,27 @@ import { ifError } from 'assert';
             />      
         </van-popup>
          <van-field
+         v-show="showbtn"
           v-model="userdata.address"
           label="详细地址"
           placeholder="请输入地址信息"
         >
         </van-field>
-        <div class="uploadimg">
+        <div class="uploadimg" v-show="showbtn">
             <h5>营业执照</h5>
             <van-uploader  :after-read="onRead" accept="image/gif, image/jpeg" multiple>
               <van-icon name="photograph" size="30px"/>
             </van-uploader>
         </div>
-        <div class="imgsrc">
+        <div class="imgsrc" v-show="showbtn"> 
           <img :src="imgsrc" alt="">
         </div>
       </van-cell-group>
-      <div class="btn">
+      <div class="btn" v-show="showbtn">
         <van-button round size="large" @click="adduser" >新建客户</van-button>
+      </div>
+      <div class="btn" v-show="showbtn1">
+        <van-button round size="large" @click="xiayibu" >下一步</van-button>
       </div>
 
   </div>
@@ -68,12 +72,14 @@ export default {
        activeNames: ['1'],
        value: '',
        uid: 3,
+       showbtn: false,
        imgsrc: '',
        provval:'请选择省份',
        cityval:'请选择城市',
        morencity:'',
        show: false,
        cityshow:false,
+       showbtn1:true,
        provSelect:[],
        provdata:[],
        citySelect:[],
@@ -173,12 +179,26 @@ export default {
               console.log(err)
           })
     },
-    onRead(file) {
+    async onRead(file) {
       // console.log(file)
+      let that = this
       console.log(file.file)
       this.imgsrc = file.content
       this.file = file.file
+      let data = await that.uploadLicense(that.userdata.mobile, that.file);
+      console.log(data)
     },
+    xiayibu:function(){
+       let that = this;
+      if(!(/^1[34578]\d{9}$/.test(that.userdata.mobile))){ 
+        this.$toast('手机号码有误，请重填');
+        return false; 
+      }else{
+        that.showbtn = true;
+      that.showbtn1 = false;
+      }   
+    },
+
     // 上传营业执照
     uploadLicense (phone, file) {
       let that = this
@@ -191,13 +211,13 @@ export default {
       }else{
         return new Promise ((resolve, reject) => {
          that.$axios({
-           url:'pocket/wxchatc/uploadLicense/'+ phone,
+            url:'pocket/wxchatc/uploadLicense/'+ phone,
             method:'post',
             data:formdata,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
          }).then((res) => {
            if(res.data.code=='0'){//说明上传成功
-              if(res.data.data.code!='无'){//图片解析成功，把机构代码填入
+              if(res.data.data.code!=''){//图片解析成功，把机构代码填入
                   this.userdata.businessLicense = res.data.data.code;
               }else{
                   this.$toast('图片解析失败，请重新上传！');
@@ -221,7 +241,9 @@ export default {
     // 新增客户
     async adduser(){
        let that = this; 
-       let data = await that.uploadLicense(that.userdata.mobile, that.file)
+       
+       console.log(data);
+       
        let phofuwuadd = data.path
        let khname = that.userdata.shopName;
        let khaddr = that.userdata.name;
@@ -231,6 +253,10 @@ export default {
        let shengfen = that.provval;
        let chengshi = that.cityval;
        let csID = that.cityidid;
+       if(data.code = '无' || gszzcode == ""){
+         this.$toast('营业执照代码解析错误或者填写营业执照代码');
+         return false
+       }
       if(!(/^1[34578]\d{9}$/.test(that.userdata.mobile))){ 
         this.$toast('手机号码有误，请重填');
         return false; 
