@@ -1,24 +1,20 @@
 
+import { ifError } from 'assert';
 <template>
   <div class="app-container">
       <van-cell-group>
         <van-field v-model="userdata.shopName" label="名称" placeholder="请输入名字" />
-        <van-field v-model="userdata.name" label="店铺名称" placeholder="请输入店铺地址" />
+        <van-field v-model="userdata.name" label="店铺名称" placeholder="请输入店铺名称" />
         <van-field
           v-model="userdata.mobile"
           label="手机号"
           placeholder="请输入手机号"
         />
-         <van-field
-          v-model="userdata.address"
-          label="地址"
-          placeholder="请输入地址信息"
-        >
-        </van-field>
+        
         <van-field
           v-model="userdata.businessLicense"
-          label="公司机构代码"
-          placeholder="公司组织机构代码"
+          label="组织机构代码"
+          placeholder="组织机构代码"
         >
         </van-field>
         <van-cell title="省份" is-link :value="provval" size="large" @click="sfSelect"/>
@@ -41,10 +37,16 @@
             @confirm="onConfirm1"
             />      
         </van-popup>
+         <van-field
+          v-model="userdata.address"
+          label="详细地址"
+          placeholder="请输入地址信息"
+        >
+        </van-field>
         <div class="uploadimg">
             <h5>营业执照</h5>
             <van-uploader  :after-read="onRead" accept="image/gif, image/jpeg" multiple>
-              <van-icon name="photograph" />
+              <van-icon name="photograph" size="30px"/>
             </van-uploader>
         </div>
         <div class="imgsrc">
@@ -194,9 +196,19 @@ export default {
             data:formdata,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
          }).then((res) => {
-          //  console.log(res)
-           resolve(res.data.data)
-          //  console.log(res.data)
+           if(res.data.code=='0'){//说明上传成功
+              if(res.data.data.code!='无'){//图片解析成功，把机构代码填入
+                  this.userdata.businessLicense = res.data.data.code;
+              }else{
+                  this.$toast('图片解析失败，请重新上传！');
+              }
+                resolve(res.data.data)
+           }else{
+             reject(res)
+           }
+           console.log(res)
+         
+           console.log(222,res.data)
          })
          .catch((err) => {
            console.log(err)
