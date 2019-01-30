@@ -23,12 +23,12 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.qs = qs
 
-let url = 'http://www.insoup.cn/pocket/wxchat?isBind=y&&user=4&&isCreated=n'
 
-let isBind = parseQueryString(url).isBind
 
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */
+  let url = window.location.href
+  let isBind = parseQueryString(url).isBind
   let token = isBind == 'y' ? true: false;
   if (to.meta.title) {
     document.title = to.meta.title

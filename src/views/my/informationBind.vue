@@ -59,7 +59,7 @@ export default {
   methods:{
       getuserInfo(){
      let that = this;
-      that.$axios.get('pocket/wxchatc/getUserInfo', { params: {'uid': 3}})
+      that.$axios.get('pocket/wxchat/getUserInfo', { params: {'uid': 3}})
       .then(res=>{
           console.log(res.data)
       })
@@ -87,7 +87,7 @@ export default {
              
         },1000)
         //发送验证码
-         this.$axios.get('pocket/wxchatc/sms/', { params: {'phone': this.phone}})
+         this.$axios.get('pocket/wxchat/sms/', { params: {'phone': this.phone}})
       .then(res=>{
             if(res.data.code==0){
           this.$toast('验证码已发送');
@@ -116,7 +116,7 @@ export default {
         return false; 
     } 
 
-     this.$axios.get('pocket/wxchatc/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':3}})
+     this.$axios.get('pocket/wxchat/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':3}})
       .then(res=>{
               let that = this
           if(res.data.code===0){
