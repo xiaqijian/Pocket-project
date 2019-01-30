@@ -118,7 +118,6 @@ export default {
 
      this.$axios.get('pocket/wxchatc/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':3}})
       .then(res=>{
-              let that = this
           if(res.data.code===0){
            this.$toast('绑定成功！');
              setTimeout(function(){

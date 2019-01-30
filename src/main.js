@@ -25,7 +25,7 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  // var ss = 'http://cyp.startupbelts.com/dist/index.html?data=0&isCreated=n&isBind=n&uid=10647&customerId=10647&mobile="18812340000"';
+  // var ss = 'http://cyp.startupbelts.com/dist/index.html?data=0&isCreated=n&isBind=n&user=10647&customerId=10647&mobile="18812340000"';
      var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
      var r =  window.location.search.substr(1).match(reg);
     //  var r =  ss.substr(1).match(reg);
@@ -42,8 +42,9 @@ localStorage.setItem('mobile', mobile);
 var customerId = GetQueryString('customerId');
 localStorage.setItem('customerId', customerId);
 //uid
-var uid = GetQueryString('uid');
+var uid = GetQueryString('user');
 localStorage.setItem('uid', uid);
+console.log('isCreated:',isCreated,'isBind:',isBind,'mobile:',mobile,'user',uid);
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */
   if (to.meta.title) {
