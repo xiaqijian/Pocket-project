@@ -3,8 +3,8 @@
       <div class="detail-top">
          <img src="../../assets/tx.png" alt="" class="header-img"> 
           <div class="user-id">
-               <label>ID：</label>
-               <span>1899008475y7</span>
+               <label>{{name}}</label>
+               <span></span>
            </div>
         
     </div>
@@ -89,6 +89,7 @@ export default {
         uid:'',
         //mobelie:
         mobile:'',
+        name:'',
         popupNameStyle:{
             background:'#fafafa',
             top:'0',
@@ -126,6 +127,7 @@ export default {
           that.storeName = res.data.data.shopName;
           that.customerName = res.data.data.name;
           that.contact = res.data.data.mobile;
+          that.name = res.data.data.name;
       })
       .catch(err=>{
           this.$toast(err);

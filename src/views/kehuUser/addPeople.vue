@@ -1,25 +1,25 @@
 
+import { ifError } from 'assert';
 <template>
   <div class="app-container">
       <van-cell-group>
-
-        <van-field v-show="showbtn" v-model="userdata.shopName" label="名称" placeholder="请输入名字" />
-        <van-field v-show="showbtn" v-model="userdata.name" label="店铺名称" placeholder="请输入店铺名称" />
+        <van-field v-model="userdata.shopName" label="名称" placeholder="请输入名字" />
+        <van-field v-model="userdata.name" label="店铺名称" placeholder="请输入店铺名称" />
         <van-field
           v-model="userdata.mobile"
           label="手机号"
           placeholder="请输入手机号"
         />
         
-        <van-field v-show="showbtn"
+        <van-field
           v-model="userdata.businessLicense"
           label="组织机构代码"
           placeholder="组织机构代码"
         >
         </van-field>
-        <van-cell v-show="showbtn" title="省份" is-link :value="provval" size="large" @click="sfSelect"/>
-        <van-cell v-show="showbtn" title="城市" is-link :value="cityval" size="large" @click="csSelect"/>
-        <van-popup v-model="show" v-show="showbtn"  position="bottom">
+        <van-cell title="省份" is-link :value="provval" size="large" @click="sfSelect"/>
+        <van-cell title="城市" is-link :value="cityval" size="large" @click="csSelect"/>
+        <van-popup v-model="show"  position="bottom">
             <van-picker
             show-toolbar
             title="省份选择"
@@ -28,7 +28,7 @@
             @confirm="onConfirm"
             />      
         </van-popup>
-        <van-popup v-model="cityshow" v-show="showbtn"  position="bottom">
+        <van-popup v-model="cityshow"  position="bottom">
             <van-picker
             show-toolbar
             title="城市选择"
@@ -38,29 +38,28 @@
             />      
         </van-popup>
          <van-field
-         v-show="showbtn"
           v-model="userdata.address"
           label="详细地址"
           placeholder="请输入地址信息"
         >
         </van-field>
-        <div class="uploadimg" v-show="showbtn">
+        <div class="uploadimg">
             <h5>营业执照</h5>
-            <van-uploader  :after-read="onRead" accept="image/gif, image/jpeg" multiple>
+            <van-uploader  :after-read="onRead" :disabled='updisabled' accept="image/gif, image/jpeg" multiple>
               <van-icon name="photograph" size="30px"/>
             </van-uploader>
         </div>
-        <div class="imgsrc" v-show="showbtn"> 
+        <div class="imgsrc">
           <img :src="imgsrc" alt="">
         </div>
       </van-cell-group>
-      <div class="btn" v-show="showbtn">
-        <van-button round size="large" @click="adduser" >新建客户</van-button>
+      <div class="btn">
+         <van-button round size="large" @click="adduser" :disabled='submitDisabled'>新建客户</van-button>
+        
       </div>
-      <div class="btn" v-show="showbtn1">
-        <van-button round size="large" @click="xiayibu" >下一步</van-button>
-      </div>
-
+<div class="loading" v-if='onUping'>
+ <van-loading type="spinner" color="white" />
+</div>
   </div>
 </template>
 
@@ -72,19 +71,20 @@ export default {
        activeNames: ['1'],
        value: '',
        uid: 3,
-       showbtn: false,
        imgsrc: '',
        provval:'请选择省份',
        cityval:'请选择城市',
        morencity:'',
        show: false,
        cityshow:false,
-       showbtn1:true,
        provSelect:[],
        provdata:[],
        citySelect:[],
        citydata:[],
        cityidid:'',
+       submitDisabled:true,
+       updisabled:true,
+       onUping:false,
        userdata: {
          'name': '',///客户店铺地址
          'shopName': '',//客户名称
@@ -94,7 +94,8 @@ export default {
          'province':'',//省份名称
          'area':'',//城市名称
          'areaCode':'',//城市id
-         'licenseUrl': ''
+         'licenseUrl': '',
+         'path':''
        },
        file: ''
     }
@@ -102,6 +103,19 @@ export default {
   mounted() {
     this.getproData();
   },
+   watch: {
+    'userdata.mobile': {
+      handler() {
+        if((/^1[34578]\d{9}$/.test(this.userdata.mobile))){ 
+       
+        this.updisabled=false;
+      }
+      },
+      deep: true,
+      immediate: true
+    }
+  },
+  
   methods: {
     //省份选的
     sfSelect:function(){
@@ -179,26 +193,28 @@ export default {
               console.log(err)
           })
     },
-    async onRead(file) {
+   async onRead(file) {
       // console.log(file)
-      let that = this
+      this.onUping=true;
       console.log(file.file)
       this.imgsrc = file.content
       this.file = file.file
-      let data = await that.uploadLicense(that.userdata.mobile, that.file);
-      console.log(data)
-    },
-    xiayibu:function(){
-       let that = this;
-      if(!(/^1[34578]\d{9}$/.test(that.userdata.mobile))){ 
-        this.$toast('手机号码有误，请重填');
-        return false; 
-      }else{
-        that.showbtn = true;
-      that.showbtn1 = false;
-      }   
-    },
+      let res = await this.uploadLicense(this.userdata.mobile, this.file)
+       if(res.data.code=='0'){//说明上传成功
+              if(res.data.data.code!='无'){//图片解析成功，把机构代码填入
+                  this.userdata.businessLicense = res.data.data.code;
+              }else{
+                  this.$toast('图片解析失败，请重新上传！');
+              }
+              this.submitDisabled = false
+              this.picPath = res.data.data.path
+           }else{
+              this.$toast(res.data.msg);
+             return
+           }
 
+       
+    },
     // 上传营业执照
     uploadLicense (phone, file) {
       let that = this
@@ -209,26 +225,18 @@ export default {
         this.$toast('手机号码有误，请重填');
         return false; 
       }else{
+        
         return new Promise ((resolve, reject) => {
          that.$axios({
-            url:'pocket/wxchatc/uploadLicense/'+ phone,
+           url:'pocket/wxchatc/uploadLicense/'+ phone,
             method:'post',
             data:formdata,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
          }).then((res) => {
-           if(res.data.code=='0'){//说明上传成功
-              if(res.data.data.code!=''){//图片解析成功，把机构代码填入
-                  this.userdata.businessLicense = res.data.data.code;
-              }else{
-                  this.$toast('图片解析失败，请重新上传！');
-              }
-                resolve(res.data.data)
-           }else{
-             reject(res)
-           }
+           this.onUping=false;
            console.log(res)
-         
-           console.log(222,res.data)
+           resolve(res)
+        
          })
          .catch((err) => {
            console.log(err)
@@ -241,10 +249,9 @@ export default {
     // 新增客户
     async adduser(){
        let that = this; 
-       
-       console.log(data);
-       
-       let phofuwuadd = data.path
+      //  let res = await that.uploadLicense(that.userdata.mobile, that.file)
+       let phofuwuadd = this.picPath;
+       console.log(this.phofuwuadd)
        let khname = that.userdata.shopName;
        let khaddr = that.userdata.name;
        let khphone = that.userdata.mobile;
@@ -253,14 +260,10 @@ export default {
        let shengfen = that.provval;
        let chengshi = that.cityval;
        let csID = that.cityidid;
-       if(data.code = '无' || gszzcode == ""){
-         this.$toast('营业执照代码解析错误或者填写营业执照代码');
-         return false
-       }
       if(!(/^1[34578]\d{9}$/.test(that.userdata.mobile))){ 
         this.$toast('手机号码有误，请重填');
         return false; 
-      }else if(phofuwuadd !='' && khname !='' && khaddr !='' && khphone !='' && khnameaddr !='' && gszzcode !='' && shengfen !='' && chengshi !=''){
+      }else if(phofuwuadd && khname && khaddr && khphone && khnameaddr  && gszzcode && shengfen && chengshi){
           console.log(11);
           that.$axios.post('pocket/wxchatc/customerAdd', 
            { 
@@ -305,8 +308,20 @@ export default {
 .app-container {
   height: 100%;
   background: #efefef;
+  position: relative;
+  width: 100%;
 }
-
+.loading{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background:rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 .btn {
   padding: 20px;
   padding-bottom: 100px;
