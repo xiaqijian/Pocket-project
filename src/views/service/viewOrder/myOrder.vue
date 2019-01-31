@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
- <van-tabs swipeable color ="#68B6F7" @click="onClick">
+ <van-tabs  color ="#68B6F7" @click="onClick">
   <van-tab title="全部" >
     
        <van-list

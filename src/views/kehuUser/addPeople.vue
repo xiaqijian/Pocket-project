@@ -284,6 +284,7 @@ export default {
          .catch((err) => {
            this.onUping=false;
            console.log(err)
+            this.$toast(err);
            reject(err)
          })
       })
