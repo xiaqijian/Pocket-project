@@ -73,7 +73,7 @@ export default {
        showuser: true,
        activeNames: ['1'],
        value: '',
-       phone: '18812345688',
+       phone: '',
        uid: 3,
        area: '',
        imageurl: '',
@@ -110,6 +110,9 @@ export default {
     },
     seletype () {
        this.show = true
+       this.typecolumn = this.typecolumns[0]
+       this.addWorkOrderfrom.bId = this.typecolumn.id
+       this.typedata = this.typecolumn.busName
     },
     addwork () {
       console.log(this.addWorkOrderfrom)

@@ -8,7 +8,8 @@
           v-model="userdata.mobile"
           label="手机号"
           placeholder="请输入手机号"
-        />
+        >
+        </van-field>
          <van-field
           v-model="userdata.address"
           label="客户地址"
@@ -20,6 +21,7 @@
           label="公司机构代码"
           placeholder="公司组织机构代码"
         >
+        <van-button slot="button" size="small" type="primary" @click="picbtn">解析图片</van-button>
         </van-field>
         <div>
           <uploader
@@ -69,7 +71,7 @@ export default {
          'uid': '',
          'name': '',
          'shopName': '',
-         'mobile': '18812345688',
+         'mobile': '',
          'address': '',
          'businessLicense': '',
          'licenseUrl': ''
@@ -84,6 +86,33 @@ export default {
      Uploader
   },
   methods: {
+    // 
+    async picbtn() {
+      let that =this
+      if(this.userdata.mobile == '' ) {
+        this.$toast('请添加手机号码')
+        return false
+      }
+      if(this.file == '' ) {
+        this.$toast('请上传营业执照')
+        return false
+      }
+      this.$toast.loading({
+        mask: true,
+        message: '识别营业执照中...'
+      });
+      let data = await this.uploadLicense(this.userdata.mobile, this.file)
+      console.log(data)
+      if(!data.code) {
+         if(this.userdata.businessLicense == "") {
+           this.$toast('无法识别机构代码，请填写公司机构代码')
+           return false
+         }
+      } else {
+        this.userdata.businessLicense = data.code
+      }
+      this.userdata.licenseUrl = data.path
+    },
     onChange (fileList) {
        console.log(fileList[0])
        console.log(this.Uploader.files)
@@ -111,7 +140,7 @@ export default {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
          }).then((res) => {
           //  console.log(res)
-           resolve(res.data.data)
+           resolve(res.data)
          })
          .catch((err) => {
            console.log(err)
@@ -128,7 +157,9 @@ export default {
             data: postdata
          }).then((res) => {
            that.$toast.success(res.data.data);
-          //  this.$router.go(-1)
+           if (res.data.code == 0) {
+             that.$router.go(-1)
+           }
            console.log(res)
          })
          .catch((err) => {
@@ -139,29 +170,11 @@ export default {
     async adduser () {
       console.log(this.userdata)
       let that = this
-      if(this.userdata.mobile == '' ) {
-        this.$toast('请添加手机号码')
+      
+      if(this.userdata.businessLicense == "") {
+        this.$toast('请填写公司机构代码, 或者上传营业执照识别')
         return false
       }
-      if(this.file == '' ) {
-        this.$toast('请上传营业执照')
-        return false
-      }
-      this.$toast.loading({
-        mask: true,
-        message: '识别营业执照中...'
-      });
-      let data = await this.uploadLicense(this.userdata.mobile, this.file)
-      console.log(data)
-      if(data.code === "无") {
-         if(this.userdata.businessLicense == "") {
-           this.$toast('无法识别机构代码，请填写公司机构代码')
-           return false
-         }
-      } else {
-        this.userdata.businessLicense = data.code
-      }
-      this.userdata.licenseUrl = data.path
       this.addNewCustomer(this.userdata)
     }
   },
