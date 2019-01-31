@@ -90,7 +90,7 @@
                 click: (id) => {
                     console.log(ele.id)
                     that.$router.push({
-                       path:'/orderdetail', 
+                       path:'/orderservice', 
                        query: {
                           id: ele.id
                        }})

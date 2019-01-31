@@ -5,10 +5,9 @@
          <van-card>
           <div slot="title" class="titlebox" >
              <div style="font-size: 16px;">
-                 售后-维修
-             </div>
-             <div class="juli">3km</div>
-             
+                 {{item.businessName}}
+              </div>
+             <div class="juli"> {{item.distance | toFixedone }}</div>
           </div>
           <div slot="thumb" class="thumbbox">
               <!-- <van-button size="mini">按钮</van-button> -->
@@ -17,14 +16,14 @@
              <div slot="tags" class="tagsbox">
               <!-- <van-button size="mini">按钮</van-button> -->
                 <div class="tagsboxitem">
-                   <div>联系人：马化腾</div>
-                   <div>联系方式：1506887110110</div>
-                   <div>地址：浙江省杭州市西湖区西溪银泰城</div>
+                   <div>联系人：{{item.operator}}</div>
+                   <div>联系方式：{{item.customerMobile}}</div>
+                   <div>地址：{{item.province + item.area + item.address}}</div>
                 </div>
             </div>
             <div slot="footer">
               <!-- <van-button size="mini">按钮</van-button> -->
-              <van-button size="mini" type="danger">抢单</van-button>
+              <van-button size="mini" type="danger" @click="todatail(item.id)">抢单</van-button>
             </div>
           </van-card>
       </div>
@@ -35,39 +34,49 @@
 export default {
   data () {
     return {
-       datas: [
-         {
-           id:1
-         },
-          {
-           id:2
-         },
-         {
-           id:3
-         },
-         {
-           id:4
-         },
-         {
-           id:5
-         },
-         {
-           id:6
-         },
-         {
-           id:7
-         }
-       ]
+       datas: [ ]
     }
   },
   mounted () {
     this.getuid()
+    this.getdata()
+  },
+  filters: {
+     toFixedone (value) {
+       if(value > 1000) {
+          let val = value/1000
+          let text = val.toFixed(1) + 'km'
+          return text
+       }else {
+          return value + 'm'
+       }
+     }
   },
   methods: {
     getuid () {
       let uid = JSON.parse(localStorage.getItem('user'))
       this.uid = uid.user
     },
+    getdata () {
+     let that = this;
+    this.$axios.get('pocket/wxchat/grabwolByDistance', { params: { 'uid': 6 }})
+      .then((res) => {
+        console.log(res.data.data.dataResult)
+        that.datas = res.data.data.dataResult
+      })
+      .catch((err) => {
+         this.$toast(err);
+        console.log(err)
+      })
+   },
+   todatail (id) {
+     let that = this
+      that.$router.push({
+        path:'/orderservice', 
+        query: {
+          id: id
+      }})
+   }
   },
   components: {
 

@@ -23,7 +23,7 @@
         </van-field>
         <div>
           <uploader
-            :files=[]
+            :files="Uploader.files"
             :title="Uploader.title"
             :limit="Uploader.limit"
             :autoUpload="Uploader.autoUpload"
@@ -57,7 +57,8 @@ export default {
        Uploader: {
           'title': '营业执照上传',
           'limit': 1,
-          'autoUpload': false
+          'autoUpload': false,
+          'files': []
        },
        index: "我是首页",
        activeNames: ['1'],
@@ -85,6 +86,7 @@ export default {
   methods: {
     onChange (fileList) {
        console.log(fileList[0])
+       console.log(this.Uploader.files)
        this.file = fileList[0]
     },
     onRead(file) {

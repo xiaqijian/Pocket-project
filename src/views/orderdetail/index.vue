@@ -49,10 +49,15 @@ export default {
     }
   },
   mounted() {
+    this.getuid()
     this.workOrderId = this.$route.query.id
     this.getdata(this.workOrderId)
   },
   methods: {
+    getuid () {
+        let uid = JSON.parse(localStorage.getItem('user'))
+        this.uid = uid.user
+      },
    getdata (id) {
      let that = this;
     this.$axios.get('pocket/wxchat/workOrderDetail', { params: { 'workOrderId': id }})

@@ -23,7 +23,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.qs = qs
 
- let url = 'http://www.insoup.cn/pocket/wxchat?isBind=y&user=6&isCreated=n'
+let url = 'http://www.insoup.cn/pocket/wxchat?isBind=y&user=6&isCreated=n'
 
 
 

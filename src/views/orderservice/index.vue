@@ -41,7 +41,7 @@
       <div class="btn">
         <van-button type="primary" size="large" @click.stop.prevent="callclick">电话联系</van-button>
         <span>
-           <van-button type="warning" :disabled="!status" size="large" @click="orderclick">{{datadetail.statudDesc}}</van-button>
+           <van-button type="warning" :disabled="!status" size="large" @click="orderclick">{{statustext}}</van-button>
         </span>
        
       </div>
@@ -59,14 +59,20 @@ export default {
        workOrderId: 36,
        datadetail: {},
        message: '',
-       status: false
+       status: false,
+       statustext: ''
     }
   },
   mounted() {
+    this.getuid()
     this.workOrderId = this.$route.query.id
     this.getdata(this.workOrderId)
   },
   methods: {
+    getuid () {
+        let uid = JSON.parse(localStorage.getItem('user'))
+        this.uid = uid.user
+   },
    getdata (id) {
      let that = this;
     this.$axios.get('pocket/wxchat/workOrderDetail', { params: { 'workOrderId': id }})
@@ -76,8 +82,10 @@ export default {
          
          if( that.datadetail.status == 1 ) {
                that.status = true
+               that.statustext = '抢工单'
          } else if (that.datadetail.status == 2) {
            that.status = true
+           that.statustext = '竣工'
          } else {
            that.status = false
          }
@@ -101,14 +109,29 @@ export default {
         });
    },
     orderclick () {
+      let that = this
       this.$dialog.confirm({
           title: '提示',
           message: '你即将完结本次工单，是否确认？'
         }).then(() => {
           // on confirm
+           that.updateWorkOrder()
         }).catch(() => {
           // on cancel
         });
+   },
+   updateWorkOrder () {
+      let that = this;
+      this.$axios.get('pocket/wxchat/updateWorkOrder', { params: { 'workOrderId': that.workOrderId, 'uid': that.uid }})
+        .then((res) => {
+          // console.log(res)
+          that.$toast.success(res.data.msg);
+          that.getdata(that.workOrderId)
+        })
+        .catch((err) => {
+          this.$toast(err);
+          console.log(err)
+        })
    }
   },
   components: {
