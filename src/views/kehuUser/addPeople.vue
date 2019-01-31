@@ -47,7 +47,6 @@ import { ifError } from 'assert';
     :files=[]
     :limit =1
     :capture = true
-    :url="imgUrl"
     @onChange	='onChange'
     @onSuccess="onSuccess"
   >
@@ -111,8 +110,7 @@ export default {
          'licenseUrl': '',
          'path':''
        },
-       file: '',
-       imgUrl:''
+       file: ''
     }
   },
   components: {
@@ -233,13 +231,11 @@ export default {
       console.log(fileList)
       var file = fileList[0];
       this.onUping=true;
-      // console.log(file.file)
-      // this.imgsrc = file.content
       this.file = file
       let res = await this.uploadLicense(this.userdata.mobile, this.file)
       console.log(res)
        if(res.data.code=='0'){//说明上传成功
-              if(res.data.data.code!='无'){//图片解析成功，把机构代码填入
+              if(res.data.data.code){//图片解析成功，把机构代码填入
                   this.userdata.businessLicense = res.data.data.code;
               }else{
                   this.$toast('图片解析失败，请重新上传！');
@@ -278,6 +274,7 @@ export default {
         
          })
          .catch((err) => {
+           this.onUping=false;
            console.log(err)
            reject(err)
          })

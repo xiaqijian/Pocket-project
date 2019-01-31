@@ -45,7 +45,8 @@ export default {
                 canClick:true, //添加canClick
                 phone:'',
                 yzm:'',
-                canBind:false
+                canBind:false,
+                openId:''
 
        
     }
@@ -54,6 +55,7 @@ export default {
 
   },
   mounted(){
+    this.openId = localStorage.getItem('openid');
      this.getuserInfo();
   },
   methods:{
@@ -116,7 +118,7 @@ export default {
         return false; 
     } 
 
-     this.$axios.get('pocket/wxchatc/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':3}})
+     this.$axios.get('pocket/wxchatc/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':this.openId}})
       .then(res=>{
           if(res.data.code===0){
            this.$toast('绑定成功！');

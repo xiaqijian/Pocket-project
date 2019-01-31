@@ -26,11 +26,9 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  // var ss = 'http://cyp.startupbelts.com/dist/ind/ex.html?data=0&isCreated=y&isBind=n&user=10647&customerId=10647&mobile="18812340000"';
-     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-     var r =  window.location.search.substr(1).match(reg);
-    //  var r =  ss.substr(1).match(reg);
-     if(r!=null)return  unescape(r[2]); return null;
+  // var ss = 'http://www.insoup.cn/wxc/#/myOrder?isBind=y&user=10688&isCreated=y&openId=ockPH1AXUJO2iEpQMoiQY3LosVXw';
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+  
 }
   // isCreated 用户是否存在，y存在，n不存在
 var isCreated = GetQueryString('isCreated');
@@ -38,6 +36,7 @@ var isCreated = GetQueryString('isCreated');
 var isBind =  GetQueryString('isBind');
 //mobile
 var mobile = GetQueryString('mobile');
+var openid = GetQueryString('openId');
 localStorage.setItem('mobile', mobile);
 //customerId
 var customerId = GetQueryString('user');
@@ -45,7 +44,7 @@ localStorage.setItem('customerId', customerId);
 //uid
 var uid = GetQueryString('user');
 localStorage.setItem('uid', uid);
-console.log('isCreated:',isCreated,'isBind:',isBind,'mobile:',mobile,'user',uid);
+console.log('isCreated:',isCreated,'isBind:',isBind,'user',uid,'openid:',openid);
 router.beforeEach((to, from, next) => {
   /* 路由发生变化修改页面title */
   if (to.meta.title) {
