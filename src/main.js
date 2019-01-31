@@ -23,13 +23,13 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.qs = qs
 
-let url = 'http://www.insoup.cn/pocket/wxchat?isBind=y&user=6&isCreated=n'
+// let url = 'http://www.insoup.cn/pocket/wxchat?isBind=y&user=6&isCreated=n'
 
 
 
 router.beforeEach((to, from, next) => {
   console.log(to)
-  // let url = window.location.href
+  let url = window.location.href
   let oldepath = to.path
   console.log(parseQueryString(url))
   localStorage.setItem('user', JSON.stringify(parseQueryString(url)))

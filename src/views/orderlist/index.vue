@@ -1,6 +1,7 @@
 
 <template>
   <div class="app-container">
+     <div class="nodata" v-show="datas.length === 0">没有数据</div>
       <div class="cardbox" v-for="item in datas" :key="item.id">
          <van-card>
           <div slot="title" class="titlebox" >
@@ -34,7 +35,7 @@
 export default {
   data () {
     return {
-       datas: [ ]
+       datas: []
     }
   },
   mounted () {
@@ -117,6 +118,10 @@ export default {
     //   //  display: flex;
     //  }
   }
+}
+.nodata {
+  text-align: center;
+  padding: 20px;
 }
 
 

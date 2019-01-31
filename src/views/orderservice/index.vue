@@ -12,6 +12,7 @@
         <van-cell title="服务状态" :value="datadetail.statudDesc" />
         <van-cell title="创建时间" :value="datadetail.addTime" />
         <van-cell title="服务时间" :value="datadetail.modifierTime" />
+        <van-cell title="佣金" :value="datadetail.commission | getcommission" />
         
       </van-cell-group>
     <van-collapse v-model="activeNames1">
@@ -110,15 +111,7 @@ export default {
    },
     orderclick () {
       let that = this
-      this.$dialog.confirm({
-          title: '提示',
-          message: '你即将完结本次工单，是否确认？'
-        }).then(() => {
-          // on confirm
-           that.updateWorkOrder()
-        }).catch(() => {
-          // on cancel
-        });
+      that.updateWorkOrder()
    },
    updateWorkOrder () {
       let that = this;
@@ -133,6 +126,14 @@ export default {
           console.log(err)
         })
    }
+  },
+  filters: {
+    getcommission (val) {
+      if(!val) {
+        return 0
+      }
+      return val
+    }
   },
   components: {
 
