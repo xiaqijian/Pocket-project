@@ -104,7 +104,7 @@ show: false,
 
         let khID = localStorage.getItem('customerId')//客户id
 
-          that.$axios.get('pocket/wxchat/customerWorkOrderAdd', 
+          that.$axios.get('pocket/wxchatc/customerWorkOrderAdd', 
              { params:{
                  "customerId":khID,
                  "busCompanyId":ywID,

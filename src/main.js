@@ -17,9 +17,9 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  // var ss = 'http://www.insoup.cn/wxc/#/informationBind?isBind=n&user=10688&isCreated=y&openId=ockPH1AXUJO2iEpQMoiQY3LosVXw';
-  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
-  // return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(ss) || [, ""])[1].replace(/\+/g, '%20')) || null
+  var ss = 'http://www.insoup.cn/wxc/#/serviceState?isBind=y&user=10852&isCreated=y&openId=ockPH1Nft3L1vxNxP28aZwYCQ1qA';
+  // return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(ss) || [, ""])[1].replace(/\+/g, '%20')) || null
   
 }
   // isCreated 用户是否存在，y存在，n不存在
@@ -27,8 +27,10 @@ var isCreated = GetQueryString('isCreated');
 // isBind: y 已经绑定 n 未绑定
 var isBind =  GetQueryString('isBind');
 //mobile
+
 var mobile = GetQueryString('mobile');
 var openid = GetQueryString('openId');
+localStorage.setItem('openid', openid);
 localStorage.setItem('mobile', mobile);
 //customerId
 var customerId = GetQueryString('user');
@@ -50,19 +52,21 @@ router.beforeEach((to, from, next) => {
               path: '/addPeople',
               })
               return
-        }
-     if(infoBind){  //进入绑定页面
-         if(isBind=='y'){  //而且未绑定
-                    next({
-                          path: '/myOrder',
-                         })
-              }else{ //绑定
-                next();
-              }
-     }else{
-      next()
-     }
-  }
+             }
+                  if(!infoBind){
+                        if(isBind=='y'){
+                          next()
+                        }else{
+                          next('/informationBind')
+                        }
+                    }else if(isBind=='y'){
+                          next('/myOrder')
+                    }else{
+                      next()
+                    }
+                   
+                 }
+                
   else {
       next();
   }

@@ -20,11 +20,11 @@
       </van-collapse-item>
     </van-collapse>
 
-      <van-collapse v-model="activeNames">
+      <!-- <van-collapse v-model="activeNames">
         <van-collapse-item title="佣金说明" name="1">
           <span v-for="item in datadetail.commissions" :key="item.id"> {{item.commissionName}} 一共{{item.score}}分 --- 每分 {{item.money}}元<br></span>
         </van-collapse-item>
-      </van-collapse>
+      </van-collapse> -->
       <div class="btn">
         <van-button round size="large" @click.stop.prevent="callclick">电话联系</van-button>    
       </div>
@@ -94,9 +94,7 @@ export default {
   height: 100%;
   background: #efefef;
 }
-// van-collapse{
-  
-// }
+
 .btn {
   padding: 20px;
   padding-bottom: 100px;
@@ -110,5 +108,11 @@ export default {
 }
 
 </style>
+<style>
+.van-collapse-item .van-cell {
+     background: #ffffff !important;
+}
+</style>
+
 
 

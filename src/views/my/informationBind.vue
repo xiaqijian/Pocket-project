@@ -56,19 +56,10 @@ export default {
   },
   mounted(){
     this.openId = localStorage.getItem('openid');
-     this.getuserInfo();
+    
   },
   methods:{
-      getuserInfo(){
-     let that = this;
-      that.$axios.get('pocket/wxchatc/getUserInfo', { params: {'uid': 3}})
-      .then(res=>{
-          console.log(res.data)
-      })
-      .catch(err=>{
-          this.$toast(err);
-      })
-      },
+   
     obtainYzm:function(){
       if(!(/^1[34578]\d{9}$/.test(this.phone))){ 
         this.$toast('手机号码有误，请重填');
@@ -123,7 +114,7 @@ export default {
           if(res.data.code===0){
            this.$toast('绑定成功！');
              setTimeout(function(){
-               that.$router.replace('/myOrder')
+               this.$router.replace('/myOrder')
            },1000)
          
           }else{

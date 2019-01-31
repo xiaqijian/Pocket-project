@@ -16,7 +16,7 @@
                   <van-cell title="工单类型" :value="item.businessName" class="order-type" />
             </div>
             <van-cell title="工单编码" :value="item.workOrderCode" />
-            <van-cell title="姓名" :value="item.customerName"/>
+            <van-cell title="业务员" :value="item.customerName"/>
             <van-cell title="联系方式" :value="item.customerMobile" />
             <van-cell title="开始时间" :value="item.addTime" />
             <van-cell title="竣工时间" :value="item.modifierTime" />
@@ -53,11 +53,9 @@
                 
                 <div @click.stop="checkProgress(item.id)">
                   <van-cell title="工单类型" :value="item.businessName" class="order-type" />
-                </div>
-
-                      
+                </div>                  
                 <van-cell title="工单编码" :value="item.workOrderCode" />
-                <van-cell title="姓名" :value="item.customerName"  />
+                <van-cell title="业务员" :value="item.customerName"  />
                 <van-cell title="联系方式" :value="item.customerMobile"  />
                 <van-cell title="开始时间" :value="item.addTime" />
               <van-cell title="竣工时间" :value="item.modifierTime" />
@@ -81,7 +79,7 @@
             </div>
               
                 <van-cell title="工单编码" :value="item.workOrderCode" />
-                <van-cell title="姓名" :value="item.customerName" />
+                <van-cell title="业务员" :value="item.customerName" />
                 <van-cell title="联系方式" :value="item.customerMobile"  />
                 <van-cell title="开始时间" :value="item.addTime" />
                 <van-cell title="竣工时间" :value="item.modifierTime" />
@@ -110,7 +108,7 @@
             </div>
               
                 <van-cell title="工单编码" :value="item.workOrderCode" />
-                <van-cell title="姓名" :value="item.customerName" />
+                <van-cell title="业务员" :value="item.customerName" />
                 <van-cell title="联系方式" :value="item.customerMobile"  />
                 <van-cell title="开始时间" :value="item.addTime" />
                 <van-cell title="竣工时间" :value="item.modifierTime" />
