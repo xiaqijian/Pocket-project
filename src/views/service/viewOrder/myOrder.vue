@@ -11,7 +11,7 @@
 >               
           <div class="myOrder" v-for="item in data" :key="item.id" >
 
-            <van-panel  title=当前状态 :status='item.statudDesc'  v-bind:class="[item.status==2?'blue':'','font-weight']">    
+            <van-panel  title=当前状态 :status='item.statudDesc'  v-bind:class="[item.status==2?'blue':'','font-weight',item.status==4?'red':'',]">    
             <div>
                   <van-cell title="工单类型" :value="item.businessName" class="order-type" />
             </div>
@@ -415,6 +415,9 @@ this.$axios.get('pocket/wxchat/customerWoError',
 }
 .blue .van-panel__header .van-cell__value{
    color: #EEB569;
+}
+.red .van-panel__header .van-cell__value{
+   color: red;
 }
 .font-weight .van-panel__header .van-cell__title{
   font-weight:bolder;

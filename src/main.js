@@ -17,9 +17,9 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  var ss = 'http://www.insoup.cn/wxc/#/serviceState?isBind=y&user=10852&isCreated=y&openId=ockPH1Nft3L1vxNxP28aZwYCQ1qA';
-  // return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
-  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(ss) || [, ""])[1].replace(/\+/g, '%20')) || null
+  // var ss = 'http://www.insoup.cn/wxc/#/serviceState?isBind=y&user=10852&isCreated=y&openId=ockPH1Nft3L1vxNxP28aZwYCQ1qA';
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+  // return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(ss) || [, ""])[1].replace(/\+/g, '%20')) || null
   
 }
   // isCreated 用户是否存在，y存在，n不存在

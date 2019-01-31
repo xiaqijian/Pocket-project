@@ -44,11 +44,13 @@ import { ifError } from 'assert';
               <van-icon name="photograph" size="30px"/>
             </van-uploader> -->
              <uploader
-    :files=[]
-    :limit =1
-    :capture = true
-    @onChange	='onChange'
-    @onSuccess="onSuccess"
+            :files="Uploader.files"
+            :title="Uploader.title"
+            :limit="Uploader.limit"
+            :autoUpload="Uploader.autoUpload"
+            url="your remote upload url"
+            @onChange="onChange"
+          
   >
   </uploader>
             <div class="cover" v-if='cover' @click="onCover()"></div>
@@ -79,6 +81,12 @@ import { ifError } from 'assert';
 export default {
   data () {
     return {
+       Uploader: {
+          'title': '营业执照上传',
+          'limit': 1,
+          'autoUpload': false,
+          'files': []
+       },
        index: "我是首页",
        activeNames: ['1'],
        value: '',
