@@ -21,12 +21,23 @@
           placeholder="公司组织机构代码"
         >
         </van-field>
-        <div class="uploadimg">
+        <div>
+          <uploader
+            :files=[]
+            :title="Uploader.title"
+            :limit="Uploader.limit"
+            :autoUpload="Uploader.autoUpload"
+            url="your remote upload url"
+            @onChange="onChange"
+          >
+          </uploader>
+        </div>
+        <!-- <div class="uploadimg">
             <h5>营业执照</h5>
             <van-uploader  :after-read="onRead" accept="image/gif, image/jpeg" multiple>
               <van-icon name="photograph" />
             </van-uploader>
-        </div>
+        </div> -->
         <div class="imgsrc">
           <img :src="imgsrc" alt="">
         </div>
@@ -34,14 +45,20 @@
       <div class="btn">
         <van-button type="warning" size="large" @click="adduser">新建客户</van-button>
       </div>
-
   </div>
 </template>
 
 <script>
+import Uploader from 'vux-uploader-component'
+
 export default {
   data () {
     return {
+       Uploader: {
+          'title': '营业执照上传',
+          'limit': 1,
+          'autoUpload': false
+       },
        index: "我是首页",
        activeNames: ['1'],
        value: '',
@@ -63,9 +80,13 @@ export default {
     this.userdata.uid = this.uid
   },
   components: {
-
+     Uploader
   },
   methods: {
+    onChange (fileList) {
+       console.log(fileList[0])
+       this.file = fileList[0]
+    },
     onRead(file) {
       console.log(file)
       console.log(file.file)
@@ -124,8 +145,20 @@ export default {
         this.$toast('请上传营业执照')
         return false
       }
-      
+      this.$toast.loading({
+        mask: true,
+        message: '识别营业执照中...'
+      });
       let data = await this.uploadLicense(this.userdata.mobile, this.file)
+      console.log(data)
+      if(data.code === "无") {
+         if(this.userdata.businessLicense == "") {
+           this.$toast('无法识别机构代码，请填写公司机构代码')
+           return false
+         }
+      } else {
+        this.userdata.businessLicense = data.code
+      }
       this.userdata.licenseUrl = data.path
       this.addNewCustomer(this.userdata)
     }
