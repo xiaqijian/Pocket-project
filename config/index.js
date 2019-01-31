@@ -12,8 +12,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/pocket': {
-        // target: 'http://www.insoup.cn/wx/',  
-        target: 'http://www.insoup.cn/',  
+        target: 'http://www.insoup.cn/wx/',  
+        // target: 'http://www.insoup.cn/',  
         changeOrigin: true,
         pathRewrite: {                //需要rewrite重写的, 如果在服务器端做了处理则可以不要这段
           '^/pocket': ''
@@ -23,7 +23,7 @@ module.exports = {
     },
 
     // Various Dev Server settings
-    host: '192.168.88.151', // can be overwritten by process.env.HOST
+    host: 'localhost', // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,

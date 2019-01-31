@@ -4,21 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import VueAMap from 'vue-amap'
 import Vant from 'vant'
-import Uploader from 'vux-uploader-component'
 import 'vant/lib/index.css'
-
 var qs = require('qs')
 
 Vue.use(Vant)
-Vue.use(VueAMap);
-VueAMap.initAMapApiLoader({
-  key: '3c14af81a3f3cad7e7bc54a5722d857f',
-  plugin: ['Geolocation', 'AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
-  // 默认高德 sdk 版本为 1.4.4
-  v: '1.4.4'
-})
+
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
@@ -26,8 +17,9 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  // var ss = 'http://www.insoup.cn/wxc/#/myOrder?isBind=y&user=10688&isCreated=y&openId=ockPH1AXUJO2iEpQMoiQY3LosVXw';
+  // var ss = 'http://www.insoup.cn/wxc/#/informationBind?isBind=n&user=10688&isCreated=y&openId=ockPH1AXUJO2iEpQMoiQY3LosVXw';
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
+  // return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(ss) || [, ""])[1].replace(/\+/g, '%20')) || null
   
 }
   // isCreated 用户是否存在，y存在，n不存在
@@ -51,27 +43,30 @@ router.beforeEach((to, from, next) => {
     document.title = to.meta.title
   }
   if (to.meta.requireAuth) { 
-   if (isCreated=='y') {  // 用户存在
-            
-            // 判断是否绑定
-            if(isBind=='y'){ //用户绑定
-              next({
-                path: '/myOrder',
-               })
-            }else{
-              next(); //未绑定
-            }
-        }else{
-          // 用户不存在，跳转到添加页面
-          next({
-            path: '/addPeople',
-        })
+//  debugger
+    var infoBind= to.path === '/informationBind'?true:false; //判断是否进入绑定页面
+         if(isCreated=='n'){ //没绑定进入添加用户
+            next({
+              path: '/addPeople',
+              })
+              return
         }
+     if(infoBind){  //进入绑定页面
+         if(isBind=='y'){  //而且未绑定
+                    next({
+                          path: '/myOrder',
+                         })
+              }else{ //绑定
+                next();
+              }
+     }else{
+      next()
+     }
   }
   else {
       next();
   }
-  
+
 })
 
 /* eslint-disable no-new */
