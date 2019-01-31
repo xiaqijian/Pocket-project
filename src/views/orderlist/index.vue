@@ -60,7 +60,7 @@ export default {
     },
     getdata () {
      let that = this;
-    this.$axios.get('pocket/wxchat/grabwolByDistance', { params: { 'uid': 6 }})
+    this.$axios.get('pocket/wxchat/grabwolByDistance', { params: { 'uid': that.uid }})
       .then((res) => {
         console.log(res.data.data.dataResult)
         that.datas = res.data.data.dataResult
