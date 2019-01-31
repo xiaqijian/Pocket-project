@@ -82,7 +82,7 @@ export default {
 
      });
      console.log(evaluation)
-  this.$axios.get('pocket/wxchatc/customerWoUpdate',//
+  this.$axios.get('pocket/wxchatc/customerWoUpdate',
       {params:{
         workOrderId:this.workId,
         status:3,
@@ -95,6 +95,9 @@ export default {
     this.$dialog.alert({
       message: '您的评价已提交！'
     });
+    setTimeout(function(){
+               this.$router.replace('/myOrder')
+           },1000)
     }else{
       this.$toast(res.data.msg);
           }
