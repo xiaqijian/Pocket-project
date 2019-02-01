@@ -189,12 +189,22 @@ export default new Router({
         requireAuth: true
 
       }
-    }, {
-      path: '/addPeople',
-      name: 'addPeople',
-      component: () => import('@/views/kehuUser/addPeople'),
+    },
+    {
+      path: '/myStore',
+      name: 'myStore',
+      component: () => import('@/views/service/viewOrder/myStore'),
       meta: {
-        title: '新增客户'
+        title: '店铺列表',
+        requireAuth: true
+      }
+    },
+     {
+      path: '/addStore',
+      name: 'addStore',
+      component: () => import('@/views/kehuUser/addStore'),
+      meta: {
+        title: '新增店铺'
       }
     },
     {

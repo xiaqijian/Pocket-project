@@ -26,12 +26,8 @@ function GetQueryString(name)
 var isCreated = GetQueryString('isCreated');
 // isBind: y 已经绑定 n 未绑定
 var isBind =  GetQueryString('isBind');
-//mobile
-
-var mobile = GetQueryString('mobile');
 var openid = GetQueryString('openId');
 localStorage.setItem('openid', openid);
-localStorage.setItem('mobile', mobile);
 //customerId
 var customerId = GetQueryString('user');
 localStorage.setItem('customerId', customerId);
@@ -44,32 +40,42 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
-  if (to.meta.requireAuth) { 
-//  debugger
-    var infoBind= to.path === '/informationBind'?true:false; //判断是否进入绑定页面
-         if(isCreated=='n'){ //没绑定进入添加用户
-            next({
-              path: '/addPeople',
-              })
-              return
-             }
-                  if(!infoBind){
-                        if(isBind=='y'){
-                          next()
-                        }else{
-                          next('/informationBind')
-                        }
-                    }else if(isBind=='y'){
-                          next('/myOrder')
-                    }else{
-                      next()
-                    }
-                   
-                 }
-                
-  else {
+    if (to.meta.requireAuth) { 
+       //如果用户未绑定，则去绑定
+       if(isBind=='n'){
+        next('/informationBind');
+        return;
+       }else{
+        next();
+       }
+    }else{
       next();
-  }
+    }
+//  debugger
+  //   var infoBind= to.path === '/informationBind'?true:false; //判断是否进入绑定页面
+  //        if(isCreated=='n'){ //没绑定进入添加用户
+  //           next({
+  //             path: '/addPeople',
+  //             })
+  //             return
+  //            }
+  //                 if(!infoBind){
+  //                       if(isBind=='y'){
+  //                         next()
+  //                       }else{
+  //                         next('/informationBind')
+  //                       }
+  //                   }else if(isBind=='y'){
+  //                         next('/myOrder')
+  //                   }else{
+  //                     next()
+  //                   }
+                   
+  //                }
+                
+  // else {
+  //     next();
+  // }
 
 })
 

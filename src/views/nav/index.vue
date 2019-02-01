@@ -33,20 +33,25 @@ export default {
            'id':2,
            'link': '',
            'navlist': [
-             {
-             'name': '查看订单',
-             'id': 1,
-             'link': '/myOrder'
-           },
+          //    {
+          //    'name': '查看订单',
+          //    'id': 1,
+          //    'link': '/myOrder'
+          //  },
            {
-             'name': '新需求',
+             'name': '创建工单',
              'id': 2,
              'link': '/newDemand'
            },
             {
-             'name': '新增客户',
+             'name': '新增店铺',
              'id': 3,
-             'link': '/addPeople'
+             'link': '/addStore'
+           },
+             {
+             'name': '店铺列表',
+             'id': 4,
+             'link': '/myStore'
            }
           ]
          },
