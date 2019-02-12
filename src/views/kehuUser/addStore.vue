@@ -1,5 +1,4 @@
 
-import { ifError } from 'assert';
 <template>
   <div class="app-container">
       <van-cell-group>
@@ -9,6 +8,11 @@ import { ifError } from 'assert';
           v-model="userdata.mobile"
           label="手机号"
           placeholder="请输入手机号"
+        />
+        <van-field
+          v-model="userdata.shopMobile"
+          label="店铺联系电话"
+          placeholder="请输入店铺联系手机号"
         />
         
        
@@ -32,12 +36,13 @@ import { ifError } from 'assert';
             @confirm="onConfirm1"
             />      
         </van-popup>
-         <van-field
+        <van-cell title="地址" is-link :value="provvalDetail"  size="large" @click="searchAddress"/>
+         <!-- <van-field
           v-model="userdata.address"
           label="详细地址"
           placeholder="请输入地址信息"
         >
-        </van-field>
+        </van-field> -->
         <div class="uploadimg">
             <div>营业执照</div>
             <!-- <van-uploader  :after-read="onRead" :disabled='updisabled' accept="image/gif, image/jpeg" multiple>
@@ -92,8 +97,9 @@ export default {
        value: '',
        uid: 3,
        imgsrc: '',
-       provval:'请选择省份',
-       cityval:'请选择城市',
+       provval:'',
+       provvalDetail:'',
+       cityval:'',
        morencity:'',
        show: false,
        cityshow:false,
@@ -110,13 +116,16 @@ export default {
          'name': '',///客户店铺地址
          'shopName': '',//客户名称
          'mobile': '',
+         'shopMobile':'',
          'address': '',
          'businessLicense': '',
          'province':'',//省份名称
          'area':'',//城市名称
          'areaCode':'',//城市id
          'licenseUrl': '',
-         'path':''
+         'path':'',
+         'lng':'',
+         'lat':''
        },
        file: ''
     }
@@ -125,7 +134,26 @@ export default {
       Uploader,
     },
   mounted() {
+
     this.getproData();
+    this.userdata.lng = this.$route.params.lng;
+    this.userdata.lat =this.$route.params.lat;
+    this.provvalDetail = this.$route.params.address;
+    
+    console.log(this.$route.params.address,'oooooo')
+    if(localStorage.getItem('data')){
+       let data = JSON.parse(localStorage.getItem('data'));
+       console.log(data)
+      this.userdata.name= data.name;
+      this.userdata.shopName=data.shopName;
+       this.userdata.mobile =data.mobile;
+       this.userdata.shopMobile =data.shopMobile;
+       this.provval=data.provval;
+        this.cityval=data.cityval;
+       data = JSON.stringify(data)
+       localStorage.setItem('data',data);
+    }
+   
   },
    watch: {
     'userdata.mobile': {
@@ -145,12 +173,35 @@ export default {
   },
   
   methods: {
+    searchAddress:function(){
+
+//缓存数据
+let data = {};
+       data.name = this.userdata.name;
+       data.shopName = this.userdata.shopName;
+       data.mobile = this.userdata.mobile;
+       data.provval = this.provval;
+       data.cityval = this.cityval;
+       data.shopMobile=this.userdata.shopMobile;
+       data = JSON.stringify(data)
+       localStorage.setItem('data',data);
+
+
+      if(this.provval){
+        let city =this.cityval =='市辖区'?this.provval:this.cityval
+        this.$router.push({name:'searchAddress',params:{city:city}})
+      }else{
+         this.$toast('请先选择您的省份！');
+         return;
+      }
+      
+    },
     //省份选的
     sfSelect:function(){
         let that = this;
         that.show = true;
     },
-    //城市选择
+    // 城市选择
     csSelect:function(){
         let that = this;
         that.cityshow = true;
@@ -159,10 +210,10 @@ export default {
     onSuccess(result){
       console.log(result)
     },
-    // onChange(fileList){
-    //   console.log(fileList);
+    onChange(fileList){
+      console.log(fileList);
       
-    // },
+    },
     //省份选择确认 需要发送当前选择的省份的id 以获取省份下面的城市
     onConfirm(value, index) {
       console.log(`当前值：${value}, 当前索引：${index}`);
@@ -217,7 +268,7 @@ export default {
       this.cityshow = false;
     //   this.Toast('取消');
     },
-    //获取所有省份信息
+    // 获取所有省份信息
     getproData(){
         let that = this;
         let arr = [];
@@ -300,11 +351,14 @@ export default {
        let khname = that.userdata.shopName;
        let khaddr = that.userdata.name;
        let khphone = that.userdata.mobile;
-       let khnameaddr = that.userdata.address;
+       let khnameaddr = that.provvalDetail;
        let gszzcode = that.userdata.businessLicense;
        let shengfen = that.provval;
        let chengshi = that.cityval;
        let csID = that.cityidid;
+       let lng = that.userdata.lng;
+       let lat = that.userdata.lat;
+       let shopMobile = that.userdata.shopMobile;
       if(!(/^1[34578]\d{9}$/.test(that.userdata.mobile))){ 
         this.$toast('手机号码有误，请重填');
         return false; 
@@ -320,7 +374,10 @@ export default {
             'province':shengfen,//省份名称
             'area':chengshi,//城市名称
             'areaCode':csID,//城市id
-            'licenseUrl': phofuwuadd//上传的营业执照服务端地址
+            'licenseUrl': phofuwuadd,//上传的营业执照服务端地址
+            'longitude':lng,
+            'latitude':lat,
+            'shopMobile':shopMobile
             
           })
           .then(res=>{
@@ -340,10 +397,10 @@ export default {
          this.$toast('请填写完整')
        }
       
-      // console.log(this.userdata)
-      // let data = await this.uploadLicense(this.userdata.mobile, this.file)
-      // this.userdata.licenseUrl = data.path
-      // this.addNewCustomer(this.userdata)
+      console.log(this.userdata)
+      let data = await this.uploadLicense(this.userdata.mobile, this.file)
+      this.userdata.licenseUrl = data.path
+      this.addNewCustomer(this.userdata)
     }
   },
 }
@@ -355,6 +412,7 @@ export default {
   background: #efefef;
   position: relative;
   width: 100%;
+  // height: 100%;
 }
 .loading{
   position: absolute;

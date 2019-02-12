@@ -38,11 +38,11 @@ export default {
           //    'id': 1,
           //    'link': '/myOrder'
           //  },
-           {
-             'name': '创建工单',
-             'id': 2,
-             'link': '/newDemand'
-           },
+          //  {
+          //    'name': '创建工单',
+          //    'id': 2,
+          //    'link': '/newDemand'
+          //  },
             {
              'name': '新增店铺',
              'id': 3,

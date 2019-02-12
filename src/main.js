@@ -4,11 +4,21 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import VueAMap from 'vue-amap'
 import Vant from 'vant'
 import 'vant/lib/index.css'
+
 var qs = require('qs')
 
 Vue.use(Vant)
+Vue.use(VueAMap);
+VueAMap.initAMapApiLoader({
+  key: '3c14af81a3f3cad7e7bc54a5722d857f',
+  plugin: ['Geolocation', 'AMap.Autocomplete', 'AMap.PlaceSearch', 'AMap.Scale', 'AMap.OverView', 'AMap.ToolBar', 'AMap.MapType', 'AMap.PolyEditor', 'AMap.CircleEditor'],
+  // 默认高德 sdk 版本为 1.4.4
+  v: '1.4.4'
+})
+
 
 
 Vue.config.productionTip = false
@@ -17,7 +27,7 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  var ss = 'http://www.insoup.cn/wxc/#/serviceState?isBind=y&user=10852&isCreated=y&openId=ockPH1Nft3L1vxNxP28aZwYCQ1qA';
+  var ss = 'http://www.insoup.cn/wxc/#/serviceState?isBind=y&user=18336391418&isCreated=y&openId=ockPH1Nft3L1vxNxP28aZwYCQ1qA';
   // return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(ss) || [, ""])[1].replace(/\+/g, '%20')) || null
   
@@ -51,31 +61,6 @@ router.beforeEach((to, from, next) => {
     }else{
       next();
     }
-//  debugger
-  //   var infoBind= to.path === '/informationBind'?true:false; //判断是否进入绑定页面
-  //        if(isCreated=='n'){ //没绑定进入添加用户
-  //           next({
-  //             path: '/addPeople',
-  //             })
-  //             return
-  //            }
-  //                 if(!infoBind){
-  //                       if(isBind=='y'){
-  //                         next()
-  //                       }else{
-  //                         next('/informationBind')
-  //                       }
-  //                   }else if(isBind=='y'){
-  //                         next('/myOrder')
-  //                   }else{
-  //                     next()
-  //                   }
-                   
-  //                }
-                
-  // else {
-  //     next();
-  // }
 
 })
 

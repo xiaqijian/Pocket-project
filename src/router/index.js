@@ -135,7 +135,8 @@ export default new Router({
       component: () => import('@/views/service/viewOrder/myOrder'),
       meta: {
         title: '所有订单',
-        requireAuth: true
+        requireAuth: true,
+        // keepAlive: true
       }
     },
     {
@@ -204,7 +205,17 @@ export default new Router({
       name: 'addStore',
       component: () => import('@/views/kehuUser/addStore'),
       meta: {
-        title: '新增店铺'
+        title: '新增店铺',
+        // keepAlive: true
+      }
+    },
+    {
+      path: '/searchAddress',
+      name: 'searchAddress',
+      component: () => import('@/views/kehuUser/searchAddress'),
+      meta: {
+        title: '新增店铺',
+        
       }
     },
     {

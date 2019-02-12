@@ -119,7 +119,7 @@ export default {
           let that = this;
         that.$axios.get('pocket/wxchatc/customerInfo', 
         {params:{  
-            'customerId':this.uid
+            'customerId':that.uid
             
           }})
       .then(res=>{    

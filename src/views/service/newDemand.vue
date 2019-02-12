@@ -29,10 +29,9 @@
 export default {
   data(){
     return{
-//客户id
-id:4,
 show: false,
       gdshow:false,
+      userID:'',
       columns: [],
       val: '',//业务类型
       gdval:'',//工单业务
@@ -47,6 +46,8 @@ show: false,
   mounted(){
         //请求所有数据  封装成一个函数
       //  this.getCreateBussiness();
+       this.userID = this.$route.params.id;
+       console.log(this.userID)
         this.aa();
   },
   methods:{
@@ -54,9 +55,10 @@ show: false,
 
     aa(){
          let that = this
-         let userID = localStorage.getItem('customerId')
+        
+         console.log(that.userID)
          that.$axios.get('pocket/wxchatc/customerCreateBusiness', { params: { 
-            'customerId':userID,
+            'customerId':that.userID,
             }
           })
           .then(res=>{
@@ -102,11 +104,11 @@ show: false,
         let question = that.message;//备注
         let ywID = that.yewuid;//业务id
 
-        let khID = localStorage.getItem('customerId')//客户id
+        // let khID = localStorage.getItem('customerId')//客户id
 
           that.$axios.get('pocket/wxchatc/customerWorkOrderAdd', 
              { params:{
-                 "customerId":khID,
+                 "customerId":this.userID,
                  "busCompanyId":ywID,
                  "remark":question
                  }

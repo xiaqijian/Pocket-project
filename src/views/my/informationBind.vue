@@ -114,7 +114,7 @@ export default {
           if(res.data.code===0){
            this.$toast('绑定成功！');
              setTimeout(function(){
-               this.$router.replace('/myOrder')
+               this.$router.push('/myOrder')
            },1000)
          
           }else{
