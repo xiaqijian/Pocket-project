@@ -13,8 +13,10 @@
          <van-field
           v-model="userdata.address"
           label="客户地址"
-          placeholder="请输入地址信息"
+          disabled
+          placeholder="去地图选择位置"
         >
+        <van-button slot="button" size="small" type="primary" @click="goMap">地图</van-button>
         </van-field>
         <van-field
           v-model="userdata.businessLicense"
@@ -74,18 +76,38 @@ export default {
          'mobile': '',
          'address': '',
          'businessLicense': '',
-         'licenseUrl': ''
+         'licenseUrl': '',
+         'longitude':'',
+         'latitude':''
        },
        file: ''
     }
   },
   mounted() {
-    this.userdata.uid = this.uid
+    console.log(this.$router)
+   
+    let gomap = localStorage.getItem('gomap')
+    if(gomap) {
+       let userdata = localStorage.getItem('userdata')
+      //  console.log()
+       this.userdata = JSON.parse(userdata)
+       console.log('来自上一页返回')
+    }
+     this.getuid()
+
   },
   components: {
      Uploader
   },
   methods: {
+    getuid () {
+      let uid = JSON.parse(localStorage.getItem('user'))
+      this.uid = uid.user
+    },
+    goMap () {
+       localStorage.setItem('userdata', JSON.stringify(this.userdata))
+       this.$router.push('/selectaddress')
+    },
     // 
     async picbtn() {
       let that =this

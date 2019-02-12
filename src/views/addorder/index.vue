@@ -126,6 +126,7 @@ export default {
     this.getUserInfo()
     this.checkBusDate ()
     this.addWorkOrderfrom.uid = this.uid
+    localStorage.removeItem('gomap')
   },
   methods: {
     checkPhone(phone){ 
