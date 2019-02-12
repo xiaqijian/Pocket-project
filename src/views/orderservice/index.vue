@@ -15,6 +15,16 @@
         <van-cell title="佣金" :value="datadetail.commission | getcommission" />
         
       </van-cell-group>
+      <van-cell-group v-show="datadetail.label == 'nstallPOS'">
+        <van-field
+          v-model="tusn"
+          center
+          clearable
+          label="设备编码"
+          placeholder="请输入设备编码"
+        >
+        </van-field>
+      </van-cell-group>
     <van-collapse v-model="activeNames1">
       <van-collapse-item title="备注" name="1">
          {{datadetail.remark}}
@@ -39,10 +49,24 @@
           <!-- <span > {{item.commissionName}} 一共{{item.score}}分 --- 每分 {{item.money}}元<br></span> -->
         </van-collapse-item>
       </van-collapse>
+       <div class="uploader">
+          <uploader
+            :files="Uploader.files"
+            :title="Uploader.title"
+            :limit="Uploader.limit"
+            :autoUpload="Uploader.autoUpload"
+            url="your remote upload url"
+            @onChange="onChange"
+          >
+          </uploader>
+        </div>
       <div class="btn">
         <van-button type="primary" size="large" @click.stop.prevent="callclick">电话联系</van-button>
-        <span>
+        <span v-show="!datadetail.status == 2">
            <van-button type="warning" :disabled="!status" size="large" @click="orderclick">{{statustext}}</van-button>
+        </span>
+        <span v-show="datadetail.status == 2">
+           <van-button type="warning" :disabled="!status" size="large" @click="completionWorkOrder">{{statustext}}</van-button>
         </span>
        
       </div>
@@ -51,9 +75,18 @@
 </template>
 
 <script>
+import Uploader from 'vux-uploader-component'
+
 export default {
   data () {
     return {
+      Uploader: {
+          'title': '竣工照片上传',
+          'limit': 3,
+          'autoUpload': false,
+          'files': []
+       },
+       tusn: '',
        index: "我是首页",
        activeNames: ['1'],
        activeNames1: ['1'],
@@ -70,9 +103,17 @@ export default {
     this.getdata(this.workOrderId)
   },
   methods: {
+    onChange (fileList) {
+       console.log(fileList[0])
+       console.log(this.Uploader.files)
+      //  this.file = fileList[0]
+    },
     getuid () {
         let uid = JSON.parse(localStorage.getItem('user'))
         this.uid = uid.user
+   },
+   completionWorkOrder () {
+     console.log('2222')
    },
    getdata (id) {
      let that = this;
@@ -125,7 +166,32 @@ export default {
           this.$toast(err);
           console.log(err)
         })
-   }
+   },
+  // 竣工上传图片
+   uploadCompletion (file) {
+     let that = this
+      let formdata = new FormData();
+      
+      formdata.append('code', that.datadetail.workOrderCode );
+      formdata.append('phone', that.datadetail.customerMobile)
+      formdata.append('file', file);
+
+      return new Promise ((resolve, reject) => {
+         that.$axios({
+           url:'pocket/wxchat/uploadCompletion',
+            method:'post',
+            data:formdata,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+         }).then((res) => {
+           console.log(res)
+           resolve(res.data)
+         })
+         .catch((err) => {
+           console.log(err)
+           reject(err)
+         })
+      })
+    }
   },
   filters: {
     getcommission (val) {
@@ -136,7 +202,7 @@ export default {
     }
   },
   components: {
-
+     Uploader
   }
 }
 </script>
@@ -152,6 +218,10 @@ export default {
   .van-button--large {
      margin-top:30px;
   }
+}
+.uploader {
+  background: #fff;
+
 }
  
 </style>

@@ -63,7 +63,7 @@ export default {
     this.$axios.get('pocket/wxchat/grabwolByDistance', { params: { 'uid': that.uid }})
       .then((res) => {
         console.log(res.data.data.dataResult)
-        that.datas = res.data.data.dataResult
+        that.datas = res.data.data
       })
       .catch((err) => {
          this.$toast(err);
