@@ -81,6 +81,14 @@ export default new Router({
       }
     },
     {
+      path: '/selectaddress',
+      component: () => import('@/views/selectmap/index'),
+      meta: {
+        title: '选择地址',
+        keepAlive: true
+      }
+    },
+    {
       path: '/addState',
       name: 'addState',
       component: () => import('@/views/yingxiao/addState'),

@@ -29,8 +29,10 @@
               init(o) {
                 // o 是高德地图定位插件实例
                 o.getCurrentPosition((status, result) => {
+                  console.log(status)
+                  console.log(result)
                   if (result && result.position) {
-                    // self.center = [result.position.lng, result.position.lat]
+                    self.center = [result.position.lng, result.position.lat]
                     self.$nextTick();
                   }
                 });
