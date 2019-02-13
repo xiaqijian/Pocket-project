@@ -40,7 +40,7 @@ export default {
   },
   mounted(){
     this.workId = this.$route.params.id;
-    this.customerId = localStorage.getItem('customerId');
+    this.customerId = this.$route.params.id;
     console.log(this.workId)
     this.getDtailData();
   },

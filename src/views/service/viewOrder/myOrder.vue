@@ -20,7 +20,7 @@
             <van-cell title="业务员" :value="item.customerName"/>
             <van-cell title="联系方式" :value="item.customerMobile" />
             <van-cell title="开始时间" :value="item.addTime" />
-            <van-cell title="竣工时间" :value="item.modifierTime" />
+            <van-cell title="竣工时间" :value="item.completionTime" />
                   <van-cell value=""  is-link @click="checkDetail(item.id)">
                   <template slot="title">
                     <van-tag color="#68B6F7">查看详情</van-tag>
@@ -70,7 +70,7 @@
                 <van-cell title="业务员" :value="item.customerName"  />
                 <van-cell title="联系方式" :value="item.customerMobile"  />
                 <van-cell title="开始时间" :value="item.addTime" />
-              <van-cell title="竣工时间" :value="item.modifierTime" />
+              <van-cell title="竣工时间" :value="item.completionTime" />
                 <van-cell value=""  is-link @click="checkDetail(item.id)">
                   <template slot="title">
                     <van-tag color="#68B6F7">查看详情</van-tag>
@@ -106,7 +106,7 @@
                 <van-cell title="业务员" :value="item.customerName" />
                 <van-cell title="联系方式" :value="item.customerMobile"  />
                 <van-cell title="开始时间" :value="item.addTime" />
-                <van-cell title="竣工时间" :value="item.modifierTime" />
+                <van-cell title="竣工时间" :value="item.completionTime" />
                   <van-cell value=""  is-link @click="checkDetail(item.id)">
                   <template slot="title">
                     <van-tag color="#68B6F7">查看详情</van-tag>
@@ -147,7 +147,7 @@
                 <van-cell title="业务员" :value="item.customerName" />
                 <van-cell title="联系方式" :value="item.customerMobile"  />
                 <van-cell title="开始时间" :value="item.addTime" />
-                <van-cell title="竣工时间" :value="item.modifierTime" />
+                <van-cell title="竣工时间" :value="item.completionTime" />
                   <van-cell value=""  is-link @click="checkDetail(item.id)">
                   <template slot="title">
                     <van-tag color="#68B6F7">查看详情</van-tag>

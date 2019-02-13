@@ -53,10 +53,14 @@ router.beforeEach((to, from, next) => {
 
   
     if (to.meta.requireAuth) { 
-     
        //如果用户未绑定，则去绑定
        if(isBind=='y'){
-         next();
+        //  next();
+           if(to.path==='/informationBind'){
+            next('/myOrder');
+          }else{
+            next()
+          }
        }else{
          if(to.path==='/informationBind'){
               next()

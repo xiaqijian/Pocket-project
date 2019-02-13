@@ -91,7 +91,7 @@ export default {
 <style lang="less" type="text/less" scoped>
 
 .app-container {
-  // height: 100%;
+  height: 100%;
   background: #efefef;
 }
 

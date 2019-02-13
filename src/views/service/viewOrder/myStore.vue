@@ -22,7 +22,11 @@
             <van-cell title="店铺名称" :value="item.shopName" />
             <van-cell title="联系方式" :value="item.shopMobile"/>
             <van-cell title="店铺地址" :value="item.province+item.area+item.address" />
-                  <van-cell value=""  is-link @click="checkOrderList(item.id)">
+             <div slot="footer" class="footer" >
+                <van-button size="small" @click="checkOrderList(item.id)" >查看工单</van-button>
+                <van-button size="small" @click="addOrder(item.id)" class="primary-but">添加工单</van-button>
+          </div>
+                  <!-- <van-cell value=""  is-link @click="checkOrderList(item.id)">
                   <template slot="title">
                     <van-tag color="#68B6F7">查看工单</van-tag>
                   </template>
@@ -33,14 +37,14 @@
                     <van-tag color="#68B6F7">添加工单</van-tag>
                   </template>
                   
-                </van-cell>
+                </van-cell> -->
         
           </div>
 
       </div>
      </div>
       <!-- 添加店铺 -->
-      <div class="footer" @click="addStore">
+      <div class="foot" @click="addStore">
           <van-button round size="large">添加店铺</van-button>
       </div>
   </div>
@@ -113,6 +117,7 @@
     width: 100%;
     .topList{
         flex: 1;
+        padding-bottom: 200px;
         .emptyList{
                 margin-top: 200px;
                 text-align: center;
@@ -126,9 +131,18 @@
         //   background: #fff;
           margin: 20px 0;
     }
- .footer {
-  padding: 20px;
-  padding-bottom: 100px;
+ .foot {
+//   padding: 20px;
+  padding-bottom: 20px;
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  background: #fff;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+
   .van-button--large {
      margin-top:10px;
      background: #68B6F7;
@@ -138,7 +152,18 @@
   }
 }
 }
+.primary-but{
+   color: #68B6F7 !important;
+   border:1px solid #68B6F7;
+}
+.footer{
+  text-align: end;
+  padding: 20px;
 
+}
+.van-button--small{
+  border-radius: 15px;
+}
  
 </style>
 <style>
