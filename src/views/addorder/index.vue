@@ -33,7 +33,7 @@
       <div class="btn" v-show="showwork">
          <van-button type="primary" size="large" @click="addwork" :disabled="workdisabled" >{{workname}}</van-button>
       </div>
-      <div class="btn" v-show="showadd">
+      <div class="btn">
          <!-- <van-button type="primary" size="large" @click="addwork">新增工单</van-button> -->
          <router-link to="/adduser">
              <van-button type="warning" size="large">新建店铺</van-button>

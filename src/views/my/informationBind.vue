@@ -129,16 +129,15 @@ export default {
               let that = this
           if(res.data.code===0){
            this.$toast('绑定成功！');
-             setTimeout(function(){
-              let  oldepath = localStorage.getItem('oldepath')
-               that.$router.replace(oldepath)
-           },1000)
-         
+          //    setTimeout(function(){
+          //     let  oldepath = localStorage.getItem('oldepath')
+          //      that.$router.replace(oldepath)
+          //  },1000)
+          
+            that.$router.go(-1)
           }else{
               this.$toast(res.data.msg);
           }
-      
-          
           console.log(res.data)
       })
       .catch(err=>{

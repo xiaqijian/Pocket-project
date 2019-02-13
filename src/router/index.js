@@ -26,7 +26,8 @@ export default new Router({
       name: 'orderlist',
       component: () => import('@/views/orderlist/index'),
       meta: {
-        title: '工单列表'
+        title: '工单列表',
+        code: true
       }
     },
     {
@@ -55,14 +56,16 @@ export default new Router({
       path: '/addorder',
       component: () => import('@/views/addorder/index'),
       meta: {
-        title: '新增订单'
+        title: '新增订单',
+        code: true
       }
     },
     {
       path: '/addstatus',
       component: () => import('@/views/addstatus/index'),
       meta: {
-        title: '新增状态'
+        title: '新增状态',
+        code: true
       }
     },
     {
@@ -77,7 +80,7 @@ export default new Router({
       component: () => import('@/views/ordermap/index'),
       meta: {
         title: '订单地图',
-        keepAlive: true
+        code: true
       }
     },
     {
@@ -93,7 +96,8 @@ export default new Router({
       name: 'addState',
       component: () => import('@/views/yingxiao/addState'),
       meta: {
-        title: '新增状态'
+        title: '新增状态',
+        code: true
       }
     },
     {
@@ -101,7 +105,8 @@ export default new Router({
       name: 'disposeWorkorder',
       component: () => import('@/views/workorderManagement/disposeWorkorder'),
       meta: {
-        title: '处理工单'
+        title: '处理工单',
+        code: true
       }
     },
     {
@@ -109,7 +114,8 @@ export default new Router({
       name: 'myStatistics',
       component: () => import('@/views/workorderManagement/myStatistics'),
       meta: {
-        title: '我的统计'
+        title: '我的统计',
+        code: true
       }
     },
     {

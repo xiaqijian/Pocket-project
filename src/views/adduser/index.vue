@@ -103,10 +103,11 @@ export default {
     getuid () {
       let uid = JSON.parse(localStorage.getItem('user'))
       this.uid = uid.user
+      this.userdata.uid = this.uid
     },
     goMap () {
        localStorage.setItem('userdata', JSON.stringify(this.userdata))
-       this.$router.push('/selectaddress')
+       this.$router.push('selectaddress')
     },
     // 
     async picbtn() {
