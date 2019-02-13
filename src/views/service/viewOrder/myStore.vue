@@ -89,10 +89,13 @@
         this.$router.push({name:'myOrder',params:{id:id}})
     },
      addStore(){
+          //更改状态，从这里进入不取出数据
+        sessionStorage.setItem('status',0);
             this.$router.push('addStore')
         },
     //添加工单
     addOrder(id){
+       
       this.$router.push({name:'newDemand',params:{id:id}})
     }
     },
