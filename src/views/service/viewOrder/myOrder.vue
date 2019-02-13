@@ -201,7 +201,7 @@ export default {
   mounted(){
     this.customerId = this.$route.params.id;
     console.log(this.customerId);
-this.getCheckOrder();
+    this.getCheckOrder();
   },
   methods:{
     //tab切换请求数据
@@ -334,11 +334,11 @@ this.$axios.get('pocket/wxchat/customerWoError',
         });
    },
    checkDetail(id){
- this.$router.push({name:'bussinessDetail',params:{id:id}})
+ this.$router.replace({name:'bussinessDetail',params:{id:id}})
    },
    checkProgress:function( id){
     
-     this.$router.push({name:'checkOrder',params:{id:id}})
+     this.$router.replace({name:'checkOrder',params:{id:id}})
     
    },
    judge:function(id){

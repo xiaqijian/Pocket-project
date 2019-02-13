@@ -117,7 +117,16 @@ const self = this;
                 click: (id) => {
                 console.log(poi.lng,poi.lat);
                 let that = this;
-                that.$router.replace({name:'addStore',params:{lng:poi.lng,lat:poi.lat,address:poi.name}})
+                //1代表从搜索跳转到添加
+                sessionStorage.setItem('status',1);
+                let data = localStorage.getItem('data');
+                data = JSON.parse(data)
+                data.lng = poi.lng;
+                data.lat = poi.lat;
+                data.address = poi.name;
+                localStorage.setItem('data',JSON.stringify(data));
+                // that.$router.push('addStore');
+                this.$router.go(-1)
                 },
               }
             })

@@ -21,7 +21,7 @@
                    
             <van-cell title="店铺名称" :value="item.shopName" />
             <van-cell title="联系方式" :value="item.shopMobile"/>
-            <van-cell title="店铺地址" :value="item.provinceArea+item.area+item.address" />
+            <van-cell title="店铺地址" :value="item.province+item.area+item.address" />
                   <van-cell value=""  is-link @click="checkOrderList(item.id)">
                   <template slot="title">
                     <van-tag color="#68B6F7">查看工单</van-tag>
@@ -52,7 +52,7 @@
       return {
           emptyList:true,
         storeList:'',
-        mobile:'18336391418',
+        mobile:'',
         //店铺信息
         shopList:[],
       }
@@ -61,6 +61,7 @@
      
     },
     mounted(){
+        this.mobile = localStorage.getItem('customerId');
         this.getCustomShop();
     },
     methods:{
@@ -104,7 +105,7 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 100%;
+    // height: 100%;
     background:#eee;
     width: 100%;
     .topList{

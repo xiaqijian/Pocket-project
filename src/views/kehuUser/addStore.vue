@@ -36,7 +36,7 @@
             @confirm="onConfirm1"
             />      
         </van-popup>
-        <van-cell title="地址" is-link :value="provvalDetail"  size="large" @click="searchAddress"/>
+        <van-cell title="详细地址" is-link :value="provvalDetail"  size="large" @click="searchAddress"/>
          <!-- <van-field
           v-model="userdata.address"
           label="详细地址"
@@ -136,12 +136,10 @@ export default {
   mounted() {
 
     this.getproData();
-    this.userdata.lng = this.$route.params.lng;
-    this.userdata.lat =this.$route.params.lat;
-    this.provvalDetail = this.$route.params.address;
+   
     
     console.log(this.$route.params.address,'oooooo')
-    if(localStorage.getItem('data')){
+    if(localStorage.getItem('data')&&sessionStorage.getItem('status')==1){
        let data = JSON.parse(localStorage.getItem('data'));
        console.log(data)
       this.userdata.name= data.name;
@@ -150,6 +148,9 @@ export default {
        this.userdata.shopMobile =data.shopMobile;
        this.provval=data.provval;
         this.cityval=data.cityval;
+         this.userdata.lng = data.lng;
+    this.userdata.lat =data.lat;
+    this.provvalDetail = data.address;
        data = JSON.stringify(data)
        localStorage.setItem('data',data);
     }
@@ -383,6 +384,7 @@ let data = {};
           .then(res=>{
             if(res.data.code===0){
            this.$toast('创建成功！');
+            localStorage.setItem('data',null);
          
           }else{
               this.$toast(res.data.msg);
@@ -400,7 +402,8 @@ let data = {};
       console.log(this.userdata)
       let data = await this.uploadLicense(this.userdata.mobile, this.file)
       this.userdata.licenseUrl = data.path
-      this.addNewCustomer(this.userdata)
+      this.addNewCustomer(this.userdata);
+     
     }
   },
 }
