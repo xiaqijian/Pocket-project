@@ -386,6 +386,10 @@ let data = {};
             if(res.data.code===0){
            this.$toast('创建成功！');
             localStorage.setItem('data',null);
+             let that = this;
+             setTimeout(function(){
+               that.$router.push('/myStore')
+           },1000)
          
           }else{
               this.$toast(res.data.msg);

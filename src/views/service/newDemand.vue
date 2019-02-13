@@ -65,6 +65,10 @@ show: false,
             console.log(res.data);
             if(res.data.code=='-200'){
             this.$toast(res.data.msg);
+             let that = this;
+             setTimeout(function(){
+               that.$router.push('/myStore')
+           },1000)
           }
             let arr = [];
             that.yydata = res.data.data;
@@ -117,7 +121,15 @@ show: false,
                  }
             })
       .then(res=>{
-          console.log(res.data.code)
+        this.$toast(res.data.msg);
+        if(res.data.code===0){
+          
+          let that = this;
+             setTimeout(function(){
+               that.$router.push('/myStore')
+           },1000)
+        }
+          console.log(res.data)
           
       })
       .catch(err=>{
