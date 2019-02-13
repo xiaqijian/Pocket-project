@@ -92,7 +92,7 @@ export default {
 }
 .cardbox {
   font-size: 12px;
-  // box-shadow: 0 5px 21px 1px rgba(0,0,0,.15);
+  box-shadow: 0 5px 21px 1px rgba(0,0,0,.15);
   margin-bottom: 20px;
   .thumbbox {
     // border: 1px solid red;

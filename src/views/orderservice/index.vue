@@ -49,7 +49,7 @@
           <!-- <span > {{item.commissionName}} 一共{{item.score}}分 --- 每分 {{item.money}}元<br></span> -->
         </van-collapse-item>
       </van-collapse>
-       <div class="uploader">
+       <div class="uploader" v-show="datadetail.status == 2">
           <uploader
             :files="Uploader.files"
             :title="Uploader.title"
@@ -57,12 +57,13 @@
             :autoUpload="Uploader.autoUpload"
             url="your remote upload url"
             @onChange="onChange"
+            @onDelete="onDelete"
           >
           </uploader>
         </div>
       <div class="btn">
         <van-button type="primary" size="large" @click.stop.prevent="callclick">电话联系</van-button>
-        <span v-show="!datadetail.status == 2">
+        <span v-show=" datadetail.status == 1">
            <van-button type="warning" :disabled="!status" size="large" @click="orderclick">{{statustext}}</van-button>
         </span>
         <span v-show="datadetail.status == 2">
@@ -75,7 +76,7 @@
 </template>
 
 <script>
-import Uploader from 'vux-uploader-component'
+import Uploader from '@/components/uploader'
 
 export default {
   data () {
@@ -94,7 +95,8 @@ export default {
        datadetail: {},
        message: '',
        status: false,
-       statustext: ''
+       statustext: '',
+       files:[]
     }
   },
   mounted() {
@@ -103,17 +105,41 @@ export default {
     this.getdata(this.workOrderId)
   },
   methods: {
+    onDelete (index) {
+      // console.log(index)
+      this.files.splice(index, 1);
+    },
     onChange (fileList) {
        console.log(fileList[0])
-       console.log(this.Uploader.files)
+       this.files.push(fileList[0])
       //  this.file = fileList[0]
     },
     getuid () {
         let uid = JSON.parse(localStorage.getItem('user'))
         this.uid = uid.user
    },
-   completionWorkOrder () {
+   async completionWorkOrder () {
      console.log('2222')
+     if(this.files.length < 3 ) {
+       this.$toast('请上传三张竣工图')
+       return false
+     }
+     let resdata = await this.uploadCompletion(this.files)
+     this.completionWorkOrderpost(resdata.data)
+     console.log(resdata)
+   },
+   completionWorkOrderpost (paths, tusn="") {
+        let that = this;
+        this.$axios.get('pocket/wxchat/completionWorkOrder', { params: { 'uid': this.uid , 'workOrderId': this.workOrderId, 'paths': paths, 'tusn': tusn}})
+          .then((res) => {
+            console.log(res.data)
+             that.$toast.success(res.data.msg);
+             that.getdata(that.workOrderId)
+          })
+          .catch((err) => {
+            this.$toast(err);
+            console.log(err)
+          })
    },
    getdata (id) {
      let that = this;
@@ -170,15 +196,17 @@ export default {
   // 竣工上传图片
    uploadCompletion (file) {
      let that = this
+     
       let formdata = new FormData();
-      
-      formdata.append('code', that.datadetail.workOrderCode );
-      formdata.append('phone', that.datadetail.customerMobile)
-      formdata.append('file', file);
-
+      // formdata.append('code', that.datadetail.workOrderCode );
+      // formdata.append('phone', that.datadetail.customerMobile)
+      formdata.append('file', file[0]);
+      formdata.append('file', file[1]);
+      formdata.append('file', file[2]);
+      let url = 'pocket/wxchat/uploadCompletion/' + that.datadetail.customerMobile + '/' + that.datadetail.workOrderCode
       return new Promise ((resolve, reject) => {
          that.$axios({
-           url:'pocket/wxchat/uploadCompletion',
+           url: url,
             method:'post',
             data:formdata,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}

@@ -96,7 +96,7 @@ export default {
        showuser: true,
        activeNames: ['1'],
        value: '',
-       phone: '18857141105',
+       phone: '',
        uid: 3,
        area: '',
        imageurl: '',
