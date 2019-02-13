@@ -154,6 +154,8 @@ const self = this;
         align-items: center;
         width: 100%;
         background: #ffffff;
+        position: absolute;
+        z-index: 10000;
         .el-vue-search-box-container{
             width: 78%;
     
@@ -166,6 +168,8 @@ const self = this;
      padding: 7px 15px;
      line-height: 1;
      text-align: center;
+    //  height: 45px;
+    //  line-height: 45px;
  }
  .van-search--show-action{
      flex: 9;
@@ -180,7 +184,7 @@ const self = this;
                 width: 129.5%;
                 left: -30%;
                 top: 780px !important;
-                max-height: 300px;
+                /* max-height: 300px; */
 }
 </style>
 

@@ -63,6 +63,9 @@ show: false,
           })
           .then(res=>{
             console.log(res.data);
+            if(res.data.code=='-200'){
+            this.$toast(res.data.msg);
+          }
             let arr = [];
             that.yydata = res.data.data;
             for(let i = 0;i<res.data.data.length;i++){
@@ -114,7 +117,8 @@ show: false,
                  }
             })
       .then(res=>{
-          console.log(res.data)
+          console.log(res.data.code)
+          
       })
       .catch(err=>{
           this.$toast(err);

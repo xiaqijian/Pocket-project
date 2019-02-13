@@ -50,15 +50,22 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
+
+  
     if (to.meta.requireAuth) { 
+     
        //如果用户未绑定，则去绑定
-       if(isBind=='n'){
-        next('/informationBind');
-        return;
+       if(isBind=='y'){
+         next();
        }else{
-        next();
+         if(to.path==='/informationBind'){
+              next()
+         } else{
+          next('/informationBind');
+         }
        }
-    }else{
+    }
+    else{
       next();
     }
 

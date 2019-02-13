@@ -206,6 +206,7 @@ export default new Router({
       component: () => import('@/views/kehuUser/addStore'),
       meta: {
         title: '新增店铺',
+        requireAuth: true
         // keepAlive: true
       }
     },

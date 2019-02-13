@@ -217,6 +217,7 @@ let data = {};
     },
     //省份选择确认 需要发送当前选择的省份的id 以获取省份下面的城市
     onConfirm(value, index) {
+      this.provvalDetail ='';
       console.log(`当前值：${value}, 当前索引：${index}`);
       let aa = value;
       let that = this;
