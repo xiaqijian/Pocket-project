@@ -75,15 +75,6 @@ const self = this;
   },
 
   methods: {
-       'markderclick': {
-                click: (pois) => {
-                    console.log(pois,33)
-                    // that.$router.push({
-                    //    path:'/orderservice', 
-                    //    query: {
-                    //       id: ele.id
-                    //    }})
-                }},
     getGeocode(){
     this.$axios.get('https://restapi.amap.com/v3/geocode/geo',
     {params:{
@@ -102,14 +93,6 @@ const self = this;
       this.$toast(err);
     })
     },
-    markerEvents:{
-      click(e){
-     console.log(e) 
-      }
-    },
-  //  choosepos:function(pos){
-  //   console.log(pos)
-  //  },
     addMarker: function() {
           let lng = 121.5 + Math.round(Math.random() * 1000) / 10000;
           let lat = 31.197646 + Math.round(Math.random() * 500) / 10000;

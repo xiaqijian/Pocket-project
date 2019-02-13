@@ -8,7 +8,7 @@
       </div>
       <!-- 店铺列表 -->
       <div class="storeList">
-          <div class="shop" v-for='item of shopList'>
+          <div class="shop" v-for='(item,index) in shopList' :key="index">
                    <div v-if="item.status==0">
                        <van-cell title="当前状态" value="审核未通过" />
                    </div>
