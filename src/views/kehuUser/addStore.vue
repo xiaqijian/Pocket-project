@@ -149,6 +149,7 @@ export default {
        this.provval=data.provval;
         this.cityval=data.cityval;
          this.userdata.lng = data.lng;
+         this.cityidid = data.cityidid;
     this.userdata.lat =data.lat;
     this.provvalDetail = data.address;
        data = JSON.stringify(data)
@@ -184,6 +185,7 @@ let data = {};
        data.provval = this.provval;
        data.cityval = this.cityval;
        data.shopMobile=this.userdata.shopMobile;
+       data.cityidid = this.cityidid;
        data = JSON.stringify(data)
        localStorage.setItem('data',data);
 
@@ -235,7 +237,7 @@ let data = {};
             // console.log(res.data.data[0].name);
             that.cityval = res.data.data[0].name;
             that.cityidid =res.data.data[0].id;
-            console.log(that.cityidid)
+            console.log(that.cityidid,'pro')
             that.citydata =res.data.data;
             for(let j =0;j<res.data.data.length;j++){
                 citarr.push(res.data.data[j].name)
@@ -264,7 +266,7 @@ let data = {};
       that.cityval = aaa;
       that.cityshow = false;
       that.cityidid =  that.citydata[index].id;
-      console.log(that.cityidid);
+      console.log(that.cityidid,'city');
     },
     onCancel1() {
       this.cityshow = false;
@@ -358,6 +360,7 @@ let data = {};
        let shengfen = that.provval;
        let chengshi = that.cityval;
        let csID = that.cityidid;
+       console.log(csID,222)
        let lng = that.userdata.lng;
        let lat = that.userdata.lat;
        let shopMobile = that.userdata.shopMobile;
