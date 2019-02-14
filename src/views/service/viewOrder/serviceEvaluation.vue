@@ -39,15 +39,15 @@ export default {
     }
   },
   mounted(){
-    this.workId = this.$route.params.id;
-    this.customerId = this.$route.params.id;
+    this.workId = this.$route.query.id;
+    this.customerId = this.$route.query.customerId;
     console.log(this.workId)
     this.getDtailData();
   },
   methods:{
   getDtailData(){
     let that = this;
-    that.workId = this.$route.params.id;
+    that.workId = this.$route.query.id;
     let gdID = that.workId;
     console.log(gdID)
     that.$axios.get('pocket/wxchatc/workOrderDetail', 
@@ -56,6 +56,7 @@ export default {
           }
         })
         .then(res=>{
+          console.log(res);
           console.log(res.data.data.commissionNameList);  
           that.arrList = res.data.data.commissionNameList;
           let arr = [];

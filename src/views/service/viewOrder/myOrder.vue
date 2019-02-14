@@ -37,14 +37,15 @@
                 <van-button size="small" @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
           </div>
 
-           <div slot="footer" v-if="item.status==5" class="footer" >
+           <!-- <div slot="footer" v-if="item.status==5" class="footer" >
                 <van-button size="small"  @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
                   
-           </div>
-           <div slot="footer" v-if="item.status==3" class="footer" >
+           </div> -->
+           <div slot="footer" v-if="item.status==3||item.status==5" class="footer" >
                <van-button size="small" @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
-              <van-button size="small" @click.stop.prevent="judge(item.id)" class="primary-but">评价</van-button> 
-                  <van-button size="small" @click.stop.prevent="complain(item.id,item.status)" >申诉</van-button>
+                <van-button size="small" class="primary-but" v-if="item.status==3" @click="changeOrderStatus(item.id,item.status)">确认完成</van-button>
+                <van-button size="small" @click.stop.prevent="judge(item.id)" class="primary-but"  v-if="item.status==5">待评价</van-button> 
+                  <!-- <van-button size="small" @click.stop.prevent="complain(item.id,item.status)" >申诉</van-button> -->
            </div>
               </van-panel> 
             
@@ -53,7 +54,7 @@
      </van-list>
   </van-tab>
 
-  <van-tab title="已下单">
+  <van-tab title="待接单">
            <van-list
         v-model="loading"
         :finished="finished"
@@ -89,7 +90,7 @@
     </div>
      </van-list>
   </van-tab>
-  <van-tab title="处理中">
+  <van-tab title="进行中">
                <van-list
   v-model="loading"
   :finished="finished"
@@ -162,6 +163,8 @@
                 </van-cell>
            <div slot="footer" class="footer" >
                 <van-button size="small"  @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
+                 <van-button size="small" class="primary-but" v-if="item.status==3" @click="changeOrderStatus(item.id,item.status)">确认完成</van-button>
+                <van-button size="small" @click.stop.prevent="judge(item.id)" class="primary-but"  v-if="item.status==5">待评价</van-button> 
                   <!-- <van-button size="small" @click.stop.prevent="complain(item.id)" >申诉</van-button> -->
                    <!-- <van-button size="small" @click.stop.prevent="judge" class="primary-but">评价</van-button>  -->
            </div>
@@ -184,6 +187,8 @@ export default {
       customerId:'',
       // 详情id
       id:'',
+      //是否确认完成
+      hasFinished:true,
       // 查询状态 0：查询全部；2：进行中；5：已完成； -1： 查询异常
      status:0,
      //  查询页数
@@ -208,10 +213,10 @@ export default {
     onClick(index, title) {
       if(index==0){//全部
     this.status=0
-      } else if(index==1){//进行中
-      this.status=2
-      }else if(index==2){ //已完成
-         this.status=5
+      } else if(index==1){//待接单
+      this.status=1
+      }else if(index==2){ //处理中
+         this.status=2
       }else if(index==3){//待评价
         this.status=3
       }
@@ -254,7 +259,7 @@ export default {
     //修改工单状态接口
     changeOrderStatus(id,status){
       console.log(id,status)
-      this.$axios.get('pocket/wxchat/customerWoUpdate', 
+      this.$axios.get('pocket/wxchatc/customerWoUpdate', 
           { params: {
             'workOrderId':id,
             'status':status,
@@ -263,11 +268,12 @@ export default {
             }})
       .then(res=>{ 
           console.log(res.data)
-          if(res.data.code==200){
+           this.getCheckOrder();
+          // if(res.data.code==200){
             
-          }else{
+          // }else{
              this.$toast(res.data.msg);
-          }
+          // }
       })
       .catch(err=>{
           this.$toast(err);
@@ -342,7 +348,8 @@ this.$axios.get('pocket/wxchat/customerWoError',
     
    },
    judge:function(id){
-     this.$router.push({path:'/serviceEvaluation',query:{id:id}})
+     let customerId = this.customerId;
+     this.$router.push({path:'/serviceEvaluation',query:{id:id,status:customerId}})
       
    }
   }
