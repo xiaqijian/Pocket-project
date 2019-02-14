@@ -52,6 +52,7 @@
             :files="Uploader.files"
             :title="Uploader.title"
             :limit="Uploader.limit"
+            :quality="Uploader.quality"
             :autoUpload="Uploader.autoUpload"
             url="your remote upload url"
             @onChange="onChange"
@@ -90,6 +91,7 @@ export default {
           'title': '营业执照上传',
           'limit': 1,
           'autoUpload': false,
+          'quality':0.5,
           'files': []
        },
        index: "我是首页",
