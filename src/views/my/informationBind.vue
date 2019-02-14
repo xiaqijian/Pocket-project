@@ -16,7 +16,7 @@
                 />
 
                 <van-field
-                    type="password"
+                    type=""
                     label="验证码"
                     placeholder="请输入验证码"
                     required
@@ -113,6 +113,7 @@ export default {
       .then(res=>{
           if(res.data.code===0){
            this.$toast('绑定成功！');
+           localStorage.setItem('isBind','y');
            let that = this;
              setTimeout(function(){
                that.$router.push('/myStore')
@@ -142,6 +143,10 @@ export default {
     height: 208px;
     line-height: 78px;
     color:#68B6F7;
+}
+.app-container{
+  height: 100%;
+  background: #ffffff;
 }
 .bindingInfo{
     padding-top: 140px;
