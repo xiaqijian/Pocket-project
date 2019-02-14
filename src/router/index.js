@@ -72,7 +72,7 @@ export default new Router({
       path: '/adduser',
       component: () => import('@/views/adduser/index'),
       meta: {
-        title: '新增客户'
+        title: '新增店铺'
       }
     },
     {

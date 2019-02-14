@@ -12,7 +12,7 @@
         <van-cell-group  v-show="showbtn">
           <van-cell title="店铺名称" :value="shopName" @click="seletypeshop" is-link />
           <van-cell title="联系人" :value="userdata.name" />
-          <van-cell title="店铺联系人" :value="userdata.shopMobile" />
+          <van-cell title="店铺联系号码" :value="userdata.shopMobile" />
           <van-cell title="地区" :value="area" />
           <van-cell title="详细地址" :value="userdata.address" />
            <van-cell title="业务类型" is-link :value="typedata" @click="seletype" />

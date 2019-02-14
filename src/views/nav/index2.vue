@@ -8,7 +8,7 @@
 import navs from '@/components/nav'
 export default {
   data () {
-    let url = '?isBind=y&user=9&isCreated=y&openId=oVV-N1VLPb7S9sFU8GWikthwj7vg'
+    let url = '?isBind=n&user=9&isCreated=y&openId=oVV-N1VLPb7S9sFU8GWikthwj7vg'
     return {
       //  口袋业务
        navs: { 'navs': [

@@ -10,6 +10,12 @@
           placeholder="请输入手机号"
         >
         </van-field>
+        <van-field
+          v-model="userdata.shopMobile"
+          label="店铺联系号码"
+          placeholder="请输入手机号"
+        >
+        </van-field>
          <van-field
           v-model="userdata.address"
           label="客户地址"
@@ -47,7 +53,7 @@
         </div>
       </van-cell-group>
       <div class="btn">
-        <van-button type="warning" size="large" @click="adduser">新建客户</van-button>
+        <van-button type="warning" size="large" @click="adduser">新建店铺</van-button>
       </div>
   </div>
 </template>
@@ -78,7 +84,8 @@ export default {
          'businessLicense': '',
          'licenseUrl': '',
          'longitude':'',
-         'latitude':''
+         'latitude':'',
+         'shopMobile': ''
        },
        file: ''
     }
@@ -196,6 +203,10 @@ export default {
       
       if(this.userdata.businessLicense == "") {
         this.$toast('请填写公司机构代码, 或者上传营业执照识别')
+        return false
+      }
+      if(this.userdata.shopMobile == '' ) {
+        this.$toast('请添加商铺联系号码')
         return false
       }
       this.addNewCustomer(this.userdata)

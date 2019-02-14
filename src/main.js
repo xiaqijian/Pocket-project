@@ -42,20 +42,26 @@ router.beforeEach((to, from, next) => {
   if(to.meta.code) {
     let url =  to.fullPath
     console.log(parseQueryString(url))
-    localStorage.setItem('user', JSON.stringify(parseQueryString(url)))
-    let uid = sessionStorage.getItem('uid')
-    let isBind = parseQueryString(url).isBind
-    /* 路由发生变化修改页面title */
-    let token = isBind == 'y' ? true : false;
-    if (token || uid) {
+    if(JSON.stringify(parseQueryString(url)) == "{}") {
       next()
-    } else {
-      if (to.path === '/informationBind') {
+    }else {
+      localStorage.setItem('user', JSON.stringify(parseQueryString(url)))
+      let uid = sessionStorage.getItem('uid')
+      let isBind = parseQueryString(url).isBind
+      /* 路由发生变化修改页面title */
+      let token = isBind == 'y' ? true : false;
+      if (token || uid) {
         next()
       } else {
-        next('/informationBind')
+        if (to.path === '/informationBind') {
+          next()
+        } else {
+          next('/informationBind')
+        }
       }
     }
+    
+    
   }else {
     next()
   }
