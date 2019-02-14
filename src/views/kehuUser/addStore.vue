@@ -299,7 +299,7 @@ let data = {};
               if(res.data.data.code){//图片解析成功，把机构代码填入
                   this.userdata.businessLicense = res.data.data.code;
               }else{
-                  this.$toast('图片解析失败，请重新上传！');
+                  this.$toast('组织机构代码未识别 请重新上传或直接输入');
               }
               this.submitDisabled = false
               this.picPath = res.data.data.path
