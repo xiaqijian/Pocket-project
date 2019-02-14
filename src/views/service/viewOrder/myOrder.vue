@@ -199,7 +199,7 @@ export default {
 
   },
   mounted(){
-    this.customerId = this.$route.params.id;
+    this.customerId = this.$route.query.id;
     console.log(this.customerId);
     this.getCheckOrder();
   },
@@ -334,15 +334,15 @@ this.$axios.get('pocket/wxchat/customerWoError',
         });
    },
    checkDetail(id){
- this.$router.replace({name:'bussinessDetail',params:{id:id}})
+ this.$router.replace({path:'/bussinessDetail',query:{id:id}})
    },
    checkProgress:function( id){
     
-     this.$router.replace({name:'checkOrder',params:{id:id}})
+     this.$router.push({path:'/checkOrder',query:{id:id}})
     
    },
    judge:function(id){
-     this.$router.push({name:'serviceEvaluation',params:{id:id}})
+     this.$router.push({path:'/serviceEvaluation',query:{id:id}})
       
    }
   }

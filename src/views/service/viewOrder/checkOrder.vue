@@ -27,7 +27,7 @@ export default {
     }
   },
   mounted(){
-  this.id = this.$route.params.id
+  this.id = this.$route.query.id
   //获取订单跟踪数据
   this.getOrderTrack();
   },

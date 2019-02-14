@@ -115,7 +115,7 @@ export default {
            this.$toast('绑定成功！');
            let that = this;
              setTimeout(function(){
-               that.$router.push('/myOrder')
+               that.$router.push('/myStore')
            },1000)
          
           }else{

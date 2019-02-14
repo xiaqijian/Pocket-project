@@ -45,7 +45,7 @@ export default {
     }
   },
   mounted() {
-    this.workOrderId = this.$route.params.id
+    this.workOrderId = this.$route.query.id
     this.getdata(this.workOrderId)
   },
   methods: {

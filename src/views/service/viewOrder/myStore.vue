@@ -90,7 +90,7 @@
     },
     //查询工单列表
     checkOrderList(id){
-        this.$router.push({name:'myOrder',params:{id:id}})
+        this.$router.push({path:'/myOrder',query:{id:id}})
     },
      addStore(){
           //更改状态，从这里进入不取出数据
@@ -100,7 +100,7 @@
     //添加工单
     addOrder(id){
        
-      this.$router.push({name:'newDemand',params:{id:id}})
+      this.$router.push({path:'/newDemand',query:{id:id}})
     }
     },
    

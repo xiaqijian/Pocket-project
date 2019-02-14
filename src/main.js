@@ -59,7 +59,7 @@ router.beforeEach((to, from, next) => {
          
         //  next();
            if(to.path==='/informationBind'){
-            next('/myOrder');
+            next('/myStore');
           }else{
             next()
           }

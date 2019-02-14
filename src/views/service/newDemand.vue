@@ -46,7 +46,7 @@ show: false,
   mounted(){
         //请求所有数据  封装成一个函数
       //  this.getCreateBussiness();
-       this.userID = this.$route.params.id;
+       this.userID = this.$route.query.id;
        console.log(this.userID)
         this.aa();
   },
