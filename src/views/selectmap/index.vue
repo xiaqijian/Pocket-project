@@ -1,6 +1,6 @@
 <template>
     <div class="amap-page-container">
-      <el-amap-search-box class="search-box" :search-option="searchOption" :on-search-result="onSearchResult"></el-amap-search-box>
+          <el-amap-search-box class="search-box" :search-option="searchOption" :on-search-result="onSearchResult"></el-amap-search-box>
       <el-amap vid="amapDemo" :center="mapCenter" :zoom="12" class="amap-demo">
         <el-amap-marker v-for="(marker, index) in markers" :position="marker.position" :key="index" :events="marker.markderclick"></el-amap-marker>
       </el-amap>
@@ -9,6 +9,7 @@
           v-model="addressname"
           center
           disabled
+          :label="searchOption.city"
           placeholder="请在地图上面搜索地址"
         >
     <van-button slot="button" size="small" type="primary" @click="goback">确定</van-button>
@@ -17,7 +18,7 @@
     </div>
   </template>
 
-  <style scope>
+  <style scoped lang="less" type="text/less" >
     .addressbox {
       position: fixed;
       bottom: 0;
@@ -41,7 +42,11 @@
       position: relative;
       width: 100%;
       height: 100%;
+      
     }
+
+    /* 
+     */
   </style>
 
   <script>
@@ -55,7 +60,7 @@
           ],
           searchOption: {
             city: '上海',
-            citylimit: false
+            citylimit: true
           },
           mapCenter: [121.59996, 31.197646],
           userdata: {
@@ -64,6 +69,10 @@
             'latitude':''
           }
         };
+      },
+      mounted () {
+         let uiddata = JSON.parse(localStorage.getItem('uiddata'))
+         this.searchOption.city = uiddata.area
       },
       methods: {
         goback () {

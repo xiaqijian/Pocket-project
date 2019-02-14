@@ -129,10 +129,12 @@ export default {
               let that = this
           if(res.data.code===0){
            this.$toast('绑定成功！');
-          //    setTimeout(function(){
-          //     let  oldepath = localStorage.getItem('oldepath')
-          //      that.$router.replace(oldepath)
-          //  },1000)
+           sessionStorage.setItem('uid', res.data.data)
+           localStorage.setItem('uidid', res.data.data)
+           setTimeout(function(){
+              let  oldepath = localStorage.getItem('oldepath')
+               that.$router.replace('/addstatus')
+           },1000)
           
             that.$router.go(-1)
           }else{

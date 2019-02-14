@@ -36,8 +36,9 @@ export default {
   },
   methods:{
      getuid () {
-      let uid = JSON.parse(localStorage.getItem('user'))
-      this.uid = uid.user
+      // let uid = JSON.parse(localStorage.getItem('user'))
+      let uid = JSON.parse(localStorage.getItem('uidid'))
+      this.uid = uid
     },
       clickserver (id) {
           this.$router.push({ path: 'orderservice', query: { id: id }})

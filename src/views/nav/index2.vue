@@ -8,6 +8,7 @@
 import navs from '@/components/nav'
 export default {
   data () {
+    let url = '?isBind=y&user=9&isCreated=y&openId=oVV-N1VLPb7S9sFU8GWikthwj7vg'
     return {
       //  口袋业务
        navs: { 'navs': [
@@ -19,7 +20,7 @@ export default {
              {
              'name': '工单列表',
              'id': 1,
-             'link': '/orderlist'
+             'link': '/orderlist' + url
            },
           //   {
           //    'name': '工单服务',
@@ -29,7 +30,7 @@ export default {
            {
              'name': '抢工单',
              'id': 2,
-             'link': '/ordermap'
+             'link': '/ordermap' + url
            }
           ]
          },
@@ -41,12 +42,12 @@ export default {
              {
              'name': '新增工单',
              'id': 1,
-             'link': '/addorder'
+             'link': '/addorder' + url
            },
            {
              'name': '工单状态',
              'id': 2,
-             'link': '/addstatus'
+             'link': '/addstatus' + url
            }
           ]
          },
@@ -58,12 +59,12 @@ export default {
              {
              'name': '我的工单',
              'id': 1,
-             'link': '/disposeWorkorder'
+             'link': '/disposeWorkorder' + url
            },
            {
              'name': '我的统计',
              'id': 2,
-             'link': '/myStatistics'
+             'link': '/myStatistics' + url
            }
           ]
          }
