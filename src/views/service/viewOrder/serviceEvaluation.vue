@@ -4,7 +4,7 @@
       <h3><van-icon name="records" size="40px"/>服务评价</h3>
       <p>&nbsp;&nbsp;请您对本次服务做出评价</p>
     </div> -->
-    <div class="service-judge">请您对本次服务做出评价</div>
+    <div class="service-judge">请对本次服务做出评价</div>
     
       <div class="judge-score">
           <div class="contact" v-for="(item,index) in arrList" :key="index">
@@ -27,7 +27,7 @@ export default {
   data () {
     return {
       index:'0',
-      contactV: [5,5,5],//默认五星好评
+      contactV: [5,5,5,5],//默认五星好评
       //工单id
       workId:'',
       //评分
@@ -115,16 +115,20 @@ export default {
 h3{
   color: #ffffff;
 }
+.app-container{
+  height: 100%;
+  background: #fafafa;
+}
 .service-judge{
   padding: 5px 10px;
   border-radius: 10px;
-  /* background: coral; */
+  background: #fff;
   border: 1px solid #e5e5e5;
   margin-bottom: 130px;
-   background: #68B6F7;
-  color: #ffffff;
+  height: 80px;
+  line-height: 80px;
   box-shadow: #eee -2px 1px  10px 2px;
-  padding-top: 60px;
+  /* padding-top: 60px; */
   padding-left: 40px;
 }
 .contact {
