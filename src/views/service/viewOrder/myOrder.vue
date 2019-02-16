@@ -44,7 +44,7 @@
            <div slot="footer" v-if="item.status==3||item.status==5" class="footer" >
                <van-button size="small" @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
                 <van-button size="small" class="primary-but" v-if="item.status==3" @click="changeOrderStatus(item.id,item.status)">确认完成</van-button>
-                <van-button size="small" @click.stop.prevent="judge(item.id)" class="primary-but"  v-if="item.status==5">待评价</van-button> 
+                <van-button size="small" @click.stop.prevent="judge(item.id,item.status)" class="primary-but"  v-if="item.status==5">待评价</van-button> 
                   <!-- <van-button size="small" @click.stop.prevent="complain(item.id,item.status)" >申诉</van-button> -->
            </div>
               </van-panel> 
@@ -164,7 +164,7 @@
            <div slot="footer" class="footer" >
                 <van-button size="small"  @click.stop.prevent="call(item.userMobile)" >安全拨叫</van-button>
                  <van-button size="small" class="primary-but" v-if="item.status==3" @click="changeOrderStatus(item.id,item.status)">确认完成</van-button>
-                <van-button size="small" @click.stop.prevent="judge(item.id)" class="primary-but"  v-if="item.status==5">待评价</van-button> 
+                <van-button size="small" @click.stop.prevent="judge(item.id,item.status)" class="primary-but"  v-if="item.status==5">待评价</van-button> 
                   <!-- <van-button size="small" @click.stop.prevent="complain(item.id)" >申诉</van-button> -->
                    <!-- <van-button size="small" @click.stop.prevent="judge" class="primary-but">评价</van-button>  -->
            </div>
@@ -347,9 +347,9 @@ this.$axios.get('pocket/wxchat/customerWoError',
      this.$router.push({path:'/checkOrder',query:{id:id}})
     
    },
-   judge:function(id){
+   judge:function(id,status){
      let customerId = this.customerId;
-     this.$router.push({path:'/serviceEvaluation',query:{id:id,status:customerId}})
+     this.$router.push({path:'/serviceEvaluation',query:{id:id,status:customerId,status:status}})
       
    }
   }

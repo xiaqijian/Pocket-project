@@ -211,6 +211,16 @@ export default new Router({
       }
     },
     {
+      path: '/modifyStore',
+      name: 'modifyStore',
+      component: () => import('@/views/kehuUser/modifyStore'),
+      meta: {
+        title: '修改店铺',
+        // requireAuth: true
+        // keepAlive: true
+      }
+    },
+    {
       path: '/searchAddress',
       name: 'searchAddress',
       component: () => import('@/views/kehuUser/searchAddress'),

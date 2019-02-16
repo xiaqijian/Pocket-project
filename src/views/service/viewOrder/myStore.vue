@@ -23,8 +23,9 @@
             <van-cell title="联系方式" :value="item.shopMobile"/>
             <van-cell title="店铺地址" :value="item.province+item.area+item.address" />
              <div slot="footer" class="footer" >
-                <van-button size="small" @click="checkOrderList(item.id)" >查看工单</van-button>
-                <van-button size="small" @click="addOrder(item.id)" class="primary-but">添加工单</van-button>
+                <van-button size="small"  @click="modifyList(item,item.id)" v-if="item.status!=1">修改店铺</van-button>
+                <van-button size="small" @click="checkOrderList(item.id)" v-if="item.status!=2">查看工单</van-button>
+                <van-button size="small" @click="addOrder(item.id)" v-if="item.status!=2" class="primary-but">添加工单</van-button>
           </div>
                   <!-- <van-cell value=""  is-link @click="checkOrderList(item.id)">
                   <template slot="title">
@@ -101,8 +102,17 @@
     addOrder(id){
        
       this.$router.push({path:'/newDemand',query:{id:id}})
+    },
+    //修改店铺
+    modifyList(item,id){
+       console.log(item);
+       sessionStorage.setItem('status',0);
+       let mod = JSON.stringify(item);
+       localStorage.setItem('mod',mod);
+       this.$router.push({path:'/modifyStore',query:{id:id}});
     }
     },
+    
    
   }
 </script>
@@ -115,6 +125,7 @@
     // height: 100%;
     background:#eee;
     width: 100%;
+    // height: 100%;
     .topList{
         flex: 1;
         padding-bottom: 200px;

@@ -36,11 +36,13 @@ export default {
       descripe:'',
       arrList:[],
       arrid:[],
+      status:''
     }
   },
   mounted(){
     this.workId = this.$route.query.id;
     this.customerId = this.$route.query.customerId;
+    this.status = this.$route.query.status;
     console.log(this.workId)
     this.getDtailData();
   },
@@ -86,7 +88,7 @@ export default {
   this.$axios.get('pocket/wxchatc/customerWoUpdate',
       {params:{
         workOrderId:this.workId,
-        status:3,
+        status:this.status,
         customerId:this.customerId,
         evaluation:evaluation
       }}).
@@ -117,14 +119,14 @@ h3{
 }
 .app-container{
   height: 100%;
-  background: #fafafa;
+  background: #eeeeee;
 }
 .service-judge{
   padding: 5px 10px;
   border-radius: 10px;
   background: #fff;
   border: 1px solid #e5e5e5;
-  margin-bottom: 130px;
+  margin-bottom: 30px;
   height: 80px;
   line-height: 80px;
   box-shadow: #eee -2px 1px  10px 2px;
@@ -133,16 +135,23 @@ h3{
 }
 .contact {
     margin-bottom: 30px;
+    display: flex;
+  justify-content:space-around;
    
 }
 .judge-score{
-  width: 65%;
+  width: 100%;
   margin: auto;
   text-align: end;
+  background: #fff;
+  padding: 20px 0;
+  
 }
 .contact label{
      float: left;
      margin-right: 20px;
+     display: inline-block;
+     width: 20%;
     }
 .doJudge{
   text-align: center;
