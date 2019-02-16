@@ -15,7 +15,7 @@
         <van-cell title="佣金" :value="datadetail.commission | getcommission" />
         
       </van-cell-group>
-      <van-cell-group v-show="datadetail.label == 'nstallPOS'">
+      <van-cell-group v-show="datadetail.label == 'installPOS'">
         <van-field
           v-model="tusn"
           center
