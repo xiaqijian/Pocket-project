@@ -125,7 +125,7 @@ export default {
   mounted () {
     this.getuid()
     this.getUserInfo()
-    this.checkBusDate ()
+    // this.checkBusDate ()
     this.addWorkOrderfrom.uid = this.uid
     localStorage.removeItem('gomap')
   },

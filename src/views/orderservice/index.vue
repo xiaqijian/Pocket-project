@@ -71,7 +71,6 @@
         </span>
        
       </div>
-
   </div>
 </template>
 
@@ -103,6 +102,7 @@ export default {
     this.getuid()
     this.workOrderId = this.$route.query.id
     this.getdata(this.workOrderId)
+    
   },
   methods: {
     onDelete (index) {
@@ -196,7 +196,12 @@ export default {
   // 竣工上传图片
    uploadCompletion (file) {
      let that = this
-     
+      const toast = this.$toast.loading({
+        duration: 0,       // 持续展示 toast
+        forbidClick: true, // 禁用背景点击
+        loadingType: 'spinner',
+        message: '上传图片中.....'
+      });
       let formdata = new FormData();
       // formdata.append('code', that.datadetail.workOrderCode );
       // formdata.append('phone', that.datadetail.customerMobile)
@@ -212,6 +217,7 @@ export default {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
          }).then((res) => {
            console.log(res)
+           toast.clear()
            resolve(res.data)
          })
          .catch((err) => {

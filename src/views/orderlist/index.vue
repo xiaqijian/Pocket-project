@@ -39,8 +39,10 @@ export default {
     }
   },
   mounted () {
+    this.getoption()
     this.getuid()
     this.getdata()
+    
   },
   filters: {
      toFixedone (value) {
@@ -54,6 +56,39 @@ export default {
      }
   },
   methods: {
+    getoption () {
+      let that = this
+       if(navigator.geolocation)
+          {
+              navigator.geolocation.getCurrentPosition(function(position){
+                  // 获取成功
+                  console.debug(position);
+                  let latitude  = position.coords.latitude;
+                  let longitude = position.coords.longitude;
+                  that.updateLocation(longitude, latitude )
+              }, function(err){
+                  // 获取失败
+                  console.debug(err);
+              });
+          }
+          else
+          {
+              console.debug('不支持获取GPS地理位置');
+          }
+       
+    },
+    updateLocation (longitude, latitude) {
+      let that = this
+        this.$axios.get('pocket/wxchat/grabwolByDistance', { params: { 'uid': that.uid, 'longitude': longitude, 'latitude':latitude }})
+      .then((res) => {
+        console.log(res)
+        // that.datas = res.data.data
+      })
+      .catch((err) => {
+         this.$toast(err);
+        console.log(err)
+      })
+    },
     getuid () {
       let uid = JSON.parse(localStorage.getItem('user'))
       this.uid = uid.user
