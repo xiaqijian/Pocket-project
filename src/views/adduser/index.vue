@@ -127,21 +127,21 @@ export default {
         this.$toast('请上传营业执照')
         return false
       }
-      this.$toast.loading({
-        mask: true,
-        message: '识别营业执照中...'
-      });
+      // this.$toast.loading({
+      //   mask: true,
+      //   message: '识别营业执照中...'
+      // });
       let data = await this.uploadLicense(this.userdata.mobile, this.file)
       console.log(data)
-      if(!data.code) {
+      if(!data.data.code) {
          if(this.userdata.businessLicense == "") {
            this.$toast('无法识别机构代码，请填写公司机构代码')
            return false
          }
       } else {
-        this.userdata.businessLicense = data.code
+        this.userdata.businessLicense = data.data.code
       }
-      this.userdata.licenseUrl = data.path
+      this.userdata.licenseUrl = data.data.path
     },
     onChange (fileList) {
        console.log(fileList[0])
@@ -156,6 +156,14 @@ export default {
     },
     // 上传营业执照
     uploadLicense (phone, file) {
+      const toast = this.$toast.loading({
+        duration: 0,       // 持续展示 toast
+        forbidClick: true, // 禁用背景点击
+        mask: true,
+        loadingType: 'spinner',
+        message: '识别营业执照中...'
+      });
+
       let that = this
       let formdata = new FormData();
       
@@ -170,6 +178,7 @@ export default {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
          }).then((res) => {
           //  console.log(res)
+           toast.clear()
            resolve(res.data)
          })
          .catch((err) => {
