@@ -72,7 +72,12 @@ show: false,
           }
             let arr = [];
             that.yydata = res.data.data;
+            console.log(res.data.data)
             for(let i = 0;i<res.data.data.length;i++){
+              // debugger
+              if(!res.data.data[i].busName){
+               continue;
+              }
                 arr.push(res.data.data[i].busName);
                 // console.log(arr)
             }
