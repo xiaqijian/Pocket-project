@@ -59,7 +59,7 @@
 
           ],
           searchOption: {
-            city: '上海',
+            city: '杭州',
             citylimit: true
           },
           mapCenter: [121.59996, 31.197646],
@@ -70,9 +70,14 @@
           }
         };
       },
-      mounted () {
-         let uiddata = JSON.parse(localStorage.getItem('uiddata'))
+      created() {
+        let uiddata = JSON.parse(localStorage.getItem('uiddata'))
          this.searchOption.city = uiddata.area
+         this.mapCenter = [uiddata.longitude, uiddata.latitude]
+         console.log(this.searchOption)
+      },
+      mounted () {
+         
       },
       methods: {
         goback () {
