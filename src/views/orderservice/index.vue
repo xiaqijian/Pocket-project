@@ -31,7 +31,7 @@
       </van-collapse-item>
     </van-collapse>
 
-      <van-collapse v-model="activeNames">
+      <van-collapse v-model="activeNames" v-show="!datadetail.label == 'open_card'">
         <van-collapse-item title="佣金说明" name="1">
            <span style="font-size:16px; color: red;">总分：20分</span>
            <van-row>
