@@ -111,14 +111,12 @@ export default {
 
      this.$axios.get('pocket/wxchatc/customerBind', { params: {'mobile': this.phone,'code':this.yzm,'openId':this.openId}})
       .then(res=>{
-        //   debugger
           if(res.data.code==0){
-           sessionStorage.setItem('Bind','y');
-           this.$toast('绑定成功！');
-           
+           localStorage.setItem('Binding','y');
+           this.$toast('绑定成功！');        
            let that = this;
              setTimeout(function(){
-              location.reload();
+              that.$router.replace('/myStore');
            },1000)
          
           }else{

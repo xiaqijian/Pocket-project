@@ -27,7 +27,7 @@ Vue.prototype.qs = qs
 
 function GetQueryString(name)
 {
-  var ss = 'http://www.insoup.cn/wxc/#/serviceState?isBind=y&user=18336391418&isCreated=y&openId=ockPH1Nft3L1vxNxP28aZwYCQ1qA';
+  var ss = 'http://www.insoup.cn/wxc/#/serviceState?isBind=n&user=18336391418&isCreated=y&openId=ockPH1Nft3L1vxNxP28aZwYCQ1qA';
   // return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
   return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(ss) || [, ""])[1].replace(/\+/g, '%20')) || null
   
@@ -37,12 +37,10 @@ var isCreated = GetQueryString('isCreated');
 // isBind: y 已经绑定 n 未绑定
 var isBind =  GetQueryString('isBind');
 let Bind;
-// sessionStorage.setItem('Bind','');
 sessionStorage.setItem('Bind',isBind);
 Bind = sessionStorage.getItem('Bind');
 var openid = GetQueryString('openId');
 localStorage.setItem('openid', openid);
-
 //customerId
 var customerId = GetQueryString('user');
 localStorage.setItem('customerId', customerId);
@@ -55,13 +53,12 @@ router.beforeEach((to, from, next) => {
   if (to.meta.title) {
     document.title = to.meta.title
   }
-
+let binding = localStorage.getItem('Binding')
   
     if (to.meta.requireAuth) { 
       console.log(Bind,0) 
        //如果用户未绑定，则去绑定
-       if(Bind=='y'){
-     
+       if(Bind=='y'||binding=='y'){
         //  next();
            if(to.path==='/informationBind'){
             next('/myStore');
