@@ -56,7 +56,7 @@ export default new Router({
       path: '/addorder',
       component: () => import('@/views/addorder/index'),
       meta: {
-        title: '新增订单',
+        title: '新增店铺',
         code: true
       }
     },
@@ -64,7 +64,7 @@ export default new Router({
       path: '/addstatus',
       component: () => import('@/views/addstatus/index'),
       meta: {
-        title: '新增状态',
+        title: '工单状态',
         code: true
       }
     },
