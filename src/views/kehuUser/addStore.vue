@@ -412,7 +412,7 @@ let data = {};
       console.log(this.userdata)
       let data = await this.uploadLicense(this.userdata.mobile, this.file)
       this.userdata.licenseUrl = data.path
-      this.addNewCustomer(this.userdata);
+      // this.addNewCustomer(this.userdata);
      
     }
   },

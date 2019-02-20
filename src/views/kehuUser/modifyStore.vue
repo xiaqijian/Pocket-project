@@ -49,7 +49,7 @@
               <van-icon name="photograph" size="30px"/>
             </van-uploader> -->
              <uploader
-            :files="files"
+            :files="Uploader.files"
             :title="Uploader.title"
             :limit="Uploader.limit"
             :quality="Uploader.quality"
@@ -62,7 +62,8 @@
             <div class="cover" v-if='cover' @click="onCover()"></div>
         </div>
         <div class="imgsrc">
-          <img :src="imgsrc" alt="">
+        <div class="hasupload"><span>已上传</span></div>
+        <img :src="imgsrc" alt="">
         </div>
          <van-field
           v-model="userdata.businessLicense"
@@ -71,9 +72,9 @@
         >
         </van-field>
       </van-cell-group>
-      
+    
       <div class="btn">
-         <van-button round size="large" @click="modify" :disabled='submitDisabled'>确认修改</van-button>
+         <van-button round size="large" @click="modify" >确认修改</van-button>
         
       </div>
 <div class="loading" v-if='onUping'>
@@ -88,7 +89,7 @@ export default {
   data () {
     return {
        Uploader: {
-          'title': '营业执照上传',
+          'title': '营业执照修改',
           'limit': 1,
           'autoUpload': false,
           'quality':0.5,
@@ -131,19 +132,8 @@ export default {
          'lng':'',
          'lat':''
        },
-       file: ''
+       file: '',
     }
-  },
-  computed:{
-      files:function(){
-          console.log(this.imgPathUrl)
-          let str = encodeURI('http://www.insoup.cn/upload/'+this.imgPathUrl);
-          let arr = [];
-          arr.push('http://www.insoup.cn/upload/'+str)
-          console.log(arr);
-          return  arr;
-        //   return ['http://www.insoup.cn/upload/18336391418/1550305479198_%E5%B7%A5%E7%AC%94%E7%94%BB.png']
-      }
   },
   components: {
       Uploader,
@@ -171,6 +161,9 @@ console.log(list.name)
   this.userdata.lng=list.lng;
   this.userdata.lat = list.lat;
   this.imgPathUrl = list.licenseUrl;
+  this.picPath = list.licenseUrl;
+  let str = encodeURI(this.imgPathUrl);
+  this.imgsrc='http://www.mypocketms.com/upload/'+str
 console.log(this.Uploader.files)    
     console.log(this.$route.params.address,'oooooo')
     if(localStorage.getItem('data')&&sessionStorage.getItem('status')==1){
@@ -332,6 +325,12 @@ let data = {};
       let res = await this.uploadLicense(this.userdata.mobile, this.file)
       console.log(res)
        if(res.data.code=='0'){//说明上传成功
+       console.log(res.data.data.path)
+       let url =res.data.data.path;
+       let str = encodeURI(url);
+       console.log(str)
+       this.imgsrc ='http://www.mypocketms.com/upload/'+str;
+       
               if(res.data.data.code){//图片解析成功，把机构代码填入
                   this.userdata.businessLicense = res.data.data.code;
               }else{
@@ -398,10 +397,10 @@ let data = {};
        let lng = that.userdata.lng;
        let lat = that.userdata.lat;
        let shopMobile = that.userdata.shopMobile;
-      if(!(/^1[34578]\d{9}$/.test(that.userdata.mobile))){ 
+      if(!(/^1[34578]\d{9}$/.test(that.userdata.mobile))||!(/^1[34578]\d{9}$/.test(that.userdata.shopMobile))){ 
         this.$toast('手机号码有误，请重填');
         return false; 
-      }else if(phofuwuadd && khname && khaddr && khphone && khnameaddr  && gszzcode && shengfen && chengshi){
+      }else if(phofuwuadd && khname && khaddr && khphone &&shopMobile&& khnameaddr  && gszzcode && shengfen && chengshi){
           console.log(11);
           that.$axios.post('pocket/wxchatc/customerInfoUpdate', 
            { 
@@ -499,10 +498,14 @@ let data = {};
 }
 
 .imgsrc {
-  width: 100px;
+  width: 100%;
   padding: 10px 40px;
+ .hasupload{
+   float: left;
+   margin-right: 20px;
+ }
   img {
-    width: 100%;
+    width: 30%;
   }
 }
 </style>
