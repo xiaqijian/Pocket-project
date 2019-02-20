@@ -1,29 +1,39 @@
 <template>
   <div class="app-container" id="sendOut">
+
     <van-list
-    v-model="loading"
-    :finished="finished"
-    finished-text="没有更多了"
-    :offset="offset"
-    @load="onLoad"
-  >
-   <div v-for= "(item,index) in list" class="card" :key="index" @click="clickserver(item.id)">
-          <div slot="footer">
-            <van-cell class="haha" icon="card" title="工单编码:" :value="item.workOrderCode" size="large"/>
-            <van-cell class="haha" icon="friends" title="客户姓名:" :value="item.customerName" size="large"/>
-            <van-cell class="haha" icon="phone"  title="联系方式:" :value="item.customerMobile" is-link @click="callphone($event,item)" size="large"/>
-            <van-cell class="haha" icon="printer" title="开始时间:" :value="item.addTime" size="large"/>
-            <van-cell class="haha" icon="info" title="当前状态:" :value="item.statudDesc" size="large"/>
-            <van-cell class="haha" icon="award" title="工单类型:" :value="item.businessName"  size="large">  
-                <!-- <div v-if="item.status ==1">
-                  <van-tag type="primary" size="large">正常</van-tag>
-                </div>
-                <div  v-if="item.status ==2">
-                  <van-tag type="danger" size="large">关闭</van-tag>
-                </div> -->
-            </van-cell>
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
+       <div class="cardbox" v-for="item in list" :key="item.id">
+         <van-card>
+          <div slot="title" class="titlebox" >
+             <div style="font-size: 16px;" class="textname">
+                 {{item.businessName}}
+              </div>
+             <!-- <div class="juli"> {{item.distance | toFixedone }}</div> -->
           </div>
+          <div slot="thumb" class="thumbbox">
+              <!-- <van-button size="mini">按钮</van-button> -->
+                <img src="/static/logo.jpg" alt="">
+            </div>
+             <div slot="tags" class="tagsbox">
+              <!-- <van-button size="mini">按钮</van-button> -->
+                <div class="tagsboxitem">
+                   <div>联系人：{{item.operator}}</div>
+                   <div>联系方式：{{item.customerMobile}}</div>
+                   <div>地址：{{item.province + item.area + item.address}}</div>
+                </div>
+            </div>
+            <div slot="footer">
+              <!-- <van-button size="mini">按钮</van-button> -->
+              <van-button size="mini" :type="item.status | getstatus" @click="clickserver(item.id)">{{item.statudDesc}}</van-button>
+            </div>
+          </van-card>
       </div>
+
     </van-list>
   </div>
 </template>
@@ -31,14 +41,34 @@
 <script>
 export default {
   mounted(){
-    this.getuid()
-      // this.getdata(1)
+     this.getuid()
+    //  this.getdata(1)
+  },
+  filters: {
+     getstatus (value) {
+       if(value == 5) {
+         return 'primary'
+       }else if(value == 4 ) {
+         return 'danger'
+       }else {
+         return 'warning'
+       }
+     }
   },
   methods:{
      getuid () {
       // let uid = JSON.parse(localStorage.getItem('user'))
       let uid = JSON.parse(localStorage.getItem('uidid'))
-      this.uid = uid
+      let uids = JSON.parse(localStorage.getItem('user'))
+      if(!uid) {
+         console.log('登录')
+         this.uid = uids.user
+      }else {
+        console.log('22')
+        this.uid = uid
+      }
+      
+      // console.log(this.uid)
     },
       clickserver (id) {
           this.$router.push({ path: 'orderservice', query: { id: id }})
@@ -101,21 +131,56 @@ export default {
 }
 </script>
 
-<style scoped>
-.card{
-   background: #dddddd;
-   width: 90%; 
-   margin: auto;
-   margin-top: 20px; 
-   border: 2px solid #eeeeee;
-   border-radius: 6px;
-   box-shadow:#e5e5e5 1px 3px 6px 3px;
+<style lang="less" type="text/less" scoped>
+.app-container {
+  height: 100%;
+  background: #efefef;
+}
+.cardbox {
+  font-size: 12px;
+  box-shadow: 0 5px 21px 1px rgba(0,0,0,.15);
+  margin-bottom: 20px;
+  .thumbbox {
+    // border: 1px solid red;
+    width: 160px;
+    height: 160px;
+    border-radius: 20px;
+    overflow: hidden;
+    
+  }
+  .titlebox {
+     display: flex;
+     > div {
+      //  flex: 1;
+     }
+     .textname {
+       flex: 1;
+     }
+     .juli {
+       text-align: right;
+       padding: 6px 0px;
+       width: 70px;
+     }
+  }
+  .tagsbox {
+     padding-top: 20px;
+    //  .tagsboxitem {
+    //   //  display: flex;
+    //  }
+  }
+}
+.nodata {
+  text-align: center;
+  padding: 20px;
+}
 
+.loading {
+  text-align: center;
+  padding: 20px;
 }
-.chakan{
-    width: 100%;
+.tbn {
+  background: #d1d1d1;
+  padding: 10px;
 }
-.haha{
-  color: #2983fb
-}
+
 </style>

@@ -55,6 +55,7 @@
             :title="Uploader.title"
             :limit="Uploader.limit"
             :autoUpload="Uploader.autoUpload"
+            :quality="Uploader.quality"
             url="your remote upload url"
             @onChange="onChange"
             @onDelete="onDelete"
@@ -84,7 +85,8 @@ export default {
           'title': '竣工照片上传',
           'limit': 3,
           'autoUpload': false,
-          'files': []
+          'files': [],
+          'quality': 0.5
        },
        tusn: '',
        index: "我是首页",

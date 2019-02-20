@@ -5,7 +5,7 @@
       <div class="cardbox" v-for="item in datas" :key="item.id">
          <van-card>
           <div slot="title" class="titlebox" >
-             <div style="font-size: 16px;">
+             <div style="font-size: 16px;" class="textname">
                  {{item.businessName}}
               </div>
              <div class="juli"> {{item.distance | toFixedone }}</div>
@@ -140,11 +140,15 @@ export default {
   .titlebox {
      display: flex;
      > div {
+      //  flex: 1;
+     }
+     .textname {
        flex: 1;
      }
      .juli {
        text-align: right;
        padding: 6px 0px;
+       width: 70px;
      }
   }
   .tagsbox {

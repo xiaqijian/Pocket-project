@@ -2,7 +2,8 @@
   <div class="app-container">
       <div class="bindingInfo">
           <div class="pocket">
-              口袋业务
+             <img src="/static/logo.jpg" alt=""  class="logo">
+              口袋商服业务
           </div>
         <div class="phone">
                 <van-cell-group >
@@ -135,8 +136,6 @@ export default {
               let  oldepath = localStorage.getItem('oldepath')
                that.$router.replace('/addstatus')
            },1000)
-          
-            that.$router.go(-1)
           }else{
               this.$toast(res.data.msg);
           }
@@ -156,9 +155,15 @@ export default {
 .pocket{
     font-size: 48px;
     text-align: center;
-    height: 208px;
+    /* height: 208px; */
     line-height: 78px;
     color:#68B6F7;
+    margin-bottom: 40px;
+}
+.logo {
+  width: 30%;
+  display: block;
+  margin:auto;
 }
 .bindingInfo{
     padding-top: 140px;
