@@ -12,7 +12,7 @@
         <van-cell title="服务状态" :value="datadetail.statudDesc" />
         <van-cell title="创建时间" :value="datadetail.addTime" />
         <van-cell title="服务时间" :value="datadetail.modifierTime" />
-        <van-cell title="佣金" :value="datadetail.commission | getcommission" />
+        <van-cell title="佣金" :value="datadetail.commission | getcommission" v-show="!datadetail.label == 'open_card'" />
         
       </van-cell-group>
       <van-cell-group v-show="datadetail.label == 'installPOS'">

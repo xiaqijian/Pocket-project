@@ -31,6 +31,15 @@ export default new Router({
       }
     },
     {
+      path: '/map',
+      name: 'map',
+      component: () => import('@/views/map/index'),
+      meta: {
+        title: '地图',
+        code: true
+      }
+    },
+    {
       path: '/nav2',
       name: 'nav2',
       component: () => import('@/views/nav/index2'),

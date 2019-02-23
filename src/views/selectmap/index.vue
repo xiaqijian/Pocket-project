@@ -1,7 +1,7 @@
 <template>
     <div class="amap-page-container">
           <el-amap-search-box class="search-box" :search-option="searchOption" :on-search-result="onSearchResult"></el-amap-search-box>
-      <el-amap vid="amapDemo" :center="mapCenter" :zoom="12" class="amap-demo">
+      <el-amap vid="amapDemo" :plugin="plugin" :center="mapCenter" :zoom="12" class="amap-demo">
         <el-amap-marker v-for="(marker, index) in markers" :position="marker.position" :key="index" :events="marker.markderclick"></el-amap-marker>
       </el-amap>
       <div class="addressbox">
@@ -67,7 +67,23 @@
             'address': '',
             'longitude':'',
             'latitude':''
-          }
+          },
+          plugin: [{
+            pName: 'Geolocation',
+            events: {
+              init(o) {
+                // o 是高德地图定位插件实例
+                o.getCurrentPosition((status, result) => {
+                  console.log(status)
+                  console.log(result)
+                  if (result && result.position) {
+                    self.mapCenter = [result.position.lng, result.position.lat]
+                    self.$nextTick();
+                  }
+                });
+              }
+            }
+          }]
         };
       },
       created() {
