@@ -17,7 +17,7 @@
              <div slot="tags" class="tagsbox">
               <!-- <van-button size="mini">按钮</van-button> -->
                 <div class="tagsboxitem">
-                   <div>联系人：{{item.operator}}</div>
+                   <div>联系人：{{item.customerName}}</div>
                    <div>联系方式：{{item.customerMobile}}</div>
                    <div>地址：{{item.province + item.area + item.address}}</div>
                 </div>

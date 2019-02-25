@@ -18,7 +18,7 @@ export default new Router({
       name: 'nav',
       component: () => import('@/views/nav/index'),
       meta: {
-        title: '口袋商服'
+        title: '商机助手'
       }
     },
     {
