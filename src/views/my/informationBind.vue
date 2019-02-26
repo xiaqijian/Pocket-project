@@ -3,7 +3,7 @@
       <div class="bindingInfo">
           <div class="pocket">
              <img src="/static/logo.jpg" alt=""  class="logo">
-              口袋商服业务
+              商机助手
           </div>
         <div class="phone">
                 <van-cell-group >
@@ -164,6 +164,7 @@ export default {
   width: 30%;
   display: block;
   margin:auto;
+  padding: 20px;
 }
 .bindingInfo{
     padding-top: 140px;
